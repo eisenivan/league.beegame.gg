@@ -2,6 +2,11 @@ module.exports = {
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   darkMode: false, // or 'media' or 'class'
   theme: {
+    fontFamily: {
+      'head': '"Open Sans Condensed"',
+      'subhead': '"Open Sans"',
+      'body': '"Montserrat"'
+    },
     extend: {
       colors: {
         blue: {
