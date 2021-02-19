@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import Chrome from '../components/Chrome'
 
 function Home () {
@@ -8,23 +7,19 @@ function Home () {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get('https://kqb.buzz/api/leagues/?format=json', {
-        headers: {
-          'Access-Control-Allow-Origin': '*'
-        }
-      })
-
-      console.log(response.data)
-      setLeagues(response.data)
+      const response = await fetch('https://kqb.buzz/api/leagues/?format=json') // eslint-disable-line
+      const json = await response.json()
+      setLeagues(json)
       setLoading(false)
     }
+
     fetchData()
   }, [])
 
   return (
     <Chrome>
       {
-        loading && leagues.length > 0
+        loading
           ? <div>loading...</div>
           : (
             <div>
