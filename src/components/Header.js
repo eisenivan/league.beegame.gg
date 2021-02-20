@@ -21,13 +21,12 @@ function Header () {
   return (
     <header className='flex justify-between bg-gray-2 p-2 lg:px-8'>
       <div className='flex items-center'>
-        <HeaderLogo className='h-28' alt='Beegame.gg emblem logo' src='/img/logo_BGL_emblem.png' />
-        <Link to='/' className={`${linkString} text-gray-1 font-head uppercase text-2xl`}>Beegame.gg</Link>
+        <Link to='/' className={`${linkString} text-gray-1 font-head uppercase text-2xl flex items-center`}><HeaderLogo className='h-28' alt='Beegame.gg emblem logo' src='/img/logo_BGL_emblem.png' /> League.Beegame.gg</Link>
       </div>
       <nav className='flex items-center'>
         <NavItem to='/circuits' className={`${linkString} text-gray-1`}>Circuits</NavItem>
         <NavItem to='/teams' className={`${linkString} text-gray-1`}>Teams</NavItem>
-        <NavItem to='/standings' className={`${linkString} text-gray-1`}>Standings</NavItem>
+        <NavItem to='/dynasties' className={`${linkString} text-gray-1`}>Dynasties</NavItem>
         <NavItem to='/leaders' className={`${linkString} text-gray-1`}>Leaders</NavItem>
       </nav>
     </header>

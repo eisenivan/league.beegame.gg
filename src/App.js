@@ -6,16 +6,20 @@ import {
 } from 'react-router-dom'
 import Home from './screens/Home'
 import Circuits from './screens/Circuits'
+import Circuit from './screens/Circuit'
 
 function App () {
   return (
     <Router>
       <Switch>
-        <Route exact path='/'>
+        <Route path='/' exact>
           <Home />
         </Route>
-        <Route path='/circuits'>
+        <Route path='/circuits' exact>
           <Circuits />
+        </Route>
+        <Route path='/circuits/:id'>
+          <Circuit />
         </Route>
       </Switch>
     </Router>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Chrome from '../components/Chrome'
 
-function Home () {
+function Circuits () {
   const [loading, setLoading] = useState(true)
   const [leagues, setLeagues] = useState([])
 
@@ -9,8 +9,20 @@ function Home () {
     const fetchData = async () => {
       const response = await fetch('https://kqb.buzz/api/leagues/?format=json') // eslint-disable-line
       const json = await response.json()
-      setLeagues(json)
-      setLoading(false)
+      const activeBglUrl = json
+        .find(x => x.id === 4)
+        .seasons
+        .pop()
+
+      const circuits = await fetch(activeBglUrl) // eslint-disable-line
+      const circuitsJson = await circuits.json()
+
+      const circuitsPromises = circuitsJson.circuits.map((x) => fetch(x)) // eslint-disable-line
+      Promise.all(circuitsPromises).then((data) => {
+        console.log(data, circuitsJson)
+        setLeagues(circuitsJson.circuits)
+        setLoading(false)
+      })
     }
 
     fetchData()
@@ -23,7 +35,7 @@ function Home () {
           ? <div>loading...</div>
           : (
             <div>
-              { leagues.map(x => (<span>{x.name}</span>)) }
+              { leagues.map(x => (<a className='block' href={`/${x.match(/circuits\/[0-9]+/)}`}>{x}</a>)) }
             </div>
           )
       }
@@ -31,4 +43,4 @@ function Home () {
   )
 }
 
-export default Home
+export default Circuits
