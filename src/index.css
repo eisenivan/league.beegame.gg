@@ -11,7 +11,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-a:hover {
-  color: #fdb833;
+a {
+  color: #b37b2d;
   transition: .4s ease 0s;
+}
+a:hover {
+  text-decoration: underline;
 }

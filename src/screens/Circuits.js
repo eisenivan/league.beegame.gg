@@ -35,7 +35,7 @@ function Circuits () {
           ? <div>loading...</div>
           : (
             <div>
-              { leagues.map(x => (<a className='block' href={`/${x.match(/circuits\/[0-9]+/)}`}>{x}</a>)) }
+              { leagues.map(x => (<a key={`${x}`} className='block' href={`/${x.match(/circuits\/[0-9]+/)}`}>{x}</a>)) }
             </div>
           )
       }
