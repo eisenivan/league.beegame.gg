@@ -43,7 +43,6 @@ function Circuit () {
                 </div>
                 <div>
                   <H2 className='text-2xl'>Teams</H2>
-                  <em>wold love to have team record here. We can query each team to get their record, but it would be great to not have to.</em>
                   { circuit.teams.map((team) => (
                     <SingleTeam key={`${team}-${circuit.name}-${id}`} team={team} />
                   ))}
