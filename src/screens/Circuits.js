@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import Chrome from '../components/Chrome'
 
 function Circuits () {
@@ -35,7 +36,7 @@ function Circuits () {
           ? <div>loading...</div>
           : (
             <div>
-              { leagues.map(x => (<a key={`${x}`} className='block' href={`/${x.match(/circuits\/[0-9]+/)}`}>{x}</a>)) }
+              { leagues.map(x => (<Link key={`${x}`} className='block' to={`/${x.match(/circuits\/[0-9]+/)}`}>{x}</Link>)) }
             </div>
           )
       }
