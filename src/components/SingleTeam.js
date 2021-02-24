@@ -1,19 +1,34 @@
 import React from 'react'
 
-const borderStyle = 'border-b-2 border-gray-1 border-dotted'
+const toolTip = 'cursor-help border-b-2 border-gray-300 border-dotted'
+
+function buildTooltipString (person) {
+  return [person.name_phonetic, person.pronouns ? `(${person.pronouns})` : null]
+    .filter(x => x)
+    .join(' ')
+}
 
 function SingleTeam ({ team }) {
   return (
-    <>
+    <div className='mb-4'>
       <h3 className='text-xl'>{team.name}</h3>
-      <ul className='ml-4'>
-        <li className={`${borderStyle} cursor-help`} title={`${team.captain.name_phonetic} (${team.captain.pronouns})`}>⭐️ {team.captain.name}</li>
+      <div>
+        <span className={`${(buildTooltipString(team.captain)) ? toolTip : ''} m-1`} title={buildTooltipString(team.captain)}>⭐️ {team.captain.name}</span>
 
-        {team.members.map((member) => (
-          <li key={`${team.name}-${member.name}`} className={`${borderStyle} cursor-help`} title={`${member.name_phonetic} (${member.pronouns})`}>{member.name}</li>
-        ))}
-      </ul>
-    </>
+        {team.members
+          // filter out team captain
+          .filter(x => x.name !== team.captain.name)
+          .map((member) => {
+            return (
+              <span
+                key={`${team.name}-${member.name}`}
+                className={`${(buildTooltipString(member)) ? toolTip : ''} m-1`}
+                title={buildTooltipString(member)}>{member.name}
+              </span>
+            )
+          })}
+      </div>
+    </div>
   )
 }
 
