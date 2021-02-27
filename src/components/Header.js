@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { linkString } from './elements'
 import { NavLink, Link } from 'react-router-dom'
+import cookie from 'react-cookies'
 
 const HeaderLogo = styled.img`
   margin: -0.5rem -1rem -1.6rem -1.7rem;
@@ -18,6 +19,17 @@ function NavItem ({ children, to, exact = false }) {
 }
 
 function Header () {
+  const [token, setToken] = useState(null)
+
+  function logout () {
+    cookie.remove('token')
+    setToken(null)
+  }
+
+  useEffect(() => {
+    setToken(cookie.load('token'))
+  }, [token])
+
   return (
     <header className='md:flex justify-between bg-gray-2 p-2 lg:px-8'>
       <div className='flex items-center'>
@@ -26,7 +38,11 @@ function Header () {
       <nav className='flex items-center'>
         <NavItem to='/circuits' className={`${linkString} text-gray-1`}>Circuits</NavItem>
         <NavItem to='/teams' className={`${linkString} text-gray-1`}>Teams</NavItem>
-        <a href='https://kqb.buzz/accounts/discord/login/'>Login With Discord</a>
+
+        { token
+          ? <button className='bg-yellow-2 text-gray-3 px-2 py-1' onClick={logout}>Logout</button>
+          : <a className='bg-yellow-2 text-gray-3 px-2 py-1' href='https://kqb.buzz/accounts/discord/login/'>Login</a> }
+
       </nav>
     </header>
   )
