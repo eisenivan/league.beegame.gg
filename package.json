@@ -11,6 +11,7 @@
     "lodash.sortby": "^4.7.0",
     "moment-timezone": "^0.5.33",
     "react": "^17.0.1",
+    "react-cookies": "^0.1.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",

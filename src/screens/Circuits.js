@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Chrome from '../components/Chrome'
+import fetch from '../modules/fetch-with-headers'
 
 function Circuits () {
   const [loading, setLoading] = useState(true)
@@ -20,7 +21,6 @@ function Circuits () {
 
       const circuitsPromises = circuitsJson.circuits.map((x) => fetch(x)) // eslint-disable-line
       Promise.all(circuitsPromises).then((data) => {
-        console.log(data, circuitsJson)
         setLeagues(circuitsJson.circuits)
         setLoading(false)
       })

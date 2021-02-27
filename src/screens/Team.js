@@ -5,6 +5,7 @@ import Chrome from '../components/Chrome'
 import { PageTitle, PageSubtitle } from '../components/elements'
 import { TeamRoster } from '../components/SingleTeam'
 import { useParams } from 'react-router-dom'
+import fetch from '../modules/fetch-with-headers'
 
 const HAS_DYNASTY = not(empty('@dynasty'))
 
@@ -18,14 +19,12 @@ function Team () {
       const response = await fetch(`https://kqb.buzz/api/teams/${id}`) // eslint-disable-line
       const json = await response.json()
 
-      console.log(json)
       setTeam(json)
       setLoading(false)
     }
 
     fetchData()
   }, [id])
-  console.log(team)
   return (
     <Chrome>
       {

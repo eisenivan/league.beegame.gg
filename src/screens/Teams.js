@@ -4,6 +4,7 @@ import get from 'lodash.get'
 import Chrome from '../components/Chrome'
 import { PageTitle, PageSubtitle } from '../components/elements'
 import { useParams, Link, useLocation, useHistory } from 'react-router-dom'
+import fetch from '../modules/fetch-with-headers'
 
 const HAS_DYNASTY = not(empty('@dynasty'))
 
@@ -26,7 +27,7 @@ function Teams () {
       setLoading(true)
       const response = await fetch(`https://kqb.buzz/api/teams?page=${page || 1}&name=${q || ''}`) // eslint-disable-line
       const json = await response.json()
-      console.log(json)
+
       setTeams(json)
       setLoading(false)
     }
@@ -35,7 +36,6 @@ function Teams () {
   }, [id, page, q])
 
   function updateQProp (e) {
-    console.log(e.target.value)
     history.push({
       pathname: '/teams',
       search: `?q=${query}`

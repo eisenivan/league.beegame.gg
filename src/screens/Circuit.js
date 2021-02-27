@@ -5,6 +5,7 @@ import SingleTeam from '../components/SingleTeam'
 import MatchList from '../components/MatchList'
 import { PageTitle, H2 } from '../components/elements'
 import { useParams } from 'react-router-dom'
+import fetch from '../modules/fetch-with-headers'
 
 function Standings ({ teams }) {
   const sorted = sortBy(teams, 'wins').reverse()
