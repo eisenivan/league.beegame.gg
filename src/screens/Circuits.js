@@ -36,7 +36,7 @@ function Circuits () {
           ? <div>loading...</div>
           : (
             <div>
-              { leagues.map(x => (<Link key={`${x}`} className='block' to={`/circuits/${x.id}`}>{x.name}</Link>)) }
+              { leagues.map(x => (<Link key={`${x.name}`} className='block' to={`/circuits/${x.id}`}>{x.name}</Link>)) }
             </div>
           )
       }

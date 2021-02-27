@@ -7100,7 +7100,7 @@ lodash.memoize@^4.1.2:
 
 lodash.sortby@^4.7.0:
   version "4.7.0"
-  resolved "https://registry.yarnpkg.com/lodash.sortby/-/lodash.sortby-4.7.0.tgz"
+  resolved "https://registry.yarnpkg.com/lodash.sortby/-/lodash.sortby-4.7.0.tgz#edd14c824e2cc9c1e0b0a1b42bb5210516a42438"
   integrity sha1-7dFMgk4sycHgsKG0K7UhBRakJDg=
 
 lodash.template@^4.5.0:
@@ -9514,6 +9514,11 @@ regenerator-transform@^0.14.2:
   integrity sha512-eOf6vka5IO151Jfsw2NO9WpGX58W6wWmefK3I1zEGr0lOD0u8rwPaNqQL1aRxUaxLeKO3ArNh3VYg1KbaD+FFw==
   dependencies:
     "@babel/runtime" "^7.8.4"
+
+regent@^3.3.5:
+  version "3.3.5"
+  resolved "https://registry.yarnpkg.com/regent/-/regent-3.3.5.tgz#3050c13d1207a949ed38704f4f288368220664a4"
+  integrity sha512-qFpgkcbIVUVDudsa2MbOSTrFF7QaT7napz3Bjw/bl94hRgoZTN+EMixAsBs6CPUKN8579AGDwlqhrbyGaf2tbw==
 
 regex-not@^1.0.0, regex-not@^1.0.2:
   version "1.0.2"

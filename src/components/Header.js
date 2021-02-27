@@ -25,6 +25,7 @@ function Header () {
       </div>
       <nav className='flex items-center'>
         <NavItem to='/circuits' className={`${linkString} text-gray-1`}>Circuits</NavItem>
+        <NavItem to='/teams' className={`${linkString} text-gray-1`}>Teams</NavItem>
       </nav>
     </header>
   )

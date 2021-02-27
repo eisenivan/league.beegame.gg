@@ -8,6 +8,10 @@ module.exports = {
       'body': '"Montserrat"'
     },
     extend: {
+      gridTemplateColumns: {
+        'content': '2fr 1fr'
+      },
+
       colors: {
         blue: {
           1: '#3399ff',

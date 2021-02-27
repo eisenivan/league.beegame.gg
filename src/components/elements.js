@@ -9,9 +9,13 @@ export function Link ({ children, ...props }) {
 }
 
 export function PageTitle ({ children }) {
-  return <h1 className='text-2xl mb-4 font-head uppercase'>{children}</h1>
+  return <h1 className='text-2xl mb-4 font-head uppercase inline-block'>{children}</h1>
+}
+
+export function PageSubtitle ({ children }) {
+  return <div className='text-xs -mt-4'>{children}</div>
 }
 
 export function H2 ({ children }) {
-  return <h2 className='text-2xl mb-4 font-subhead'>{children}</h2>
+  return <h2 className='text-2xl mb-4 font-subhead inline-block'>{children}</h2>
 }

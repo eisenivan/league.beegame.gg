@@ -6,7 +6,7 @@ function Chrome ({ children }) {
   return (
     <div id='app'>
       <Header />
-      <main className='container p-2 lg:p-8'>
+      <main className='container p-2 m-auto lg:p-8'>
         {children}
       </main>
       <Footer />
