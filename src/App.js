@@ -9,6 +9,7 @@ import Circuits from './screens/Circuits'
 import Circuit from './screens/Circuit'
 import Teams from './screens/Teams'
 import Team from './screens/Team'
+import Profile from './screens/Profile'
 
 function App () {
   return (
@@ -28,6 +29,9 @@ function App () {
         </Route>
         <Route path='/circuits/:id'>
           <Circuit />
+        </Route>
+        <Route path='/profile'>
+          <Profile />
         </Route>
       </Switch>
     </Router>

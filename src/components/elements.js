@@ -17,5 +17,5 @@ export function PageSubtitle ({ children }) {
 }
 
 export function H2 ({ children }) {
-  return <h2 className='text-2xl mb-4 font-subhead inline-block'>{children}</h2>
+  return <h2 className='text-2xl my-2 font-subhead inline-block'>{children}</h2>
 }
