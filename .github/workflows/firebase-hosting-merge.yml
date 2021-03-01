@@ -13,4 +13,4 @@ jobs:
       - uses: actions/checkout@v2
       - run: yarn install
       - run: yarn build
-      - run: yarn deploy --token "$FIREBASE_TOKEN"
+      - run: npx firebase deploy --token "$FIREBASE_TOKEN"
