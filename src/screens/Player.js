@@ -33,8 +33,8 @@ function Profile () {
               <hr className='my-4' />
               <H3>Teams</H3>
               { player.teams.map(x => (
-                <div key={x}>
-                  {x}
+                <div key={x.id}>
+                  {x.name}
                 </div>
               ))}
             </div>
