@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { not, empty } from 'regent'
+import { not, empty, and, equals } from 'regent'
 import get from 'lodash.get'
 import Chrome from '../components/Chrome'
 import { PageTitle, PageSubtitle } from '../components/elements'
@@ -8,6 +8,10 @@ import { useParams } from 'react-router-dom'
 import fetch from '../modules/fetch-with-headers'
 
 const HAS_DYNASTY = not(empty('@dynasty'))
+const CAN_EDIT_TEAM = and(
+  equals('@is_active', true),
+  equals('@team.captain.id', '@user.id')
+)
 
 function Team () {
   const { id } = useParams()
@@ -16,7 +20,7 @@ function Team () {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`https://kqb.buzz/api/teams/${id}`) // eslint-disable-line
+      const response = await fetch(`https://kqb.buzz/api/teams/${id}/`) // eslint-disable-line
       const json = await response.json()
 
       setTeam(json)

@@ -25,7 +25,7 @@ function Teams () {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
-      const response = await fetch(`https://kqb.buzz/api/teams?page=${page || 1}&name=${q || ''}`) // eslint-disable-line
+      const response = await fetch(`https://kqb.buzz/api/teams/?page=${page || 1}&name=${q || ''}`) // eslint-disable-line
       const json = await response.json()
 
       setTeams(json)

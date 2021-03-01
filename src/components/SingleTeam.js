@@ -13,7 +13,16 @@ export function TeamRoster ({ team = {}, vertical, className = '' }) {
   return (
     <div className={`${className} ${vertical ? 'flex flex-col' : ''}`}>
       { team.captain
-        ? <div><span className={`${(buildTooltipString(team.captain)) ? toolTip : ''} m-1`} title={buildTooltipString(team.captain)}>⭐️ {team.captain.name}</span></div>
+        ? (
+          <div>
+            <Link
+              to={`/player/${team.captain.id}`}
+              className={`${(buildTooltipString(team.captain)) ? toolTip : ''} m-1`}
+              title={buildTooltipString(team.captain)}>
+                ⭐️ {team.captain.name}
+            </Link>
+          </div>
+        )
         : null }
 
       {team.members
@@ -22,11 +31,12 @@ export function TeamRoster ({ team = {}, vertical, className = '' }) {
         .map((member) => {
           return (
             <div key={`${team.name}-${member.name}`}>
-              <span
+              <Link
+                to={`/player/${member.id}`}
                 key={`${team.name}-${member.name}`}
                 className={`${(buildTooltipString(member)) ? toolTip : ''} m-1`}
                 title={buildTooltipString(member)}>{member.name}
-              </span>
+              </Link>
             </div>
           )
         })}

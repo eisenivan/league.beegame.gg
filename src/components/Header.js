@@ -21,8 +21,8 @@ function NavItem ({ children, to, exact = false }) {
 function Header () {
   const [token, setToken] = useState(null)
 
-  function logout () {
-    cookie.remove('token')
+  async function logout () {
+    await cookie.remove('token', { path: '/' })
     setToken(null)
   }
 

@@ -9,8 +9,6 @@ function Chrome ({ children }) {
   const token = new URLSearchParams(search).get('token')
 
   if (token) {
-    console.log(process.env)
-    console.log(token)
     cookie.save('token', token, { path: '/', secure: !process.env.NODE_ENV === 'development' })
   }
 
