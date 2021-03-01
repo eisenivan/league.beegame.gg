@@ -11,6 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: yarn install
-      - run: yarn build
-      - run: npx firebase deploy --token "$FIREBASE_TOKEN"
+      - run: yarn install && yarn build
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_LEAGUE_BEEGAME_GG }}'
+          channelId: live
+          projectId: league-beegame-gg
+        env:
+          FIREBASE_CLI_PREVIEWS: hostingchannels
