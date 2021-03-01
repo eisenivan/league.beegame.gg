@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { PageTitle, PageSubtitle, H3 } from '../components/elements'
 import Chrome from '../components/Chrome'
+import SingleTeam from '../components/SingleTeam'
 import fetch from '../modules/fetch-with-headers'
 
 function Profile () {
@@ -34,7 +35,7 @@ function Profile () {
               <H3>Teams</H3>
               { player.teams.map(x => (
                 <div key={x.id}>
-                  {x.name}
+                  <SingleTeam className='text-md' team={x} />
                 </div>
               ))}
             </div>
