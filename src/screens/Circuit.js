@@ -30,12 +30,12 @@ function Circuit () {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`https://api-staging.beegame.gg/api/leagues/4/seasons/6/circuits/${id}/?format=json`)
+      const response = await fetch(`https://api-staging.beegame.gg/leagues/${id}/?format=json`)
         .catch(handleError)
       const json = await response.json()
         .catch(handleError)
 
-      const matchResponse = await fetch(`https://api-staging.beegame.gg/api/matches/?away=&circuit=${id}&days=&dynasties=&dynasty=&format=json&home=&hours=&league=&loser=&minutes=&primary_caster=&region=&round=&scheduled=true&season=&starts_in_minutes=&status=&team=&teams=&tier=&winner=`)
+      const matchResponse = await fetch(`https://api-staging.beegame.gg/matches/?away=&circuit=${id}&days=&dynasties=&dynasty=&format=json&home=&hours=&league=&loser=&minutes=&primary_caster=&region=&round=&scheduled=true&season=&starts_in_minutes=&status=&team=&teams=&tier=&winner=`)
         .catch(handleError)
       const matchJson = await matchResponse.json()
         .catch(handleError)
@@ -64,9 +64,7 @@ function Circuit () {
                   <hr className='my-8' />
 
                   <H2 className='text-2xl'>Teams</H2>
-                  { circuit.teams.map((team) => (
-                    <SingleTeam key={`${team.name}-${circuit.name}-${id}`} team={team} />
-                  ))}
+
                 </div>
                 <div>
                   <H2 className='text-2xl'>Standings</H2>

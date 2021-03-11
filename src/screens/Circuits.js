@@ -10,11 +10,11 @@ function Circuits () {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('https://api-staging.beegame.gg/api/leagues/4/seasons/6/circuits/?format=json') // eslint-disable-line
+      const response = await fetch('https://api-staging.beegame.gg/leagues/?format=json') // eslint-disable-line
         .catch(handleError)
       const json = await response.json()
         .catch(handleError)
-      console.log(json)
+      console.log('ivanxxx', json)
 
       setLeagues(json)
       setLoading(false)
