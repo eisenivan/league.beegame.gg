@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Chrome from '../components/Chrome'
 import fetch from '../modules/fetch-with-headers'
+import handleError from '../modules/handle-error'
 
 function Circuits () {
   const [loading, setLoading] = useState(true)
@@ -9,21 +10,14 @@ function Circuits () {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('https://kqb.buzz/api/leagues/?format=json') // eslint-disable-line
+      const response = await fetch('https://api-staging.beegame.gg/api/leagues/4/seasons/6/circuits/?format=json') // eslint-disable-line
+        .catch(handleError)
       const json = await response.json()
-      const activeBglUrl = json
-        .find(x => x.id === 4)
-        .seasons
-        .pop()
+        .catch(handleError)
+      console.log(json)
 
-      const circuits = await fetch(activeBglUrl) // eslint-disable-line
-      const circuitsJson = await circuits.json()
-
-      const circuitsPromises = circuitsJson.circuits.map((x) => fetch(x)) // eslint-disable-line
-      Promise.all(circuitsPromises).then((data) => {
-        setLeagues(circuitsJson.circuits)
-        setLoading(false)
-      })
+      setLeagues(json)
+      setLoading(false)
     }
 
     fetchData()

@@ -16,7 +16,7 @@ import Player from './screens/Player'
 import Profile from './screens/Profile'
 
 async function setUserCookies () {
-  const me = await fetch('https://kqb.buzz/api/me/?format=json')
+  const me = await fetch('https://api-staging.beegame.gg/api/me/?format=json')
   const meJson = await me.json()
   cookie.save('userId', meJson.player.id, { path: '/', secure: !process.env.NODE_ENV === 'development' })
   cookie.save('name', meJson.first_name, { path: '/', secure: !process.env.NODE_ENV === 'development' })
@@ -39,7 +39,7 @@ function App () {
         <Route path='/teams' exact>
           <Teams />
         </Route>
-        <Route path='/teams/:id'>
+        <Route path='/teams/:id' exact>
           <Team />
         </Route>
         <Route path='/circuits' exact>

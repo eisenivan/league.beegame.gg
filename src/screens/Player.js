@@ -4,6 +4,7 @@ import { PageTitle, PageSubtitle, H3 } from '../components/elements'
 import Chrome from '../components/Chrome'
 import SingleTeam from '../components/SingleTeam'
 import fetch from '../modules/fetch-with-headers'
+import handleError from '../modules/handle-error'
 
 function Profile () {
   const { id } = useParams()
@@ -12,8 +13,10 @@ function Profile () {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`https://kqb.buzz/api/players/${id}/?format=json`) // eslint-disable-line
+      const response = await fetch(`https://api-staging.beegame.gg/api/players/${id}/?format=json`)
+        .catch(handleError)
       const json = await response.json()
+        .catch(handleError)
       setPlayer(json)
       setLoading(false)
     }

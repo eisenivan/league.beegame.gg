@@ -6,6 +6,7 @@ import MatchList from '../components/MatchList'
 import { PageTitle, H2 } from '../components/elements'
 import { useParams } from 'react-router-dom'
 import fetch from '../modules/fetch-with-headers'
+import handleError from '../modules/handle-error'
 
 function Standings ({ teams }) {
   const sorted = sortBy(teams, 'wins').reverse()
@@ -29,11 +30,15 @@ function Circuit () {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`https://kqb.buzz/api/leagues/4/seasons/6/circuits/${id}/?format=json`) // eslint-disable-line
+      const response = await fetch(`https://api-staging.beegame.gg/api/leagues/4/seasons/6/circuits/${id}/?format=json`)
+        .catch(handleError)
       const json = await response.json()
+        .catch(handleError)
 
-      const matchResponse = await fetch(`https://kqb.buzz/api/matches/?away=&circuit=${id}&days=&dynasties=&dynasty=&format=json&home=&hours=&league=&loser=&minutes=&primary_caster=&region=&round=&scheduled=true&season=&starts_in_minutes=&status=&team=&teams=&tier=&winner=`) // eslint-disable-line
+      const matchResponse = await fetch(`https://api-staging.beegame.gg/api/matches/?away=&circuit=${id}&days=&dynasties=&dynasty=&format=json&home=&hours=&league=&loser=&minutes=&primary_caster=&region=&round=&scheduled=true&season=&starts_in_minutes=&status=&team=&teams=&tier=&winner=`)
+        .catch(handleError)
       const matchJson = await matchResponse.json()
+        .catch(handleError)
 
       setCircuit(json)
       setMatches(matchJson)

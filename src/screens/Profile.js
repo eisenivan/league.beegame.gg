@@ -4,6 +4,7 @@ import { PageTitle, PageSubtitle, H2 } from '../components/elements'
 import Chrome from '../components/Chrome'
 import SingleTeam from '../components/SingleTeam'
 import fetch from '../modules/fetch-with-headers'
+import handleError from '../modules/handle-error'
 
 function getAwardEmoji (str) {
   switch (str) {
@@ -36,8 +37,11 @@ function Profile () {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('https://kqb.buzz/api/me/?format=json') // eslint-disable-line
+      const response = await fetch('https://api-staging.beegame.gg/api/me/?format=json')
+        .catch(handleError)
       const json = await response.json()
+        .catch(handleError)
+
       setProfile(json)
       setLoading(false)
     }
@@ -49,7 +53,7 @@ function Profile () {
   if (!loading && !profile.player) {
     return (
       <Chrome>
-        <div>You must <a href='https://kqb.buzz/accounts/discord/login/'>login</a> to view your profile</div>
+        <div>You must <a href='https://api-staging.beegame.gg/accounts/discord/login/'>login</a> to view your profile</div>
       </Chrome>
     )
   }

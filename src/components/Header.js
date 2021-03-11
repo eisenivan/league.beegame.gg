@@ -46,7 +46,7 @@ function Header () {
               <button className='bg-yellow-2 text-gray-3 px-2 py-1' onClick={logout}>Logout</button>
             </>
           )
-          : <a className='bg-yellow-2 text-gray-3 px-2 py-1' href='https://kqb.buzz/accounts/discord/login/'>Login</a> }
+          : <a className='bg-yellow-2 text-gray-3 px-2 py-1' href='https://api-staging.beegame.gg/accounts/discord/login/'>Login</a> }
 
       </nav>
     </header>

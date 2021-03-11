@@ -5,6 +5,7 @@ import Chrome from '../components/Chrome'
 import { PageTitle, PageSubtitle } from '../components/elements'
 import { useParams, Link, useLocation, useHistory } from 'react-router-dom'
 import fetch from '../modules/fetch-with-headers'
+import handleError from '../modules/handle-error'
 
 const HAS_DYNASTY = not(empty('@dynasty'))
 
@@ -25,8 +26,10 @@ function Teams () {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
-      const response = await fetch(`https://kqb.buzz/api/teams/?page=${page || 1}&name=${q || ''}`) // eslint-disable-line
+      const response = await fetch(`https://api-staging.beegame.gg/api/teams/?page=${page || 1}&name=${q || ''}`)
+        .catch(handleError)
       const json = await response.json()
+        .catch(handleError)
 
       setTeams(json)
       setLoading(false)
