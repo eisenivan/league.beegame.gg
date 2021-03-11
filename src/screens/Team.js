@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { not, empty } from 'regent'
 import get from 'lodash.get'
+import cookie from 'react-cookies'
 import Chrome from '../components/Chrome'
 import { PageTitle, PageSubtitle } from '../components/elements'
 import { TeamRoster } from '../components/SingleTeam'
@@ -16,6 +17,7 @@ function Team () {
   const [team, setTeam] = useState({})
   const [editTeam, setEditTeam] = useState(false)
   const [name, setName] = useState()
+  const [authId, setAuthId] = useState()
 
   function toggleEditTeam () {
     setEditTeam(!editTeam)
@@ -35,7 +37,7 @@ function Team () {
       body: JSON.stringify(data)
     }
 
-    fetch(`https://api-staging.beegame.gg/api/teams/${id}/`, requestOptions)
+    fetch(`https://api-staging.beegame.gg/teams/${id}/`, requestOptions)
       .then(res => res.json())
       .then((res) => {
         setName(res.name)
@@ -46,7 +48,7 @@ function Team () {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`https://api-staging.beegame.gg/api/teams/${id}/`)
+      const response = await fetch(`https://api-staging.beegame.gg/teams/${id}/`)
         .catch(handleError)
       const json = await response.json()
         .catch(handleError)
@@ -57,6 +59,8 @@ function Team () {
     }
 
     fetchData()
+
+    setAuthId(cookie.load('userId'))
   }, [id])
   return (
     <Chrome>
@@ -94,7 +98,7 @@ function Team () {
                 : (
                 <>
                   <PageTitle>{name}</PageTitle>
-                  { team.can_add_members
+                  { authId === team.captain.id
                     ? <button onClick={toggleEditTeam} className='ml-2' to={`/teams/${id}/edit`}>✏️</button>
                     : null }
                   </>

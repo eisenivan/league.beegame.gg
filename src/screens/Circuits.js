@@ -14,7 +14,6 @@ function Circuits () {
         .catch(handleError)
       const json = await response.json()
         .catch(handleError)
-      console.log('ivanxxx', json)
 
       setLeagues(json)
       setLoading(false)
