@@ -26,6 +26,7 @@ function Circuit () {
   const { id } = useParams()
   const [loading, setLoading] = useState(true)
   const [circuit, setCircuit] = useState({})
+  const [teams, setTeams] = useState({})
   const [matches, setMatches] = useState({})
 
   useEffect(() => {
@@ -35,13 +36,19 @@ function Circuit () {
       const json = await response.json()
         .catch(handleError)
 
-      const matchResponse = await fetch(`https://api-staging.beegame.gg/matches/?away=&circuit=${id}&days=&dynasties=&dynasty=&format=json&home=&hours=&league=&loser=&minutes=&primary_caster=&region=&round=&scheduled=true&season=&starts_in_minutes=&status=&team=&teams=&tier=&winner=`)
+      const teamResponse = await fetch(`https://api-staging.beegame.gg/teams/?circuit=${id}`)
+        .catch(handleError)
+      const teamJson = await teamResponse.json()
+        .catch(handleError)
+
+      const matchResponse = await fetch(`https://api-staging.beegame.gg/matches/?circuit=${id}`)
         .catch(handleError)
       const matchJson = await matchResponse.json()
         .catch(handleError)
 
       setCircuit(json)
-      setMatches(matchJson)
+      setTeams(teamJson.results)
+      setMatches(matchJson.results)
       setLoading(false)
     }
 
@@ -59,16 +66,18 @@ function Circuit () {
               <div className='grid grid-cols-1 md:grid-cols-content md:gap-12'>
                 <div>
                   <H2 className='text-2xl'>Schedule</H2>
-                  <MatchList matches={matches.results} />
+                  <MatchList matches={matches} />
 
                   <hr className='my-8' />
 
                   <H2 className='text-2xl'>Teams</H2>
-
+                  { teams.map((team) => (
+                    <SingleTeam key={`${team.name}-${circuit.name}-${id}`} team={team} />
+                  ))}
                 </div>
                 <div>
                   <H2 className='text-2xl'>Standings</H2>
-                  <Standings teams={circuit.teams} />
+                  <Standings teams={teams} />
                 </div>
               </div>
 
