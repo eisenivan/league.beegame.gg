@@ -15,7 +15,7 @@ function Circuits () {
       const json = await response.json()
         .catch(handleError)
 
-      setLeagues(json)
+      setLeagues(json.results)
       setLoading(false)
     }
 

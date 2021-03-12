@@ -31,7 +31,7 @@ function Header () {
   }, [token])
 
   return (
-    <header className='md:flex justify-between bg-gray-2 p-2 lg:px-8'>
+    <header className='md:flex justify-between p-2 lg:px-8'>
       <div className='flex items-center'>
         <Link to='/' className={`${linkString} text-gray-1 font-head uppercase text-2xl flex items-center`}><HeaderLogo className='h-28' alt='Beegame.gg emblem logo' src='/img/logo_BGL_emblem.png' /> League.Beegame.gg</Link>
       </div>
@@ -43,10 +43,10 @@ function Header () {
           ? (
             <>
               <NavItem className={`${linkString} text-gray-1`} to='/profile'>Profile</NavItem>
-              <button className='bg-yellow-2 text-gray-3 px-2 py-1' onClick={logout}>Logout</button>
+              <button className={`${linkString} text-gray-1 bg-transparent px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75`} onClick={logout}>Logout</button>
             </>
           )
-          : <a className='bg-yellow-2 text-gray-3 px-2 py-1' href='https://api-staging.beegame.gg/accounts/discord/login/'>Login</a> }
+          : <a className={`${linkString} text-gray-1 bg-transparent px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75`} href='https://api-staging.beegame.gg/accounts/discord/login/'>Login</a> }
 
       </nav>
     </header>

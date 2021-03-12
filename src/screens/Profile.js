@@ -37,7 +37,7 @@ function Profile () {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('https://api-staging.beegame.gg/api/me/?format=json')
+      const response = await fetch('https://api-staging.beegame.gg/me/?format=json')
         .catch(handleError)
       const json = await response.json()
         .catch(handleError)
@@ -50,7 +50,7 @@ function Profile () {
   }, [])
 
   // const awards = profile.player.
-  if (!loading && !profile.player) {
+  if (!loading && !profile) {
     return (
       <Chrome>
         <div>You must <a href='https://api-staging.beegame.gg/accounts/discord/login/'>login</a> to view your profile</div>
@@ -65,10 +65,10 @@ function Profile () {
           ? <div>loading...</div>
           : (
             <div>
-              <PageTitle>{profile.player.name}</PageTitle>
-              <PageSubtitle>{profile.player.name_phonetic} ({profile.player.pronouns})</PageSubtitle>
+              <PageTitle>{profile.first_name}</PageTitle>
+              <PageSubtitle>{profile.name_phonetic} ({profile.pronouns})</PageSubtitle>
 
-              <H2>Teams</H2>
+              {/* <H2>Teams</H2>
               { profile.player.teams.map(x => (
                 <div key={`${x.id}-${x.name}`} className='my-2'>
                   <SingleTeam className='text-md' team={x} />
@@ -77,7 +77,7 @@ function Profile () {
                       .map(x => <span key={`${x.id}-${x.name}`} className='mr-2'>{getAwardEmoji(x.name)}<span className='text-xs italic'>x{x.count}</span></span>)
                   }
                 </div>
-              ))}
+              ))} */}
             </div>
           )
       }

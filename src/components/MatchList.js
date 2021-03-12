@@ -1,7 +1,7 @@
 import React from 'react'
 import moment from 'moment-timezone'
 
-function MatchList ({ matches }) {
+function MatchList ({ matches = [] }) {
   return (
     <>
       { matches.length > 0

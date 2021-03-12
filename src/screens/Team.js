@@ -3,7 +3,7 @@ import { not, empty } from 'regent'
 import get from 'lodash.get'
 import cookie from 'react-cookies'
 import Chrome from '../components/Chrome'
-import { PageTitle, PageSubtitle } from '../components/elements'
+import { PageTitle, PageSubtitle, LightContentBox } from '../components/elements'
 import { TeamRoster } from '../components/SingleTeam'
 import { useParams } from 'react-router-dom'
 import fetch from '../modules/fetch-with-headers'
@@ -15,6 +15,7 @@ function Team () {
   const { id } = useParams()
   const [loading, setLoading] = useState(true)
   const [team, setTeam] = useState({})
+  const [circuit, setCircuit] = useState({})
   const [editTeam, setEditTeam] = useState(false)
   const [name, setName] = useState()
   const [authId, setAuthId] = useState()
@@ -49,12 +50,18 @@ function Team () {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(`https://api-staging.beegame.gg/teams/${id}/`)
-        .catch(handleError)
-      const json = await response.json()
+        .then((data) => data.json())
         .catch(handleError)
 
-      setTeam(json)
-      setName(json.name)
+      setTeam(response)
+      setName(response.name)
+
+      const circuit = await fetch(`https://api-staging.beegame.gg/leagues/${response.circuit}/`)
+        .then((data) => data.json())
+        .catch(handleError)
+
+      setCircuit(circuit)
+
       setLoading(false)
     }
 
@@ -96,19 +103,27 @@ function Team () {
                   </div>
                 )
                 : (
-                <>
-                  <PageTitle>{name}</PageTitle>
-                  { authId === team.captain.id
-                    ? <button onClick={toggleEditTeam} className='ml-2' to={`/teams/${id}/edit`}>✏️</button>
-                    : null }
-                  </>
-                ) }
+                  <div>
+                    <div style={{ backgroundImage: 'url(/img/tb-banner.png)', backgroundSize: 'cover' }} className='w-full h-80' />
+                    <div className='grid grid-cols-2'>
+                      <div className='flex'>
+                        <img className='relative -top-8 w-16' alt='placeholder team logo' src='/img/peanut.png' />
+                        <PageTitle>{name}</PageTitle>
+                        { authId === team.captain.id
+                          ? <button onClick={toggleEditTeam} className='ml-2' to={`/teams/${id}/edit`}>✏️</button>
+                          : null }
+                        { HAS_DYNASTY(team)
+                          ? <PageSubtitle>Dynasty: {get(team, 'dynasty.name')}</PageSubtitle>
+                          : null }
+                      </div>
 
-              { HAS_DYNASTY(team)
-                ? <PageSubtitle>Dynasty: {get(team, 'dynasty.name')}</PageSubtitle>
-                : null }
-              <TeamRoster className='mt-4' vertical team={team} />
-              <div />
+                      <div className='font-head text-lg text-right'>{circuit.name}</div>
+                    </div>
+                  </div>
+                ) }
+              <LightContentBox>
+                <TeamRoster className='mt-4' vertical team={team} />
+              </LightContentBox>
             </div>
           )
       }

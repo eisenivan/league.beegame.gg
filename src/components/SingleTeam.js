@@ -9,19 +9,28 @@ function buildTooltipString (person = {}) {
     .join(' ')
 }
 
+function PlayerCard ({ children, img = '', name = '' }) {
+  return (
+    <div className='p-2 w-full h-20 flex'>
+      <div className='bg-gray-2 h-16 w-16 mr-2' />
+      <span className='text-gray-3 font-head font-lg uppercase'>{name}</span>
+    </div>
+  )
+}
+
 export function TeamRoster ({ team = {}, vertical, className = '' }) {
   return (
-    <div className={`${className} ${vertical ? 'flex flex-col' : ''}`}>
+    <div className={`${className} grid grid-cols-2 gap-4"`}>
       { team.captain
         ? (
-          <div>
+          <PlayerCard name={team.captain.name}>
             <Link
               to={`/player/${team.captain.id}`}
               className={`${(buildTooltipString(team.captain)) ? toolTip : ''} m-1`}
               title={buildTooltipString(team.captain)}>
                 ⭐️ {team.captain.name}
             </Link>
-          </div>
+          </PlayerCard>
         )
         : null }
 
@@ -30,14 +39,13 @@ export function TeamRoster ({ team = {}, vertical, className = '' }) {
         .filter(x => team.captain && x.name !== team.captain.name)
         .map((member) => {
           return (
-            <div key={`${team.name}-${member.name}`}>
+            <PlayerCard key={`${team.name}-${member.name}`} name={member.name}>
               <Link
                 to={`/player/${member.id}`}
                 key={`${team.name}-${member.name}`}
                 className={`${(buildTooltipString(member)) ? toolTip : ''} m-1`}
-                title={buildTooltipString(member)}>{member.name}
-              </Link>
-            </div>
+                title={buildTooltipString(member)} />
+            </PlayerCard>
           )
         })}
     </div>

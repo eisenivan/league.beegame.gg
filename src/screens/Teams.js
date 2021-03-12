@@ -26,7 +26,7 @@ function Teams () {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
-      const response = await fetch(`https://api-staging.beegame.gg/api/teams/?page=${page || 1}&name=${q || ''}`)
+      const response = await fetch(`https://api-staging.beegame.gg/teams/?page=${page || 1}&name=${q || ''}`)
         .catch(handleError)
       const json = await response.json()
         .catch(handleError)
@@ -60,7 +60,7 @@ function Teams () {
             <div>
               <div className='flex items-center mb-8'>
                 <form onSubmit={search}>
-                  <input className='-mr-1 py-1 px-2 text-lg border-solid border-2 border-gray-300' type='text' placeholder='Search' value={query} onChange={(e) => setQuery(e.target.value)} />
+                  <input className='-mr-1 py-1 px-2 text-lg text-gray-3 border-solid border-2 border-gray-300' type='text' placeholder='Search' value={query} onChange={(e) => setQuery(e.target.value)} />
                   <button className='py-1 px-2 text-lg border-solid border-2 border-l-0 border-gray-300' type='submit'>Search</button>
                 </form>
               </div>

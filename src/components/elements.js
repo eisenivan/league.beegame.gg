@@ -23,3 +23,7 @@ export function H2 ({ children }) {
 export function H3 ({ children }) {
   return <h3 className='text-xl my-2 font-subhead inline-block'>{children}</h3>
 }
+
+export function LightContentBox ({ children }) {
+  return <div className='bg-triangle_bg_light p-2 lg:p-8'>{children}</div>
+}

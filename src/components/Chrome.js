@@ -13,7 +13,7 @@ function Chrome ({ children }) {
   }
 
   return (
-    <div id='app'>
+    <div id='app' className='bg-triangle_bg_dark text-gray-1 min-h-screen'>
       <Header />
       <main className='container p-2 m-auto lg:p-8'>
         {children}

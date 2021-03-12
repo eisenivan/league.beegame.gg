@@ -8,6 +8,10 @@ module.exports = {
       'body': '"Montserrat"'
     },
     extend: {
+      backgroundImage: theme => ({
+        'triangle_bg_dark': "url('/src/img/triangle_bg_dark.png')",
+        'triangle_bg_light': "url('/src/img/triangle_bg_light.png')"
+      }),
       gridTemplateColumns: {
         'content': '2fr 1fr'
       },

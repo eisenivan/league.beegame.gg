@@ -27,7 +27,7 @@ function Circuit () {
   const [loading, setLoading] = useState(true)
   const [circuit, setCircuit] = useState({})
   const [teams, setTeams] = useState({})
-  const [matches, setMatches] = useState({})
+  const [matches, setMatches] = useState([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,7 +41,7 @@ function Circuit () {
       const teamJson = await teamResponse.json()
         .catch(handleError)
 
-      const matchResponse = await fetch(`https://api-staging.beegame.gg/matches/?circuit=${id}`)
+      const matchResponse = await fetch(`https://api-staging.beegame.gg/matches/?circuit=${id}&scheduled=true`)
         .catch(handleError)
       const matchJson = await matchResponse.json()
         .catch(handleError)
