@@ -1,20 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const toolTip = 'cursor-help border-b-2 border-gray-300 border-dotted'
-
-function buildTooltipString (person = {}) {
-  return [person.name_phonetic, person.pronouns ? `(${person.pronouns})` : null]
-    .filter(x => x)
-    .join(' ')
-}
-
-function PlayerCard ({ children, img = '', name = '' }) {
+function PlayerCard ({ children, id, img = '', name = '', captain }) {
   return (
-    <div className='p-2 w-full h-20 flex'>
+    <Link to={`/player/${id}`} className='p-2 w-full h-20 flex hover:bg-yellow-2'>
       <div className='bg-gray-2 h-16 w-16 mr-2' />
-      <span className='text-gray-3 font-head font-lg uppercase'>{name}</span>
-    </div>
+      <span className='text-gray-3 font-head font-lg uppercase'>{captain ? '🌟' : ''}{name}</span>
+    </Link>
   )
 }
 
@@ -23,14 +15,7 @@ export function TeamRoster ({ team = {}, vertical, className = '' }) {
     <div className={`${className} grid grid-cols-2 gap-4"`}>
       { team.captain
         ? (
-          <PlayerCard name={team.captain.name}>
-            <Link
-              to={`/player/${team.captain.id}`}
-              className={`${(buildTooltipString(team.captain)) ? toolTip : ''} m-1`}
-              title={buildTooltipString(team.captain)}>
-                ⭐️ {team.captain.name}
-            </Link>
-          </PlayerCard>
+          <PlayerCard name={team.captain.name} id={team.captain.id} captain />
         )
         : null }
 
@@ -39,13 +24,7 @@ export function TeamRoster ({ team = {}, vertical, className = '' }) {
         .filter(x => team.captain && x.name !== team.captain.name)
         .map((member) => {
           return (
-            <PlayerCard key={`${team.name}-${member.name}`} name={member.name}>
-              <Link
-                to={`/player/${member.id}`}
-                key={`${team.name}-${member.name}`}
-                className={`${(buildTooltipString(member)) ? toolTip : ''} m-1`}
-                title={buildTooltipString(member)} />
-            </PlayerCard>
+            <PlayerCard id={member.id} key={`${team.name}-${member.name}`} name={member.name} />
           )
         })}
     </div>

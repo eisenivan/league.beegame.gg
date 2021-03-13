@@ -1,35 +1,35 @@
 import React, { useState, useEffect } from 'react'
-import get from 'lodash.get'
-import { PageTitle, PageSubtitle, H2 } from '../components/elements'
+// import get from 'lodash.get'
+import { PageTitle, PageSubtitle } from '../components/elements'
 import Chrome from '../components/Chrome'
-import SingleTeam from '../components/SingleTeam'
+// import SingleTeam from '../components/SingleTeam'
 import fetch from '../modules/fetch-with-headers'
 import handleError from '../modules/handle-error'
 
-function getAwardEmoji (str) {
-  switch (str) {
-    case 'Queen of the Hive':
-      return '👑'
+// function getAwardEmoji (str) {
+//   switch (str) {
+//     case 'Queen of the Hive':
+//       return '👑'
 
-    case 'Eternal Warrior':
-      return '⚔'
+//     case 'Eternal Warrior':
+//       return '⚔'
 
-    case 'Purple Heart':
-      return '💜'
+//     case 'Purple Heart':
+//       return '💜'
 
-    case 'Berry Bonanza':
-      return '🍒'
+//     case 'Berry Bonanza':
+//       return '🍒'
 
-    case 'Snail Whisperer':
-      return '🐌'
+//     case 'Snail Whisperer':
+//       return '🐌'
 
-    case 'Triple Threat':
-      return '♻'
+//     case 'Triple Threat':
+//       return '♻'
 
-    default:
-      return ''
-  }
-}
+//     default:
+//       return ''
+//   }
+// }
 
 function Profile () {
   const [loading, setLoading] = useState(true)
