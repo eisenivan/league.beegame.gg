@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-// import get from 'lodash.get'
+import get from 'lodash.get'
 import { PageTitle, PageSubtitle, H2 } from '../components/elements'
 import Chrome from '../components/Chrome'
 import SingleTeam from '../components/SingleTeam'
@@ -34,7 +34,6 @@ import handleError from '../modules/handle-error'
 function Profile () {
   const [loading, setLoading] = useState(true)
   const [profile, setProfile] = useState([])
-  const [teams, setTeams] = useState([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,13 +42,6 @@ function Profile () {
         .catch(handleError)
 
       setProfile(profile)
-
-      const teams = await fetch(`https://api-staging.beegame.gg/teams/?is_active=true&member=${profile.first_name}&format=json`)
-        .then(data => data.json())
-        .catch(handleError)
-
-      setTeams(teams)
-
       setLoading(false)
     }
 
@@ -75,11 +67,11 @@ function Profile () {
               <PageTitle>{profile.first_name}</PageTitle>
               <PageSubtitle>{profile.name_phonetic} ({profile.pronouns})</PageSubtitle>
 
-              { teams.length > 0
+              { get(profile, 'player.teams')
                 ? (
                 <>
                   <H2>Teams</H2>
-                  { teams.map(x => (
+                  { profile.player.teams.map(x => (
                     <div key={`${x.id}-${x.name}`} className='my-2'>
                       <SingleTeam className='text-md' team={x} />
                       {/* {
