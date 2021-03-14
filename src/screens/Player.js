@@ -14,10 +14,10 @@ function Profile () {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(`https://api-staging.beegame.gg/players/${id}/?format=json`)
+        .then(data => data.json())
         .catch(handleError)
-      const json = await response.json()
-        .catch(handleError)
-      setPlayer(json)
+
+      setPlayer(response)
       setLoading(false)
     }
 

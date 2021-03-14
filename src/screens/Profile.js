@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 // import get from 'lodash.get'
-import { PageTitle, PageSubtitle } from '../components/elements'
+import { PageTitle, PageSubtitle, H2 } from '../components/elements'
 import Chrome from '../components/Chrome'
-// import SingleTeam from '../components/SingleTeam'
+import SingleTeam from '../components/SingleTeam'
 import fetch from '../modules/fetch-with-headers'
 import handleError from '../modules/handle-error'
 
@@ -34,15 +34,22 @@ import handleError from '../modules/handle-error'
 function Profile () {
   const [loading, setLoading] = useState(true)
   const [profile, setProfile] = useState([])
+  const [teams, setTeams] = useState([])
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('https://api-staging.beegame.gg/me/?format=json')
-        .catch(handleError)
-      const json = await response.json()
+      const profile = await fetch('https://api-staging.beegame.gg/me/?format=json')
+        .then(data => data.json())
         .catch(handleError)
 
-      setProfile(json)
+      setProfile(profile)
+
+      const teams = await fetch(`https://api-staging.beegame.gg/teams/?is_active=true&member=${profile.first_name}&format=json`)
+        .then(data => data.json())
+        .catch(handleError)
+
+      setTeams(teams)
+
       setLoading(false)
     }
 
@@ -68,16 +75,22 @@ function Profile () {
               <PageTitle>{profile.first_name}</PageTitle>
               <PageSubtitle>{profile.name_phonetic} ({profile.pronouns})</PageSubtitle>
 
-              {/* <H2>Teams</H2>
-              { profile.player.teams.map(x => (
-                <div key={`${x.id}-${x.name}`} className='my-2'>
-                  <SingleTeam className='text-md' team={x} />
-                  {
+              { teams.length > 0
+                ? (
+                <>
+                  <H2>Teams</H2>
+                  { teams.map(x => (
+                    <div key={`${x.id}-${x.name}`} className='my-2'>
+                      <SingleTeam className='text-md' team={x} />
+                      {/* {
                     get(x.members.find(y => y.name === profile.player.name), 'award_summary', [])
                       .map(x => <span key={`${x.id}-${x.name}`} className='mr-2'>{getAwardEmoji(x.name)}<span className='text-xs italic'>x{x.count}</span></span>)
-                  }
-                </div>
-              ))} */}
+                  } */}
+                    </div>
+                  ))}
+                </>
+                ) : null}
+
             </div>
           )
       }
