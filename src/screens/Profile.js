@@ -65,7 +65,8 @@ function Profile () {
           : (
             <div>
               <PageTitle>{profile.first_name}</PageTitle>
-              <PageSubtitle>{profile.name_phonetic} ({profile.pronouns})</PageSubtitle>
+              <PageSubtitle>{profile.player.name_phonetic} ({profile.player.pronouns})</PageSubtitle>
+              <p className='italic mt-2'>{profile.player.bio}</p>
 
               { get(profile, 'player.teams')
                 ? (

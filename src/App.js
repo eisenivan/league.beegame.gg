@@ -18,13 +18,13 @@ import Profile from './screens/Profile'
 async function setUserCookies () {
   const me = await fetch('https://api-staging.beegame.gg/me/?format=json')
   const meJson = await me.json()
-  cookie.save('userId', meJson.player.id, { path: '/', secure: !process.env.NODE_ENV === 'development' })
+  cookie.save('userid', meJson.player.id, { path: '/', secure: !process.env.NODE_ENV === 'development' })
   cookie.save('name', meJson.first_name, { path: '/', secure: !process.env.NODE_ENV === 'development' })
 }
 
 function App () {
-  const token = cookie.load('token', { path: '/' })
-  const userId = cookie.load('userId', { path: '/' })
+  const token = cookie.load('token', true)
+  const userId = cookie.load('userId', true)
 
   if (token && !userId) {
     setUserCookies()

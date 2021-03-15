@@ -18,7 +18,7 @@ function Team () {
   const [circuit, setCircuit] = useState({})
   const [editTeam, setEditTeam] = useState(false)
   const [name, setName] = useState()
-  const [authId, setAuthId] = useState()
+  const [userId, setUserId] = useState()
 
   function toggleEditTeam () {
     setEditTeam(!editTeam)
@@ -61,14 +61,12 @@ function Team () {
         .catch(handleError)
 
       setCircuit(circuit)
-
+      setUserId(cookie.load('userid'))
       setLoading(false)
     }
 
     fetchData()
-
-    setAuthId(cookie.load('userId'))
-  }, [id])
+  }, [id, userId])
   return (
     <Chrome>
       {
@@ -76,51 +74,57 @@ function Team () {
           ? <div>loading...</div>
           : (
             <div>
-              { editTeam
-                ? (
-                  <div className=''>
-                    <input
-                      className='shadow inline-block appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                      placeholder='Team Name'
-                      name='name'
-                      value={name}
-                      onChange={onTitleChange}
-                      required />
 
-                    <button
-                      className='float bg-yellow-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
-                      type='submit'
-                      onClick={handleSubmit}>
-                      Update
-                    </button>
+              <div>
+                <div style={{ backgroundImage: 'url(/img/tb-banner.png)', backgroundSize: 'cover' }} className='w-full h-80' />
+                <div className='grid grid-cols-2'>
+                  <div className='flex'>
+                    <img className='relative -top-8 w-16' alt='placeholder team logo' src='/img/peanut.png' />
+                    { editTeam
+                      ? (
+                        <div className=''>
+                          <input
+                            className='shadow inline-block appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                            placeholder='Team Name'
+                            name='name'
+                            value={name}
+                            onChange={onTitleChange}
+                            required />
 
-                    <button
-                      className='float bg-gray-1 hover:bg-blue-700 text-gray-3 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
-                      type='submit'
-                      onClick={toggleEditTeam}>
-                      Cancel
-                    </button>
+                          <button
+                            className='float bg-yellow-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+                            type='submit'
+                            onClick={handleSubmit}>
+                                Update
+                          </button>
+
+                          <button
+                            className='float bg-gray-1 hover:bg-blue-700 text-gray-3 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+                            type='submit'
+                            onClick={toggleEditTeam}>
+                                Cancel
+                          </button>
+                        </div>
+                      )
+                      : (
+                            <>
+                              <PageTitle>{name}</PageTitle>
+                              { userId === team.captain.id
+                                ? <button onClick={toggleEditTeam} className='ml-2' to={`/teams/${id}/edit`}>(edit)</button>
+                                : null }
+                              { HAS_DYNASTY(team)
+                                ? <PageSubtitle>Dynasty: {get(team, 'dynasty.name')}</PageSubtitle>
+                                : null }
+                            </>
+                      )
+                    }
+
                   </div>
-                )
-                : (
-                  <div>
-                    <div style={{ backgroundImage: 'url(/img/tb-banner.png)', backgroundSize: 'cover' }} className='w-full h-80' />
-                    <div className='grid grid-cols-2'>
-                      <div className='flex'>
-                        <img className='relative -top-8 w-16' alt='placeholder team logo' src='/img/peanut.png' />
-                        <PageTitle>{name}</PageTitle>
-                        { authId === team.captain.id
-                          ? <button onClick={toggleEditTeam} className='ml-2' to={`/teams/${id}/edit`}>✏️</button>
-                          : null }
-                        { HAS_DYNASTY(team)
-                          ? <PageSubtitle>Dynasty: {get(team, 'dynasty.name')}</PageSubtitle>
-                          : null }
-                      </div>
 
-                      <div className='font-head text-lg text-right'>{circuit.name}</div>
-                    </div>
-                  </div>
-                ) }
+                  <div className='font-head text-lg text-right'>{circuit.name}</div>
+                </div>
+              </div>
+
               <LightContentBox>
                 <TeamRoster className='mt-4' vertical team={team} />
               </LightContentBox>

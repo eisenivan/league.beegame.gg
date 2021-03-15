@@ -1,10 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 
-function PlayerCard ({ children, id, img = '', name = '', captain }) {
+const AvatarContainer = styled.div`
+  background-image: ${props => props.imgUrl ? `url(${props.imgUrl})` : 'none'};
+  background-size: cover;
+  background-position: center;
+`
+
+function PlayerCard ({ children, id, img = '', name = '', imgUrl = '', captain }) {
+  console.log(imgUrl)
   return (
     <Link to={`/player/${id}`} className='p-2 w-full h-20 flex hover:bg-yellow-2'>
-      <div className='bg-gray-2 h-16 w-16 mr-2' />
+      <AvatarContainer alt={`Avatar for BGL player ${name}`} imgUrl={imgUrl} className='bg-gray-2 h-16 w-16 mr-2' />
       <span className='text-gray-3 font-head font-lg uppercase'>{captain ? '🌟' : ''}{name}</span>
     </Link>
   )
@@ -15,7 +23,7 @@ export function TeamRoster ({ team = {}, vertical, className = '' }) {
     <div className={`${className} grid grid-cols-2 gap-4"`}>
       { team.captain
         ? (
-          <PlayerCard name={team.captain.name} id={team.captain.id} captain />
+          <PlayerCard name={team.captain.name} id={team.captain.id} imgUrl={team.captain.avatar_url} captain />
         )
         : null }
 
@@ -24,7 +32,7 @@ export function TeamRoster ({ team = {}, vertical, className = '' }) {
         .filter(x => team.captain && x.name !== team.captain.name)
         .map((member) => {
           return (
-            <PlayerCard id={member.id} key={`${team.name}-${member.name}`} name={member.name} />
+            <PlayerCard id={member.id} key={`${team.name}-${member.name}`} name={member.name} imgUrl={member.avatar_url} />
           )
         })}
     </div>
