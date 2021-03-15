@@ -8,8 +8,7 @@ const AvatarContainer = styled.div`
   background-position: center;
 `
 
-function PlayerCard ({ children, id, img = '', name = '', imgUrl = '', captain }) {
-  console.log(imgUrl)
+function PlayerCard ({ children, id, img = '', name = '', imgUrl, captain }) {
   return (
     <Link to={`/player/${id}`} className='p-2 w-full h-20 flex hover:bg-yellow-2'>
       <AvatarContainer alt={`Avatar for BGL player ${name}`} imgUrl={imgUrl} className='bg-gray-2 h-16 w-16 mr-2' />

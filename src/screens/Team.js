@@ -61,6 +61,7 @@ function Team () {
         .catch(handleError)
 
       setCircuit(circuit)
+      console.log(cookie.load('userid'))
       setUserId(cookie.load('userid'))
       setLoading(false)
     }
@@ -109,8 +110,8 @@ function Team () {
                       : (
                             <>
                               <PageTitle>{name}</PageTitle>
-                              { userId === team.captain.id
-                                ? <button onClick={toggleEditTeam} className='ml-2' to={`/teams/${id}/edit`}>(edit)</button>
+                              { parseInt(userId) === parseInt(team.captain.id)
+                                ? <button onClick={toggleEditTeam} className='ml-2 relative -top-4 text-sm' to={`/teams/${id}/edit`}>(edit)</button>
                                 : null }
                               { HAS_DYNASTY(team)
                                 ? <PageSubtitle>Dynasty: {get(team, 'dynasty.name')}</PageSubtitle>
