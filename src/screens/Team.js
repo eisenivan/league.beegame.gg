@@ -61,7 +61,7 @@ function Team () {
         .catch(handleError)
 
       setCircuit(circuit)
-      console.log(cookie.load('userid'))
+
       setUserId(cookie.load('userid'))
       setLoading(false)
     }
