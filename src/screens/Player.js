@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { PageTitle, PageSubtitle, H3 } from '../components/elements'
+import { PageTitle, PageSubtitle, H3, AvatarContainer } from '../components/elements'
 import Chrome from '../components/Chrome'
 import SingleTeam from '../components/SingleTeam'
 import fetch from '../modules/fetch-with-headers'
@@ -31,6 +31,9 @@ function Profile () {
           ? <div>loading...</div>
           : (
             <div>
+              { player.avatar_url
+                ? <AvatarContainer alt={`Avatar for BGL player ${player.name}`} imgUrl={player.avatar_url} className='lg:float-left bg-gray-2 h-32 w-32 lg:mr-8 mb-4 lg:mb-0' />
+                : null }
               <PageTitle>{player.name}</PageTitle>
               <PageSubtitle>
                 {player.name_phonetic || ''} {player.pronouns ? `(${player.pronouns})` : ''}</PageSubtitle>

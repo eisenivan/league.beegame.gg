@@ -1,12 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import styled from 'styled-components'
-
-const AvatarContainer = styled.div`
-  background-image: ${props => props.imgUrl ? `url(${props.imgUrl})` : 'none'};
-  background-size: cover;
-  background-position: center;
-`
+import { AvatarContainer } from './elements'
 
 function PlayerCard ({ children, id, img = '', name = '', imgUrl, captain }) {
   return (

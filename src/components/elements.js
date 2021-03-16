@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 
 export const linkString = 'hover:text-yellow-2 transition-colors'
 
@@ -7,6 +8,12 @@ export function Link ({ children, ...props }) {
     <a className={linkString} {...props}>{children}</a>
   )
 }
+
+export const AvatarContainer = styled.div`
+  background-image: ${props => props.imgUrl ? `url(${props.imgUrl})` : 'none'};
+  background-size: cover;
+  background-position: center;
+`
 
 export function PageTitle ({ children }) {
   return <h1 className='text-2xl mb-4 font-head uppercase inline-block'>{children}</h1>
