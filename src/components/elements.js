@@ -34,3 +34,41 @@ export function H3 ({ children }) {
 export function LightContentBox ({ children }) {
   return <div className='bg-triangle_bg_light p-2 lg:p-8'>{children}</div>
 }
+
+export function Input ({ ...props }) {
+  return (
+    <input
+      className='shadow inline-block appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+      placeholder={props.placeholder || ''}
+      name={props.name || ''}
+      value={props.value || ''}
+      onChange={props.onChange}
+      required={props.required || false} />
+  )
+}
+
+export function Button ({ children, ...props }) {
+  return (
+    <button
+      className='float bg-gray-1 hover:bg-blue-700 text-gray-3 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+      type={props.type || 'button'}
+      onClick={props.onClick}>
+          {children}
+    </button>
+  )
+}
+
+export function Select ({ children, ...props }) {
+  return (
+    <select
+      className='shadow inline-block appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+      placeholder={props.placeholder}
+      name={props.name}
+      value={props.value}
+      onChange={props.onChange}
+      required={props.required || false}
+    >
+      {children}
+    </select>
+  )
+}

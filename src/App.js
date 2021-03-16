@@ -14,6 +14,7 @@ import Teams from './screens/Teams'
 import Team from './screens/Team'
 import Player from './screens/Player'
 import Profile from './screens/Profile'
+import RegisterTeam from './screens/RegisterTeam'
 
 async function setUserCookies () {
   const me = await fetch('https://api-staging.beegame.gg/me/?format=json')
@@ -53,6 +54,9 @@ function App () {
         </Route>
         <Route path='/profile'>
           <Profile />
+        </Route>
+        <Route path='/register'>
+          <RegisterTeam />
         </Route>
       </Switch>
     </Router>
