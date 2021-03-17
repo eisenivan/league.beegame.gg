@@ -18,7 +18,7 @@
     "react-scripts": "4.0.2",
     "regent": "^3.3.5",
     "styled-components": "^5.2.1",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.3",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
@@ -48,7 +48,6 @@
   },
   "devDependencies": {
     "autoprefixer": "^9",
-    "postcss": "^7",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
+    "postcss": "^7"
   }
 }
