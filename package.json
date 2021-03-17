@@ -48,6 +48,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^9",
+    "firebase-tools": "^9.6.1",
     "postcss": "^7"
   }
 }
