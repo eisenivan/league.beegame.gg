@@ -53,7 +53,7 @@ export function Button ({ children, ...props }) {
       className='float bg-gray-1 hover:bg-blue-700 text-gray-3 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
       type={props.type || 'button'}
       onClick={props.onClick}>
-          {children}
+      {children}
     </button>
   )
 }
@@ -70,5 +70,13 @@ export function Select ({ children, ...props }) {
     >
       {children}
     </select>
+  )
+}
+
+export function FormBox ({ children }) {
+  return (
+    <div className='flex flex-col mb-4'>
+      {children}
+    </div>
   )
 }
