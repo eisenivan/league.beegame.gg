@@ -80,3 +80,17 @@ export function FormBox ({ children }) {
     </div>
   )
 }
+
+export function Error ({ error, className }) {
+  let msg
+  if (typeof error === 'string') {
+    msg = error
+  } else {
+    msg = Object.keys(error)
+      .map(key => `${key !== 'non_field_errors' ? `${key}: ` : ''}${error[key].join(', ')}`)
+  }
+
+  console.log(msg)
+
+  return <span className={`${className} text-red-500`}>{msg}</span>
+}

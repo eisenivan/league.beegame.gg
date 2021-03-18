@@ -1,9 +1,9 @@
-function handleError (e) {
-  console.warn(e)
-  return new Response(JSON.stringify({ // eslint-disable-line
-    code: 400,
-    message: 'Stupid network Error'
-  }))
+function handleError (e, setter) {
+  if (setter && typeof setter === 'function') {
+    setter(e)
+  } else {
+    console.warn(e)
+  }
 }
 
 export default handleError

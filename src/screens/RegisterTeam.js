@@ -3,13 +3,14 @@ import { useHistory } from 'react-router-dom'
 import Chrome from '../components/Chrome'
 import fetch from '../modules/fetch-with-headers'
 import handleError from '../modules/handle-error'
-import { Input, Select, Button, FormBox } from '../components/elements'
+import { Input, Select, Button, FormBox, Error } from '../components/elements'
 
 function RegisterTeam () {
   const [loading, setLoading] = useState(true)
   const [circuits, setCircuits] = useState([])
   const [circuit, setCircuit] = useState()
   const [name, setName] = useState('')
+  const [error, setError] = useState()
   const history = useHistory()
 
   useEffect(() => {
@@ -39,9 +40,13 @@ function RegisterTeam () {
     fetch(`https://api-staging.beegame.gg/teams/`, requestOptions)
       .then(res => res.json())
       .then(res => {
-        history.push({
-          pathname: `/teams/${res.id}/`
-        })
+        if (res.id) {
+          history.push({
+            pathname: `/teams/${res.id}/`
+          })
+        } else {
+          setError(res)
+        }
       })
       .catch(handleError)
   }
@@ -55,7 +60,7 @@ function RegisterTeam () {
             <div>
               <FormBox>
                 <label>Team Name</label>
-                <Input placeholder='Team Name' value={name} onChange={e => setName(e.target.value)} />
+                <Input required placeholder='Team Name' value={name} onChange={e => setName(e.target.value)} />
               </FormBox>
               <FormBox>
                 <label>Circuit</label>
@@ -66,11 +71,17 @@ function RegisterTeam () {
                   ))}
                 </Select>
               </FormBox>
+
               <Button
                 type='button'
                 onClick={handleSubmit}>
                   Register
               </Button>
+              { error
+                ? (
+                  <Error className='ml-4' error={error} />
+                )
+                : null }
             </div>
           )
       }
