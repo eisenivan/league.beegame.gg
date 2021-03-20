@@ -17,6 +17,7 @@ function Team () {
   const [team, setTeam] = useState({})
   const [circuit, setCircuit] = useState({})
   const [editTeam, setEditTeam] = useState(false)
+  const [matches, setMatches] = useState([])
   const [name, setName] = useState()
   const [userId, setUserId] = useState()
 
@@ -54,6 +55,7 @@ function Team () {
         .catch(handleError)
 
       setTeam(response)
+      setMatches([...response.home_matches, ...response.away_matches])
       setName(response.name)
 
       const circuit = await fetch(`https://api-staging.beegame.gg/leagues/${response.circuit}/`)
@@ -127,7 +129,21 @@ function Team () {
               </div>
 
               <LightContentBox>
-                <TeamRoster className='mt-4' vertical team={team} />
+                <div className='lg:grid lg:grid-cols-2'>
+                  <TeamRoster className='mt-4' vertical team={team} />
+                  <div>
+                    { matches.map(x => (
+                      <div>
+                        <span className='text-gray-3'>
+                          {x.home.name} vs {x.away.name}
+                          { x.start_time === null
+                            ? ' (schedule)'
+                            : null }
+                        </span>
+                      </div>
+                    )) }
+                  </div>
+                </div>
               </LightContentBox>
             </div>
           )
