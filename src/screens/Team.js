@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { not, empty } from 'regent'
 import get from 'lodash.get'
 import cookie from 'react-cookies'
+import DateTimePicker from 'react-datetime-picker'
+import moment from 'moment'
 import Chrome from '../components/Chrome'
 import { PageTitle, PageSubtitle, LightContentBox } from '../components/elements'
 import { TeamRoster } from '../components/SingleTeam'
@@ -18,8 +20,10 @@ function Team () {
   const [circuit, setCircuit] = useState({})
   const [editTeam, setEditTeam] = useState(false)
   const [matches, setMatches] = useState([])
+  const [matchTime, setMatchTime] = useState()
   const [name, setName] = useState()
   const [userId, setUserId] = useState()
+  const [lastUpdated, setLastUpdated] = useState(new Date())
 
   function toggleEditTeam () {
     setEditTeam(!editTeam)
@@ -48,6 +52,24 @@ function Team () {
       .catch(handleError)
   }
 
+  async function scheduleMatch (e, matchId) {
+    e.preventDefault()
+
+    const data = { start_time: moment(matchTime).tz('UTC').format() }
+    const requestOptions = {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }
+
+    fetch(`https://api-staging.beegame.gg/matches/${matchId}/`, requestOptions)
+      .then(res => res.json())
+      .then((res) => {
+        setLastUpdated(new Date())
+      })
+      .catch(handleError)
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(`https://api-staging.beegame.gg/teams/${id}/`)
@@ -69,7 +91,7 @@ function Team () {
     }
 
     fetchData()
-  }, [id, userId])
+  }, [id, userId, lastUpdated])
   return (
     <Chrome>
       {
@@ -133,12 +155,21 @@ function Team () {
                   <TeamRoster className='mt-4' vertical team={team} />
                   <div>
                     { matches.map(x => (
-                      <div>
+                      <div key={`${x.home.name}${x.away.name}${x.id}`}>
                         <span className='text-gray-3'>
                           {x.home.name} vs {x.away.name}
                           { x.start_time === null
-                            ? ' (schedule)'
-                            : null }
+                            ? (
+                              <>
+                                <DateTimePicker
+                                  onChange={setMatchTime}
+                                  value={matchTime}
+                                  maxDetail={'minute'}
+                                />
+                                <button onClick={(e) => scheduleMatch(e, x.id)}>Schedule</button>
+                              </>
+                            )
+                            : <span className='ml-2 font-bold'>{moment(x.start_time).tz('America/New_York').format('MM/DD/YYYY h:mm a')}</span> }
                         </span>
                       </div>
                     )) }
