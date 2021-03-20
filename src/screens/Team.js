@@ -80,7 +80,7 @@ function Team () {
       setMatches([...response.home_matches, ...response.away_matches])
       setName(response.name)
 
-      const circuit = await fetch(`https://api-staging.beegame.gg/leagues/${response.circuit}/`)
+      const circuit = await fetch(`https://api-staging.beegame.gg/circuits/${response.circuit}/`)
         .then((data) => data.json())
         .catch(handleError)
 

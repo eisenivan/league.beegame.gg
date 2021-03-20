@@ -15,7 +15,7 @@ function RegisterTeam () {
 
   useEffect(() => {
     const fetchData = async () => {
-      const circuits = await fetch('https://api-staging.beegame.gg/leagues/?format=json')
+      const circuits = await fetch('https://api-staging.beegame.gg/circuits/?format=json&registration_open=true')
         .then(x => x.json())
         .catch(handleError)
 
