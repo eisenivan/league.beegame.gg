@@ -3,9 +3,11 @@ import { not, empty } from 'regent'
 import get from 'lodash.get'
 import cookie from 'react-cookies'
 import DateTimePicker from 'react-datetime-picker'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import Chrome from '../components/Chrome'
 import { PageTitle, PageSubtitle, LightContentBox } from '../components/elements'
+import guessLocalTz from '../modules/guess-local-tz'
+import { DATE_TIME_FORMAT } from '../constants'
 import { TeamRoster } from '../components/SingleTeam'
 import { useParams } from 'react-router-dom'
 import fetch from '../modules/fetch-with-headers'
@@ -96,7 +98,6 @@ function Team () {
 
     fetchData()
   }, [id, userId, lastUpdated])
-  console.log(matchTime)
   return (
     <Chrome>
       {
@@ -163,10 +164,10 @@ function Team () {
                     { matches.map(x => (
                       <div key={`${x.home.name}${x.away.name}${x.id}`} className='shadow-lg'>
                         <div className='uppercase font-head font-xl'>
-                          <div className='text-gray-1 bg-blue-3 p-4 truncate'>
+                          <div className='text-gray-1 bg-blue-2 p-4 truncate'>
                             {x.away.name}
                           </div>
-                          <div className='text-gray-1 bg-yellow-3 p-4 ellipsis'>
+                          <div className='text-gray-1 bg-yellow-2 p-4 ellipsis'>
                             {x.home.name}
                           </div>
 
@@ -187,7 +188,7 @@ function Team () {
                               )
                               : (
                                 <>
-                                  {moment(x.start_time).format('MM/DD/YYYY h:mm a z')}
+                                  {guessLocalTz(x.start_time).format(DATE_TIME_FORMAT)}
                                 </>
                               )
                             }

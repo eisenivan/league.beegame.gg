@@ -90,7 +90,5 @@ export function Error ({ error, className }) {
       .map(key => `${key !== 'non_field_errors' ? `${key}: ` : ''}${error[key].join(', ')}`)
   }
 
-  console.log(msg)
-
   return <span className={`${className} text-red-500`}>{msg}</span>
 }

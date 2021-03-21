@@ -1,5 +1,6 @@
 import React from 'react'
-import moment from 'moment-timezone'
+import guessLocalTz from '../modules/guess-local-tz'
+import { DATE_TIME_FORMAT } from '../constants'
 
 function MatchList ({ matches = [] }) {
   return (
@@ -16,9 +17,9 @@ function MatchList ({ matches = [] }) {
             }
 
             {
-              match.primary_caster
+              match.start_time
                 ? (
-                  <span className='text-sm'>{moment(match.start_time).tz('America/New_York').format('MM/DD/YYYY h:mm a')} ET</span>
+                  <span className='text-sm'>{guessLocalTz(match.start_time).format(DATE_TIME_FORMAT)}</span>
                 ) : null
             }
 
