@@ -7,7 +7,7 @@ function MatchList ({ matches = [] }) {
       { matches.length > 0
         ? matches.map((match) => (
           <div key={`${match.start_time}-${match.home.name}-${match.away.name}`}>
-            <h3 className='text-lg'><strong className='text-yellow-3'>{match.home.name}</strong> <em className='text-sm'>({match.home.wins} - {match.home.losses})</em> vs. <strong className='text-blue-3'>{match.away.name}</strong> <em className='text-sm'>({match.away.wins} - {match.away.losses})</em> </h3>
+            <h3 className='text-lg'><strong className='text-yellow-3'>{match.home.name}</strong> <em className='text-sm'>({match.home.wins || 0} - {match.home.losses || 0})</em> vs. <strong className='text-blue-3'>{match.away.name}</strong> <em className='text-sm'>({match.away.wins || 0} - {match.away.losses || 0})</em> </h3>
             {
               match.primary_caster
                 ? (
