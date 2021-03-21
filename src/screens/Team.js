@@ -107,10 +107,10 @@ function Team () {
             <div>
 
               <div>
-                <div style={{ backgroundImage: 'url(/img/tb-banner.png)', backgroundSize: 'cover' }} className='w-full h-80' />
+                <div style={{ backgroundImage: 'url(/img/bgl_default_banner.png)', backgroundSize: 'cover', backgroundPosition: 'center' }} className='w-full h-80 hidden md:block' />
                 <div className='grid grid-cols-2'>
-                  <div className='flex'>
-                    <img className='relative -top-8 w-16' alt='placeholder team logo' src='/img/peanut.png' />
+                  <div className='flex items-center'>
+                    <img className='w-20' alt='placeholder team logo' src='/img/bgl_default_logo.png' />
                     { editTeam
                       ? (
                         <div className=''>
@@ -139,9 +139,9 @@ function Team () {
                       )
                       : (
                           <>
-                            <PageTitle>{name}</PageTitle>
+                            <PageTitle style={{ marginBottom: 0 }}>{name}</PageTitle>
                             { parseInt(userId) === parseInt(team.captain.id)
-                              ? <button onClick={toggleEditTeam} className='ml-2 relative -top-4 text-sm' to={`/teams/${id}/edit`}>(edit)</button>
+                              ? <button onClick={toggleEditTeam} className='ml-2 text-sm' to={`/teams/${id}/edit`}>(edit)</button>
                               : null }
                             { HAS_DYNASTY(team)
                               ? <PageSubtitle>Dynasty: {get(team, 'dynasty.name')}</PageSubtitle>
@@ -152,26 +152,26 @@ function Team () {
 
                   </div>
 
-                  <div className='font-head text-lg text-right'>{circuit.name}</div>
+                  <div className='font-head text-lg text-right self-center'>{circuit.name}</div>
                 </div>
               </div>
 
               <LightContentBox>
-                <div className='lg:grid lg:grid-cols-2'>
+                <div className='grid grid-cols-1 md:grid-cols-content md:gap-12'>
                   <TeamRoster className='mt-4' vertical team={team} />
                   <div>
                     <PageSubtitle>Matches</PageSubtitle>
                     { matches.map(x => (
                       <div key={`${x.home.name}${x.away.name}${x.id}`} className='shadow-lg'>
-                        <div className='uppercase font-head font-xl'>
-                          <div className='text-gray-1 bg-blue-2 p-4 truncate'>
+                        <div className='uppercase font-head text-xl'>
+                          <div className='text-gray-1 bg-blue-2 p-4 truncate text-shadow'>
                             {x.away.name}
                           </div>
-                          <div className='text-gray-1 bg-yellow-2 p-4 ellipsis'>
+                          <div className='text-gray-1 bg-yellow-2 p-4 ellipsis text-shadow'>
                             {x.home.name}
                           </div>
 
-                          <div className='bg-gray-3 text-gray-1 p-4 py-2 text-right'>
+                          <div className='bg-gray-3 text-gray-1 p-4 py-2 text-right text-shadow'>
                             { x.start_time === null
                               ? (
                                 <>
@@ -182,7 +182,7 @@ function Team () {
                                     maxDetail={'minute'}
                                     disableClock
                                   />
-                                  <button className='bg-yellow-1 text-gray-3 rounded-sm ml-2 px-2 py-1' onClick={(e) => scheduleMatch(e, x.id)}>Schedule</button>
+                                  <button className='bg-yellow-1 text-gray-3 rounded-sm ml-2 px-2 py-1 text-shadow' onClick={(e) => scheduleMatch(e, x.id)}>Schedule</button>
                                   { matchError ? <div className='mt-2 text-red-500'>{matchError}</div> : null }
                                 </>
                               )
