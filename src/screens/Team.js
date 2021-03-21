@@ -163,7 +163,7 @@ function Team () {
                     <PageSubtitle>Matches</PageSubtitle>
                     { matches.map(x => (
                       <div key={`${x.home.name}${x.away.name}${x.id}`} className='shadow-lg'>
-                        <div className='uppercase font-head text-xl'>
+                        <div className='uppercase font-head text-2xl'>
                           <div className='text-gray-1 bg-blue-2 p-4 truncate text-shadow'>
                             {x.away.name}
                           </div>
@@ -187,9 +187,9 @@ function Team () {
                                 </>
                               )
                               : (
-                                <>
+                                <span className='text-lg'>
                                   {guessLocalTz(x.start_time).format(DATE_TIME_FORMAT)}
-                                </>
+                                </span>
                               )
                             }
                           </div>
