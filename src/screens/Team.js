@@ -21,6 +21,7 @@ function Team () {
   const [editTeam, setEditTeam] = useState(false)
   const [matches, setMatches] = useState([])
   const [matchTime, setMatchTime] = useState()
+  const [matchError, setMatchError] = useState()
   const [name, setName] = useState()
   const [userId, setUserId] = useState()
   const [lastUpdated, setLastUpdated] = useState(new Date())
@@ -54,20 +55,23 @@ function Team () {
 
   async function scheduleMatch (e, matchId) {
     e.preventDefault()
+    if (matchTime) {
+      const data = { start_time: moment(matchTime).tz('UTC').format() }
+      const requestOptions = {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      }
 
-    const data = { start_time: moment(matchTime).tz('UTC').format() }
-    const requestOptions = {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
+      fetch(`https://api-staging.beegame.gg/matches/${matchId}/`, requestOptions)
+        .then(res => res.json())
+        .then((res) => {
+          setLastUpdated(new Date())
+        })
+        .catch(handleError)
+    } else {
+      setMatchError('You need to select date and time for your match')
     }
-
-    fetch(`https://api-staging.beegame.gg/matches/${matchId}/`, requestOptions)
-      .then(res => res.json())
-      .then((res) => {
-        setLastUpdated(new Date())
-      })
-      .catch(handleError)
   }
 
   useEffect(() => {
@@ -92,6 +96,7 @@ function Team () {
 
     fetchData()
   }, [id, userId, lastUpdated])
+  console.log(matchTime)
   return (
     <Chrome>
       {
@@ -132,15 +137,15 @@ function Team () {
                         </div>
                       )
                       : (
-                            <>
-                              <PageTitle>{name}</PageTitle>
-                              { parseInt(userId) === parseInt(team.captain.id)
-                                ? <button onClick={toggleEditTeam} className='ml-2 relative -top-4 text-sm' to={`/teams/${id}/edit`}>(edit)</button>
-                                : null }
-                              { HAS_DYNASTY(team)
-                                ? <PageSubtitle>Dynasty: {get(team, 'dynasty.name')}</PageSubtitle>
-                                : null }
-                            </>
+                          <>
+                            <PageTitle>{name}</PageTitle>
+                            { parseInt(userId) === parseInt(team.captain.id)
+                              ? <button onClick={toggleEditTeam} className='ml-2 relative -top-4 text-sm' to={`/teams/${id}/edit`}>(edit)</button>
+                              : null }
+                            { HAS_DYNASTY(team)
+                              ? <PageSubtitle>Dynasty: {get(team, 'dynasty.name')}</PageSubtitle>
+                              : null }
+                          </>
                       )
                     }
 
@@ -154,23 +159,40 @@ function Team () {
                 <div className='lg:grid lg:grid-cols-2'>
                   <TeamRoster className='mt-4' vertical team={team} />
                   <div>
+                    <PageSubtitle>Matches</PageSubtitle>
                     { matches.map(x => (
-                      <div key={`${x.home.name}${x.away.name}${x.id}`}>
-                        <span className='text-gray-3'>
-                          {x.home.name} vs {x.away.name}
-                          { x.start_time === null
-                            ? (
-                              <>
-                                <DateTimePicker
-                                  onChange={setMatchTime}
-                                  value={matchTime}
-                                  maxDetail={'minute'}
-                                />
-                                <button onClick={(e) => scheduleMatch(e, x.id)}>Schedule</button>
-                              </>
-                            )
-                            : <span className='ml-2 font-bold'>{moment(x.start_time).tz('America/New_York').format('MM/DD/YYYY h:mm a')}</span> }
-                        </span>
+                      <div key={`${x.home.name}${x.away.name}${x.id}`} className='shadow-lg'>
+                        <div className='uppercase font-head font-xl'>
+                          <div className='text-gray-1 bg-blue-3 p-4 truncate'>
+                            {x.away.name}
+                          </div>
+                          <div className='text-gray-1 bg-yellow-3 p-4 ellipsis'>
+                            {x.home.name}
+                          </div>
+
+                          <div className='bg-gray-3 text-gray-1 p-4 py-2 text-right'>
+                            { x.start_time === null
+                              ? (
+                                <>
+                                  <DateTimePicker
+                                    className='text-gray-3 bg-gray-1'
+                                    onChange={setMatchTime}
+                                    value={matchTime}
+                                    maxDetail={'minute'}
+                                    disableClock
+                                  />
+                                  <button className='bg-yellow-1 text-gray-3 rounded-sm ml-2 px-2 py-1' onClick={(e) => scheduleMatch(e, x.id)}>Schedule</button>
+                                  { matchError ? <div className='mt-2 text-red-500'>{matchError}</div> : null }
+                                </>
+                              )
+                              : (
+                                <>
+                                  {moment(x.start_time).format('MM/DD/YYYY h:mm a z')}
+                                </>
+                              )
+                            }
+                          </div>
+                        </div>
                       </div>
                     )) }
                   </div>
