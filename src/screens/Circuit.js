@@ -3,7 +3,7 @@ import sortBy from 'lodash.sortby'
 import Chrome from '../components/Chrome'
 import SingleTeam from '../components/SingleTeam'
 import MatchList from '../components/MatchList'
-import { PageTitle, H2 } from '../components/elements'
+import { PageTitle, H2, LightContentBox } from '../components/elements'
 import { useParams } from 'react-router-dom'
 import fetch from '../modules/fetch-with-headers'
 import handleError from '../modules/handle-error'
@@ -71,9 +71,11 @@ function Circuit () {
                   <hr className='my-8' />
 
                   <H2 className='text-2xl'>Teams</H2>
-                  { teams.map((team) => (
-                    <SingleTeam key={`${team.name}-${circuit.name}-${id}`} team={team} />
-                  ))}
+                  <LightContentBox>
+                    { teams.map((team) => (
+                      <SingleTeam key={`${team.name}-${circuit.name}-${id}`} team={team} />
+                    ))}
+                  </LightContentBox>
                 </div>
                 <div>
                   <H2 className='text-2xl'>Standings</H2>
