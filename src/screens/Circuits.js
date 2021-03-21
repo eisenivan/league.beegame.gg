@@ -10,7 +10,7 @@ function Circuits () {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('https://api-staging.beegame.gg/leagues/?format=json')
+      const response = await fetch('https://api-staging.beegame.gg/circuits/?is_active=true&format=json')
         .then(x => x.json())
         .catch(handleError)
 
