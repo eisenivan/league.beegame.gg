@@ -162,7 +162,7 @@ function Team () {
                   <div>
                     <PageSubtitle>Matches</PageSubtitle>
                     { matches.map(x => (
-                      <div key={`${x.home.name}${x.away.name}${x.id}`} className='shadow-lg'>
+                      <div key={`${x.home.name}${x.away.name}${x.id}`} className='shadow-xl'>
                         <div className='uppercase font-head text-2xl'>
                           <div className='text-gray-1 bg-blue-2 p-4 truncate text-shadow'>
                             {x.away.name}
