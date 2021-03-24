@@ -96,7 +96,7 @@ function Home () {
   return (
     <Chrome>
       <PageTitle>Check out BeeGameLeague on Twitch</PageTitle>
-      <ReactTwitchEmbedVideo channel='BeeGameLeague' />
+      <ReactTwitchEmbedVideo height='300' layout='video' channel='BeeGameLeague' />
 
       <TvGuide />
     </Chrome>
