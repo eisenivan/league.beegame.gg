@@ -55,27 +55,17 @@ function TvGuide (data) {
             <EventItem>
               <EventDot />
               <EventTitle>10:30 am</EventTitle>
-              <EventText>Monday briefing with the team</EventText>
+              <EventText>Gang vs. Peeps</EventText>
             </EventItem>
             <EventItem>
               <EventDot />
               <EventTitle>12:00 pm</EventTitle>
-              <EventText>Lunch for with the besties</EventText>
+              <EventText>Snail Satan vs. The Fighting Dadcores</EventText>
             </EventItem>
             <EventItem>
               <EventDot />
-              <EventTitle>13:00 pm</EventTitle>
+              <EventTitle>3:00 pm</EventTitle>
               <EventText>Meet with the client for final design</EventText>
-            </EventItem>
-            <EventItem>
-              <EventDot />
-              <EventTitle>14:30 am</EventTitle>
-              <EventText>Plan event night to inspire students</EventText>
-            </EventItem>
-            <EventItem>
-              <EventDot />
-              <EventTitle>15:30 am</EventTitle>
-              <EventText>Add some more events to the calendar</EventText>
             </EventItem>
           </CalendarEvents>
         </CalendarDark>
@@ -84,19 +74,19 @@ function TvGuide (data) {
         <div>Tomorrow</div>
       </DayColumn>
       <DayColumn>
-        <div>{moment().add(3, 'days').format('dddd m/d')}</div>
+        <div>{moment().add(1, 'days').format('M/D')}</div>
       </DayColumn>
       <DayColumn>
-        <div>{moment().add(4, 'days').format('dddd m/d')}</div>
+        <div>{moment().add(2, 'days').format('M/D')}</div>
       </DayColumn>
       <DayColumn>
-        <div>{moment().add(5, 'days').format('dddd m/d')}</div>
+        <div>{moment().add(3, 'days').format('M/D')}</div>
       </DayColumn>
       <DayColumn>
-        <div>{moment().add(6, 'days').format('dddd m/d')}</div>
+        <div>{moment().add(4, 'days').format('M/D')}</div>
       </DayColumn>
       <DayColumn>
-        <div>{moment().add(7, 'days').format('dddd m/d')}</div>
+        <div>{moment().add(5, 'days').format('M/D')}</div>
       </DayColumn>
     </div>
   )
