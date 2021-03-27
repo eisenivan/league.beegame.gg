@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import Chrome from '../components/Chrome'
 import fetch from '../modules/fetch-with-headers'
 import handleError from '../modules/handle-error'
-import { Input, Select, Button, FormBox, Error } from '../components/elements'
+import { Input, Select, Button, FormBox, Error, PageTitle } from '../components/elements'
 
 function RegisterTeam () {
   const [loading, setLoading] = useState(true)
@@ -57,7 +57,8 @@ function RegisterTeam () {
         loading
           ? <div>loading...</div>
           : (
-            <div>
+            <div className='max-w-md m-auto'>
+              <PageTitle>Register a Bee Game League Team</PageTitle>
               <FormBox>
                 <label>Team Name</label>
                 <Input required placeholder='Team Name' value={name} onChange={e => setName(e.target.value)} />
