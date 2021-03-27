@@ -74,9 +74,6 @@ function TvGuide (data) {
         <div>Tomorrow</div>
       </DayColumn>
       <DayColumn>
-        <div>{moment().add(1, 'days').format('M/D')}</div>
-      </DayColumn>
-      <DayColumn>
         <div>{moment().add(2, 'days').format('M/D')}</div>
       </DayColumn>
       <DayColumn>
@@ -87,6 +84,9 @@ function TvGuide (data) {
       </DayColumn>
       <DayColumn>
         <div>{moment().add(5, 'days').format('M/D')}</div>
+      </DayColumn>
+      <DayColumn>
+        <div>{moment().add(6, 'days').format('M/D')}</div>
       </DayColumn>
     </div>
   )
