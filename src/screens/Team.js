@@ -170,14 +170,14 @@ function Team () {
                             required />
 
                           <button
-                            className='float bg-yellow-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+                            className='ml-2 uppercase bg-blue-3 text-white py-1 px-2 text-center font-head text-xs'
                             type='submit'
                             onClick={handleSubmit}>
                                 Update
                           </button>
 
                           <button
-                            className='float bg-gray-1 hover:bg-blue-700 text-gray-3 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+                            className='ml-2 uppercase bg-blue-3 text-white py-1 px-2 text-center font-head text-xs'
                             type='submit'
                             onClick={toggleEditTeam}>
                                 Cancel
