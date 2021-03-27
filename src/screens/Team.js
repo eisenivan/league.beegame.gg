@@ -28,6 +28,7 @@ function Team () {
   const [name, setName] = useState()
   const [userId, setUserId] = useState()
   const [lastUpdated, setLastUpdated] = useState(new Date())
+  const [copyText, setCopyText] = useState('Copy invite url')
   const history = useHistory()
 
   function toggleEditTeam () {
@@ -78,7 +79,23 @@ function Team () {
     }
   }
 
+  async function copyInviteUrl (e) {
+    e.preventDefault()
+
+    try {
+      await navigator.clipboard.writeText(`${process.env.REACT_APP_NODE_ENV_APP_URL}teams/${id}/${team.invite_code}`)
+      setCopyText('✅')
+      // Reset to clipboard icon after 1 second
+      setTimeout(() => setCopyText('Copy invite url'), 1000)
+    } catch (err) {
+      setCopyText('❌')
+      // Reset to clipboard icon after 1 second
+      setTimeout(() => setCopyText('copy auth token'), 1000)
+    }
+  }
+
   useEffect(() => {
+    console.log(process.env)
     const fetchData = async () => {
       const response = await fetch(`https://api-staging.beegame.gg/teams/${id}/`)
         .then((data) => data.json())
@@ -132,11 +149,11 @@ function Team () {
           ? <div>loading...</div>
           : (
             <div>
-
               <div>
                 { joinMsg
                   ? <div className='bg-blue-3 text-white p-4'>{joinMsg}</div>
                   : null}
+
                 <div style={{ backgroundImage: 'url(/img/bgl_default_banner.png)', backgroundSize: 'cover', backgroundPosition: 'center' }} className='w-full h-80 hidden md:block' />
                 <div className='grid grid-cols-2'>
                   <div className='flex items-center'>
@@ -171,7 +188,13 @@ function Team () {
                           <>
                             <PageTitle style={{ marginBottom: 0 }}>{name}</PageTitle>
                             { parseInt(userId) === parseInt(team.captain.id)
-                              ? <button onClick={toggleEditTeam} className='ml-2 text-sm' to={`/teams/${id}/edit`}>(edit)</button>
+                              // captain only view
+                              ? (
+                              <>
+                                <button onClick={toggleEditTeam} className='ml-2 uppercase bg-blue-3 text-white py-1 px-2 text-center font-head text-xs' to={`/teams/${id}/edit`}>edit team</button>
+                                <button onClick={copyInviteUrl} className='ml-2 uppercase bg-blue-3 text-white py-1 px-2 text-center font-head text-xs'>{copyText}</button>
+                              </>
+                              )
                               : null }
                             { HAS_DYNASTY(team)
                               ? <PageSubtitle>Dynasty: {get(team, 'dynasty.name')}</PageSubtitle>

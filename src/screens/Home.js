@@ -49,7 +49,7 @@ function TvGuide (data) {
   return (
     <div className='grid grid-cols-7'>
       <DayColumn>
-        <div class>Today</div>
+        <div>Today</div>
         <CalendarDark>
           <CalendarEvents>
             <EventItem>

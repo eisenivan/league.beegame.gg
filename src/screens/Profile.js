@@ -35,7 +35,7 @@ import cookie from 'react-cookies'
 function Profile () {
   const [loading, setLoading] = useState(true)
   const [profile, setProfile] = useState([])
-  const [tokenButtonText, setTokenButtonText] = useState('📋')
+  const [tokenButtonText, setTokenButtonText] = useState('copy auth token')
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,7 +51,7 @@ function Profile () {
   }, [])
 
   // Function to copy user token to clipboard on button click
-  async function HandleTokenCopy (e) {
+  async function handleTokenCopy (e) {
     e.preventDefault()
     // Load token from cookies
     try {
@@ -61,11 +61,11 @@ function Profile () {
       // Display checkmark on successful copy
       setTokenButtonText('✅')
       // Reset to clipboard icon after 1 second
-      setTimeout(() => setTokenButtonText('📋'), 1000)
+      setTimeout(() => setTokenButtonText('copy auth token'), 1000)
     } catch (err) {
       // Somehow if we fail we tell the user it didn't work
       setTokenButtonText('❌')
-      setTimeout(() => setTokenButtonText('📋'), 1000)
+      setTimeout(() => setTokenButtonText('copy auth token'), 1000)
     }
   }
 
@@ -85,14 +85,15 @@ function Profile () {
           ? <div>loading...</div>
           : (
             <div>
-              <PageTitle>{profile.first_name}</PageTitle>
-              <span />
-              <button
-                className='float bg-yellow-2 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline'
-                type='submit'
-                onClick={HandleTokenCopy}>
-                {tokenButtonText}
-              </button>
+              <div className='flex items-center'>
+                <PageTitle>{profile.first_name}</PageTitle>
+                <button
+                  className='ml-2 uppercase bg-blue-3 text-white py-1 px-2 text-center font-head text-xs mb-4'
+                  type='button'
+                  onClick={handleTokenCopy}>
+                  {tokenButtonText}
+                </button>
+              </div>
               <PageSubtitle>{profile.player.name_phonetic} ({profile.player.pronouns})</PageSubtitle>
               <p className='italic mt-2'>{profile.player.bio}</p>
 

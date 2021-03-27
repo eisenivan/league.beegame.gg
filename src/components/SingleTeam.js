@@ -35,7 +35,7 @@ export function TeamRoster ({ team = {}, vertical, className = '' }) {
 function SingleTeam ({ team, className }) {
   return (
     <div>
-      <Link to={`/teams/${team.id}`} className={className || 'text-xl mb-4'}>{team.name}</Link>
+      <Link to={`/teams/${team.id}/`} className={className || 'text-xl mb-4'}>{team.name}</Link>
       { team.members
         ? <TeamRoster team={team} />
         : null }
