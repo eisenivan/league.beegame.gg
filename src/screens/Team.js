@@ -9,7 +9,7 @@ import { PageTitle, PageSubtitle, LightContentBox } from '../components/elements
 import guessLocalTz from '../modules/guess-local-tz'
 import { DATE_TIME_FORMAT } from '../constants'
 import { TeamRoster } from '../components/SingleTeam'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import fetch from '../modules/fetch-with-headers'
 import handleError from '../modules/handle-error'
 
@@ -28,6 +28,7 @@ function Team () {
   const [name, setName] = useState()
   const [userId, setUserId] = useState()
   const [lastUpdated, setLastUpdated] = useState(new Date())
+  const history = useHistory()
 
   function toggleEditTeam () {
     setEditTeam(!editTeam)
@@ -97,14 +98,20 @@ function Team () {
         const requestOptions = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          data: JSON.stringify({ invite_code: code })
+          body: JSON.stringify({ invite_code: code })
         }
+
+        console.log(requestOptions.body)
 
         fetch(`https://api-staging.beegame.gg/teams/${id}/join/`, requestOptions)
           .then(res => res.json())
           .then(res => {
-            if (res.success) {
-              setJoinMsg('Welcome to the winning team, well see you out there')
+            if (res.status === 'joined team') {
+              setJoinMsg('Welcome to your new team!')
+
+              history.push({
+                pathname: `/teams/${id}`
+              })
             } else {
               setJoinMsg('Sorry, we could not add you to the team. Check with the team captain to make sure you\'re eligible to join')
             }
@@ -117,7 +124,7 @@ function Team () {
     }
 
     fetchData()
-  }, [id, userId, lastUpdated, code])
+  }, [id, lastUpdated, code, history])
   return (
     <Chrome>
       {
@@ -128,7 +135,7 @@ function Team () {
 
               <div>
                 { joinMsg
-                  ? <div className='bg-red-500 text-white p-4'>{joinMsg}</div>
+                  ? <div className='bg-blue-3 text-white p-4'>{joinMsg}</div>
                   : null}
                 <div style={{ backgroundImage: 'url(/img/bgl_default_banner.png)', backgroundSize: 'cover', backgroundPosition: 'center' }} className='w-full h-80 hidden md:block' />
                 <div className='grid grid-cols-2'>
