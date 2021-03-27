@@ -5,6 +5,7 @@ import Chrome from '../components/Chrome'
 import SingleTeam from '../components/SingleTeam'
 import fetch from '../modules/fetch-with-headers'
 import handleError from '../modules/handle-error'
+import cookie from 'react-cookies'
 
 // function getAwardEmoji (str) {
 //   switch (str) {
@@ -31,9 +32,10 @@ import handleError from '../modules/handle-error'
 //   }
 // }
 
-function Profile () {
+function Profile() {
   const [loading, setLoading] = useState(true)
   const [profile, setProfile] = useState([])
+  const [tokenButtonText, setTokenButtonText] = useState("📋")
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,6 +49,26 @@ function Profile () {
 
     fetchData()
   }, [])
+
+  // Function to copy user token to clipboard on button click
+  async function HandleTokenCopy(e) {
+    e.preventDefault()
+    // Load token from cookies
+    try {
+      const token = cookie.load('token', true)
+      // use navigator API for clipboard write
+      await navigator.clipboard.writeText(token)
+      // Display checkmark on successful copy
+      setTokenButtonText("✅")
+      // Reset to clipboard icon after 1 second
+      setTimeout(() => setTokenButtonText("📋"), 1000)
+    }
+    catch(err) {
+      // Somehow if we fail we tell the user it didn't work
+      setTokenButtonText("❌")
+      setTimeout(() => setTokenButtonText("📋"), 1000)
+    }
+  }
 
   // const awards = profile.player.
   if (!loading && !profile) {
@@ -65,23 +87,30 @@ function Profile () {
           : (
             <div>
               <PageTitle>{profile.first_name}</PageTitle>
+              <span> </span>
+              <button
+                className='float bg-yellow-2 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline'
+                type='submit'
+                onClick={HandleTokenCopy}>
+                  {tokenButtonText}
+              </button>
               <PageSubtitle>{profile.player.name_phonetic} ({profile.player.pronouns})</PageSubtitle>
               <p className='italic mt-2'>{profile.player.bio}</p>
 
               { get(profile, 'player.teams')
                 ? (
-                <>
-                  <H2>Teams</H2>
-                  { profile.player.teams.map(x => (
-                    <div key={`${x.id}-${x.name}`} className='my-2'>
-                      <SingleTeam className='text-md' team={x} />
-                      {/* {
+                  <>
+                    <H2>Teams</H2>
+                    { profile.player.teams.map(x => (
+                      <div key={`${x.id}-${x.name}`} className='my-2'>
+                        <SingleTeam className='text-md' team={x} />
+                        {/* {
                     get(x.members.find(y => y.name === profile.player.name), 'award_summary', [])
                       .map(x => <span key={`${x.id}-${x.name}`} className='mr-2'>{getAwardEmoji(x.name)}<span className='text-xs italic'>x{x.count}</span></span>)
                   } */}
-                    </div>
-                  ))}
-                </>
+                      </div>
+                    ))}
+                  </>
                 ) : null}
 
             </div>
