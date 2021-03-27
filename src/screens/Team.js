@@ -100,13 +100,13 @@ function Team () {
           data: JSON.stringify({ invite_code: code })
         }
 
-        fetch(`https://api-staging.beegame.gg/teams/${id}/`, requestOptions)
+        fetch(`https://api-staging.beegame.gg/teams/${id}/join/`, requestOptions)
           .then(res => res.json())
           .then(res => {
-            if (res.id) {
-              setJoinMsg('Welcome to the winning team, well see you out there.')
+            if (res.success) {
+              setJoinMsg('Welcome to the winning team, well see you out there')
             } else {
-              setJoinMsg('Sorry, bad code')
+              setJoinMsg('Sorry, we could not add you to the team. Check with the team captain to make sure you\'re eligible to join')
             }
           })
           .catch(handleError)
@@ -128,7 +128,7 @@ function Team () {
 
               <div>
                 { joinMsg
-                  ? <span>{joinMsg}</span>
+                  ? <div className='bg-red-500 text-white p-4'>{joinMsg}</div>
                   : null}
                 <div style={{ backgroundImage: 'url(/img/bgl_default_banner.png)', backgroundSize: 'cover', backgroundPosition: 'center' }} className='w-full h-80 hidden md:block' />
                 <div className='grid grid-cols-2'>
