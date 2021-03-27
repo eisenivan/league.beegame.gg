@@ -39,7 +39,7 @@ function App () {
         <Route path='/teams' exact>
           <Teams />
         </Route>
-        <Route path='/teams/:id' exact>
+        <Route path='/teams/:id/:code?' exact>
           <Team />
         </Route>
         <Route path='/circuits' exact>

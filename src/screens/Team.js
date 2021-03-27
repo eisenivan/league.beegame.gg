@@ -16,8 +16,9 @@ import handleError from '../modules/handle-error'
 const HAS_DYNASTY = not(empty('@dynasty'))
 
 function Team () {
-  const { id } = useParams()
+  const { id, code = null } = useParams()
   const [loading, setLoading] = useState(true)
+  const [joinMsg, setJoinMsg] = useState()
   const [team, setTeam] = useState({})
   const [circuit, setCircuit] = useState({})
   const [editTeam, setEditTeam] = useState(false)
@@ -92,12 +93,31 @@ function Team () {
 
       setCircuit(circuit)
 
+      if (code) {
+        const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          data: JSON.stringify({ invite_code: code })
+        }
+
+        fetch(`https://api-staging.beegame.gg/teams/${id}/`, requestOptions)
+          .then(res => res.json())
+          .then(res => {
+            if (res.id) {
+              setJoinMsg('Welcome to the winning team, well see you out there.')
+            } else {
+              setJoinMsg('Sorry, bad code')
+            }
+          })
+          .catch(handleError)
+      }
+
       setUserId(cookie.load('userid'))
       setLoading(false)
     }
 
     fetchData()
-  }, [id, userId, lastUpdated])
+  }, [id, userId, lastUpdated, code])
   return (
     <Chrome>
       {
@@ -107,6 +127,9 @@ function Team () {
             <div>
 
               <div>
+                { joinMsg
+                  ? <span>{joinMsg}</span>
+                  : null}
                 <div style={{ backgroundImage: 'url(/img/bgl_default_banner.png)', backgroundSize: 'cover', backgroundPosition: 'center' }} className='w-full h-80 hidden md:block' />
                 <div className='grid grid-cols-2'>
                   <div className='flex items-center'>

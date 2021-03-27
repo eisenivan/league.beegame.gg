@@ -32,10 +32,10 @@ import cookie from 'react-cookies'
 //   }
 // }
 
-function Profile() {
+function Profile () {
   const [loading, setLoading] = useState(true)
   const [profile, setProfile] = useState([])
-  const [tokenButtonText, setTokenButtonText] = useState("📋")
+  const [tokenButtonText, setTokenButtonText] = useState('📋')
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,7 +51,7 @@ function Profile() {
   }, [])
 
   // Function to copy user token to clipboard on button click
-  async function HandleTokenCopy(e) {
+  async function HandleTokenCopy (e) {
     e.preventDefault()
     // Load token from cookies
     try {
@@ -59,14 +59,13 @@ function Profile() {
       // use navigator API for clipboard write
       await navigator.clipboard.writeText(token)
       // Display checkmark on successful copy
-      setTokenButtonText("✅")
+      setTokenButtonText('✅')
       // Reset to clipboard icon after 1 second
-      setTimeout(() => setTokenButtonText("📋"), 1000)
-    }
-    catch(err) {
+      setTimeout(() => setTokenButtonText('📋'), 1000)
+    } catch (err) {
       // Somehow if we fail we tell the user it didn't work
-      setTokenButtonText("❌")
-      setTimeout(() => setTokenButtonText("📋"), 1000)
+      setTokenButtonText('❌')
+      setTimeout(() => setTokenButtonText('📋'), 1000)
     }
   }
 
@@ -87,12 +86,12 @@ function Profile() {
           : (
             <div>
               <PageTitle>{profile.first_name}</PageTitle>
-              <span> </span>
+              <span />
               <button
                 className='float bg-yellow-2 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline'
                 type='submit'
                 onClick={HandleTokenCopy}>
-                  {tokenButtonText}
+                {tokenButtonText}
               </button>
               <PageSubtitle>{profile.player.name_phonetic} ({profile.player.pronouns})</PageSubtitle>
               <p className='italic mt-2'>{profile.player.bio}</p>
