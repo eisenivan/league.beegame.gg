@@ -17,7 +17,7 @@ export const AvatarContainer = styled.div`
 `
 
 export function PageTitle ({ children, className = '', style = {} }) {
-  return <h1 style={style} className={`${className} text-2xl mb-4 font-head uppercase inline-block`}>{children}</h1>
+  return <h1 style={style} className={`${className} text-2xl mb-4 font-head uppercase block`}>{children}</h1>
 }
 
 export function PageSubtitle ({ children }) {

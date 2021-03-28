@@ -32,6 +32,7 @@ const EventItem = styled.div`
 
 const EventTitle = styled.div`
   display: inline-block;
+  font-size: 12px;
 `
 
 const EventText = styled.div`
@@ -177,12 +178,25 @@ function Home () {
         loading
           ? <div>loading...</div>
           : (
-            <>
-              <PageTitle>Check out BeeGameLeague on Twitch</PageTitle>
-              <ReactTwitchEmbedVideo height='300' layout='video' channel='BeeGameLeague' />
+            <div>
+              <div className='mb-8 grid grid-cols-content'>
+                <div>
+                  <PageTitle>Check out BeeGameLeague on Twitch</PageTitle>
+                  <ReactTwitchEmbedVideo height='300' layout='video' channel='BeeGameLeague' />
+                </div>
+                <div>
+                  <PageTitle>Your Teams</PageTitle>
+                  coming soon
 
+                  <PageTitle className='mt-8'>Your Upcomming Matches</PageTitle>
+                  coming soon
+                </div>
+              </div>
+
+              <PageTitle className='mt-8'>Upcomming Matches</PageTitle>
               <TvGuide schedule={schedule} />
-            </>
+            </div>
+
           )
       }
     </Chrome>
