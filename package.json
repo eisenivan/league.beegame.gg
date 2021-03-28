@@ -24,11 +24,11 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "craco start",
-    "build:dev": "set REACT_APP_STAGE=true craco build",
-    "build": "craco build",
+    "start": "REACT_APP_STAGE=true craco start",
+    "build:dev": "REACT_APP_STAGE=true craco build",
+    "build": "REACT_APP_STAGE=true craco build",
     "stage": "npm run build:dev && firebase hosting:channel:deploy staging",
-    "deploy": "npm run build && firebase deploy"
+    "deploy": "REACT_APP_STAGE=true npm run build && firebase deploy"
   },
   "eslintConfig": {
     "extends": [
