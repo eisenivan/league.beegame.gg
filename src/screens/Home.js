@@ -43,7 +43,10 @@ function SingleEvent ({ event }) {
     <EventItem key={`${event.home.name}-${event.away.name}-${event.start_time}`}>
       <EventTitle>{formatTime(event.start_time)}</EventTitle>
       <EventText>{`${event.home.name} vs. ${event.away.name}`}</EventText>
-      <a target='_blank' rel='noreferrer' className='text-xs' href={event.primary_caster.stream_link}>{event.primary_caster.name}</a>
+      { event.primary_caster
+        ? <a target='_blank' rel='noreferrer' className='text-xs' href={event.primary_caster.stream_link}>{event.primary_caster.name}</a>
+        : <span className='text-xs'>Looking for caster</span> }
+
     </EventItem>
   )
 }
