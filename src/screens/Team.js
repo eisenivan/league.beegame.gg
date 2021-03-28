@@ -218,23 +218,25 @@ function Team () {
                           </div>
 
                           <div className='bg-gray-3 text-gray-1 p-4 py-2 text-right text-shadow'>
-                            { x.start_time === null
+                            { x.start_time === null && parseInt(userId) === parseInt(team.captain.id)
                               ? (
                                 <>
                                   <DateTimePicker
-                                    className='text-gray-3 bg-gray-1'
+                                    className='text-gray-3 bg-gray-1 text-sm'
                                     onChange={setMatchTime}
                                     value={matchTime}
                                     maxDetail={'minute'}
                                     disableClock
                                   />
-                                  <button className='bg-yellow-1 text-gray-3 rounded-sm ml-2 px-2 py-1 text-shadow' onClick={(e) => scheduleMatch(e, x.id)}>Schedule</button>
+                                  <button className='bg-yellow-1 text-gray-3 rounded-sm ml-2 px-2 py-1 text-shadow text-sm font-head uppercase' onClick={(e) => scheduleMatch(e, x.id)}>Schedule</button>
                                   { matchError ? <div className='mt-2 text-red-500'>{matchError}</div> : null }
                                 </>
                               )
                               : (
                                 <span className='text-lg'>
-                                  {guessLocalTz(x.start_time).format(DATE_TIME_FORMAT)}
+                                  { x.start_time
+                                    ? guessLocalTz(x.start_time).format(DATE_TIME_FORMAT)
+                                    : <span>TBD</span> }
                                 </span>
                               )
                             }
