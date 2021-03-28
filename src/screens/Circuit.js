@@ -74,7 +74,7 @@ function Circuit () {
                   <H2 className='text-2xl'>Teams</H2>
                   <LightContentBox>
                     { teams.map((team) => (
-                      <SingleTeam key={`${team.name}-${circuit.name}-${id}`} team={team} />
+                      <SingleTeam key={`${team.name}-${circuit.name}-${team.id}`} team={team} />
                     ))}
                   </LightContentBox>
                 </div>

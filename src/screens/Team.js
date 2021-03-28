@@ -6,8 +6,7 @@ import DateTimePicker from 'react-datetime-picker'
 import moment from 'moment-timezone'
 import Chrome from '../components/Chrome'
 import { PageTitle, PageSubtitle, LightContentBox, UtilityButton } from '../components/elements'
-import guessLocalTz from '../modules/guess-local-tz'
-import { DATE_TIME_FORMAT } from '../constants'
+import { formatDateTime } from '../modules/guess-local-tz'
 import { TeamRoster } from '../components/SingleTeam'
 import { useParams, useHistory } from 'react-router-dom'
 import fetch from '../modules/fetch-with-headers'
@@ -236,7 +235,7 @@ function Team () {
                               : (
                                 <span className='text-lg'>
                                   { x.start_time
-                                    ? guessLocalTz(x.start_time).format(DATE_TIME_FORMAT)
+                                    ? formatDateTime(x.start_time)
                                     : <span>TBD</span> }
                                 </span>
                               )

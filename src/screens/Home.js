@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import moment from 'moment'
+import get from 'lodash.get'
 import ReactTwitchEmbedVideo from 'react-twitch-embed-video'
 import styled from 'styled-components'
 import fetch from '../modules/fetch-with-headers'
+import { formatTime } from '../modules/guess-local-tz'
 import getApiUrl from '../modules/get-api-url'
 import Chrome from '../components/Chrome'
 import { PageTitle } from '../components/elements'
@@ -32,71 +34,123 @@ const EventTitle = styled.div`
   display: inline-block;
 `
 
-const EventDot = styled.div`
-  margin-right: 14px;
-  display: inline-block;
-  border-radius: 50%;
-  width: 10px;
-  height: 10px;
-  background-color: #A39D9E;
-  box-shadow: 0px 0px 52px -18px rgba(0, 0, 0, 0.75);
-`
-
 const EventText = styled.div`
   font-size: 12px;
-  margin-left: 27px;
 `
 
-function TvGuide (schedule) {
-  console.log(schedule)
+function SingleEvent ({ event }) {
+  return (
+    <EventItem key={`${event.home.name}-${event.away.name}-${event.start_time}`}>
+      <EventTitle>{formatTime(event.start_time)}</EventTitle>
+      <EventText>{`${event.home.name} vs. ${event.away.name}`}</EventText>
+      <a target='_blank' rel='noreferrer' className='text-xs' href={event.primary_caster.stream_link}>{event.primary_caster.name}</a>
+    </EventItem>
+  )
+}
+
+function TvGuide ({ schedule }) {
   return (
     <div className='grid grid-cols-7'>
       <DayColumn>
         <div>Today</div>
         <CalendarDark>
           <CalendarEvents>
-            <EventItem>
-              <EventDot />
-              <EventTitle>10:30 am</EventTitle>
-              <EventText>Gang vs. Peeps</EventText>
-            </EventItem>
-            <EventItem>
-              <EventDot />
-              <EventTitle>12:00 pm</EventTitle>
-              <EventText>Snail Satan vs. The Fighting Dadcores</EventText>
-            </EventItem>
-            <EventItem>
-              <EventDot />
-              <EventTitle>3:00 pm</EventTitle>
-              <EventText>Meet with the client for final design</EventText>
-            </EventItem>
+            { get(schedule, `[${moment().format('YYYYMMDD')}]`, []).map((event) => {
+              return (
+                <SingleEvent key={`${event.home.name}-${event.away.name}-${event.start_time}`} event={event} />
+              )
+            })}
           </CalendarEvents>
         </CalendarDark>
       </DayColumn>
       <DayColumn>
         <div>Tomorrow</div>
+        <CalendarDark>
+          <CalendarEvents>
+            { get(schedule, `[${moment().add(1, 'days').format('YYYYMMDD')}]`, []).map((event) => {
+              return (
+                <SingleEvent key={`${event.home.name}-${event.away.name}-${event.start_time}`} event={event} />
+              )
+            })}
+          </CalendarEvents>
+        </CalendarDark>
       </DayColumn>
       <DayColumn>
         <div>{moment().add(2, 'days').format('M/D')}</div>
+        <CalendarDark>
+          <CalendarEvents>
+            { get(schedule, `[${moment().add(2, 'days').format('YYYYMMDD')}]`, []).map((event) => {
+              return (
+                <SingleEvent key={`${event.home.name}-${event.away.name}-${event.start_time}`} event={event} />
+              )
+            })}
+          </CalendarEvents>
+        </CalendarDark>
       </DayColumn>
       <DayColumn>
         <div>{moment().add(3, 'days').format('M/D')}</div>
+        <CalendarDark>
+          <CalendarEvents>
+            { get(schedule, `[${moment().add(3, 'days').format('YYYYMMDD')}]`, []).map((event) => {
+              return (
+                <SingleEvent key={`${event.home.name}-${event.away.name}-${event.start_time}`} event={event} />
+              )
+            })}
+          </CalendarEvents>
+        </CalendarDark>
       </DayColumn>
       <DayColumn>
         <div>{moment().add(4, 'days').format('M/D')}</div>
+        <CalendarDark>
+          <CalendarEvents>
+            { get(schedule, `[${moment().add(4, 'days').format('YYYYMMDD')}]`, []).map((event) => {
+              return (
+                <SingleEvent key={`${event.home.name}-${event.away.name}-${event.start_time}`} event={event} />
+              )
+            })}
+          </CalendarEvents>
+        </CalendarDark>
       </DayColumn>
       <DayColumn>
         <div>{moment().add(5, 'days').format('M/D')}</div>
+        <CalendarDark>
+          <CalendarEvents>
+            { get(schedule, `[${moment().add(5, 'days').format('YYYYMMDD')}]`, []).map((event) => {
+              return (
+                <SingleEvent key={`${event.home.name}-${event.away.name}-${event.start_time}`} event={event} />
+              )
+            })}
+          </CalendarEvents>
+        </CalendarDark>
       </DayColumn>
       <DayColumn>
         <div>{moment().add(6, 'days').format('M/D')}</div>
+        <CalendarDark>
+          <CalendarEvents>
+            { get(schedule, `[${moment().add(6, 'days').format('YYYYMMDD')}]`, []).map((event) => {
+              return (
+                <SingleEvent key={`${event.home.name}-${event.away.name}-${event.start_time}`} event={event} />
+              )
+            })}
+          </CalendarEvents>
+        </CalendarDark>
       </DayColumn>
     </div>
   )
 }
 
 function sortEventsIntoDates (events) {
-  return events
+  const sorted = {}
+  events.forEach((event) => {
+    // check to see if we have this date
+    if (sorted[`${moment(event.start_time).format('YYYYMMDD')}`]) {
+      sorted[`${moment(event.start_time).format('YYYYMMDD')}`].push(event)
+    } else {
+      sorted[`${moment(event.start_time).format('YYYYMMDD')}`] = [event]
+    }
+  })
+
+  return sorted
 }
 
 function Home () {
