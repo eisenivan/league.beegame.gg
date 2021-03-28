@@ -16,7 +16,7 @@ function useQuery () {
 function Teams () {
   console.log(process.env)
   const params = useQuery()
-  const page = parseInt(params.get('page') || 1, 10)
+  const offset = parseInt(params.get('offset') || 1, 10)
   const q = params.get('q')
   const { id } = useParams()
   const [loading, setLoading] = useState(true)
@@ -27,7 +27,7 @@ function Teams () {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
-      const response = await fetch(`${process.env.REACT_APP_API_URL}teams/?page=${page || 1}&name=${q || ''}`)
+      const response = await fetch(`${process.env.REACT_APP_API_URL}teams/?offset=${offset || 0}&name=${q || ''}`)
         .catch(handleError)
       const json = await response.json()
         .catch(handleError)
@@ -37,7 +37,7 @@ function Teams () {
     }
 
     fetchData()
-  }, [id, page, q])
+  }, [id, offset, q])
 
   function updateQProp (e) {
     history.push({
@@ -77,11 +77,11 @@ function Teams () {
               ))}
 
               {teams.previous
-                ? <Link className={`${utilityButtonString} mr-2`} to={`/teams?page=${page - 1}`}>Previous Page</Link>
+                ? <Link className={`${utilityButtonString} mr-2`} to={`/teams/?offset=${(offset - 10)}`}>Previous Page</Link>
                 : null }
 
               {teams.next
-                ? <Link className={utilityButtonString} to={`/teams?page=${page + 1}`}>Next Page</Link>
+                ? <Link className={utilityButtonString} to={`/teams/?offset=${(offset + 10)}`}>Next Page</Link>
                 : null }
 
             </div>
