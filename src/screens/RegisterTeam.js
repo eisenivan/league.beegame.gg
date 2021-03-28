@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import Chrome from '../components/Chrome'
 import fetch from '../modules/fetch-with-headers'
+import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
 import { Input, Select, Button, FormBox, Error, PageTitle } from '../components/elements'
 
@@ -15,7 +16,7 @@ function RegisterTeam () {
 
   useEffect(() => {
     const fetchData = async () => {
-      const circuits = await fetch(`${process.env.REACT_APP_API_URL}circuits/?format=json&registration_open=true`)
+      const circuits = await fetch(`${getApiUrl()}circuits/?format=json&registration_open=true`)
         .then(x => x.json())
         .catch(handleError)
 
@@ -37,7 +38,7 @@ function RegisterTeam () {
       body: JSON.stringify(data)
     }
 
-    fetch(`${process.env.REACT_APP_API_URL}teams/`, requestOptions)
+    fetch(`${getApiUrl()}teams/`, requestOptions)
       .then(res => res.json())
       .then(res => {
         if (res.id) {

@@ -6,6 +6,7 @@ import MatchList from '../components/MatchList'
 import { PageTitle, H2, LightContentBox } from '../components/elements'
 import { useParams } from 'react-router-dom'
 import fetch from '../modules/fetch-with-headers'
+import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
 
 function Standings ({ teams }) {
@@ -31,17 +32,17 @@ function Circuit () {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}circuits/${id}/?format=json`)
+      const response = await fetch(`${getApiUrl()}circuits/${id}/?format=json`)
         .catch(handleError)
       const json = await response.json()
         .catch(handleError)
 
-      const teamResponse = await fetch(`${process.env.REACT_APP_API_URL}teams/?circuit=${id}&limit=50`)
+      const teamResponse = await fetch(`${getApiUrl()}teams/?circuit=${id}&limit=50`)
         .catch(handleError)
       const teamJson = await teamResponse.json()
         .catch(handleError)
 
-      const matchResponse = await fetch(`${process.env.REACT_APP_API_URL}matches/?circuit=${id}&scheduled=true`)
+      const matchResponse = await fetch(`${getApiUrl()}matches/?circuit=${id}&scheduled=true`)
         .catch(handleError)
       const matchJson = await matchResponse.json()
         .catch(handleError)

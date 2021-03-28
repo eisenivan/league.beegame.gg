@@ -5,6 +5,7 @@ import Chrome from '../components/Chrome'
 import { PageTitle, PageSubtitle, utilityButtonString } from '../components/elements'
 import { useParams, Link, useLocation, useHistory } from 'react-router-dom'
 import fetch from '../modules/fetch-with-headers'
+import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
 
 const HAS_DYNASTY = not(empty('@dynasty'))
@@ -16,7 +17,7 @@ function useQuery () {
 function Teams () {
   console.log(process.env)
   const params = useQuery()
-  const offset = parseInt(params.get('offset') || 1, 10)
+  const offset = parseInt(params.get('offset') || 0, 10)
   const q = params.get('q')
   const { id } = useParams()
   const [loading, setLoading] = useState(true)
@@ -27,7 +28,7 @@ function Teams () {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
-      const response = await fetch(`${process.env.REACT_APP_API_URL}teams/?offset=${offset || 0}&name=${q || ''}`)
+      const response = await fetch(`${getApiUrl()}teams/?offset=${offset || 0}&name=${q || ''}`)
         .catch(handleError)
       const json = await response.json()
         .catch(handleError)

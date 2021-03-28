@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { linkString } from './elements'
 import { NavLink, Link } from 'react-router-dom'
 import cookie from 'react-cookies'
+import getApiUrl from '../modules/get-api-url'
 
 const HeaderLogo = styled.img`
   margin: -0.5rem -1rem -1.6rem -1.7rem;
@@ -47,7 +48,7 @@ function Header () {
               <button className={`${linkString} text-gray-1 bg-transparent px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75`} onClick={logout}>Logout</button>
             </>
           )
-          : <a className={`${linkString} text-gray-1 bg-transparent px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75`} href={`${process.env.REACT_APP_API_URL}accounts/discord/login/`}>Login</a> }
+          : <a className={`${linkString} text-gray-1 bg-transparent px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75`} href={`${getApiUrl()}accounts/discord/login/`}>Login</a> }
 
       </nav>
     </header>

@@ -4,6 +4,7 @@ import { PageTitle, PageSubtitle, H3, AvatarContainer } from '../components/elem
 import Chrome from '../components/Chrome'
 import SingleTeam from '../components/SingleTeam'
 import fetch from '../modules/fetch-with-headers'
+import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
 
 function Profile () {
@@ -13,7 +14,7 @@ function Profile () {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}players/${id}/?format=json`)
+      const response = await fetch(`${getApiUrl()}players/${id}/?format=json`)
         .then(data => data.json())
         .catch(handleError)
 

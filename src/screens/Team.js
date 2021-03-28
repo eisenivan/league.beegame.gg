@@ -11,6 +11,7 @@ import { DATE_TIME_FORMAT } from '../constants'
 import { TeamRoster } from '../components/SingleTeam'
 import { useParams, useHistory } from 'react-router-dom'
 import fetch from '../modules/fetch-with-headers'
+import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
 
 const HAS_DYNASTY = not(empty('@dynasty'))
@@ -49,7 +50,7 @@ function Team () {
       body: JSON.stringify(data)
     }
 
-    fetch(`${process.env.REACT_APP_API_URL}teams/${id}/`, requestOptions)
+    fetch(`${getApiUrl()}teams/${id}/`, requestOptions)
       .then(res => res.json())
       .then((res) => {
         setName(res.name)
@@ -68,7 +69,7 @@ function Team () {
         body: JSON.stringify(data)
       }
 
-      fetch(`${process.env.REACT_APP_API_URL}matches/${matchId}/`, requestOptions)
+      fetch(`${getApiUrl()}matches/${matchId}/`, requestOptions)
         .then(res => res.json())
         .then((res) => {
           setLastUpdated(new Date())
@@ -96,7 +97,7 @@ function Team () {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}teams/${id}/`)
+      const response = await fetch(`${getApiUrl()}teams/${id}/`)
         .then((data) => data.json())
         .catch(handleError)
 
@@ -104,7 +105,7 @@ function Team () {
       setMatches([...response.home_matches, ...response.away_matches])
       setName(response.name)
 
-      const circuit = await fetch(`${process.env.REACT_APP_API_URL}circuits/${response.circuit}/`)
+      const circuit = await fetch(`${getApiUrl()}circuits/${response.circuit}/`)
         .then((data) => data.json())
         .catch(handleError)
 
@@ -119,7 +120,7 @@ function Team () {
 
         console.log(requestOptions.body)
 
-        fetch(`${process.env.REACT_APP_API_URL}teams/${id}/join/`, requestOptions)
+        fetch(`${getApiUrl()}teams/${id}/join/`, requestOptions)
           .then(res => res.json())
           .then(res => {
             if (res.status === 'joined team') {

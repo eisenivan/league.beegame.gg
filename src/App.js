@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom'
 import cookie from 'react-cookies'
 import fetch from './modules/fetch-with-headers'
+import getApiUrl from './modules/get-api-url'
 
 import Home from './screens/Home'
 import Circuits from './screens/Circuits'
@@ -16,7 +17,7 @@ import Profile from './screens/Profile'
 import RegisterTeam from './screens/RegisterTeam'
 
 async function setUserCookies () {
-  const me = await fetch(`${process.env.REACT_APP_API_URL}me/?format=json`)
+  const me = await fetch(`${getApiUrl()}me/?format=json`)
   const meJson = await me.json()
   cookie.save('userid', meJson.player.id, { path: '/', secure: !process.env.NODE_ENV === 'development' })
   cookie.save('name', meJson.first_name, { path: '/', secure: !process.env.NODE_ENV === 'development' })

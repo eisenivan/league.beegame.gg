@@ -3,6 +3,7 @@ import moment from 'moment'
 import ReactTwitchEmbedVideo from 'react-twitch-embed-video'
 import styled from 'styled-components'
 import fetch from '../modules/fetch-with-headers'
+import getApiUrl from '../modules/get-api-url'
 import Chrome from '../components/Chrome'
 import { PageTitle } from '../components/elements'
 
@@ -103,7 +104,7 @@ function Home () {
   const [schedule, setSchedule] = useState([])
   useEffect(() => {
     const fetchData = async () => {
-      await fetch(`${process.env.REACT_APP_API_URL}matches/?scheduled=true`)
+      await fetch(`${getApiUrl()}matches/?scheduled=true`)
         .then(data => data.json())
         .then(data => () => sortEventsIntoDates(data.results))
         .then(data => setSchedule(data))

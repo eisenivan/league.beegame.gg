@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Chrome from '../components/Chrome'
 import fetch from '../modules/fetch-with-headers'
+import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
 
 function Circuits () {
@@ -10,7 +11,7 @@ function Circuits () {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}circuits/?is_active=true&format=json`)
+      const response = await fetch(`${getApiUrl()}circuits/?is_active=true&format=json`)
         .then(x => x.json())
         .catch(handleError)
 
