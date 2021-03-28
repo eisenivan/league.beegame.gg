@@ -47,7 +47,7 @@ function Header () {
               <button className={`${linkString} text-gray-1 bg-transparent px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75`} onClick={logout}>Logout</button>
             </>
           )
-          : <a className={`${linkString} text-gray-1 bg-transparent px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75`} href='https://api-staging.beegame.gg/accounts/discord/login/'>Login</a> }
+          : <a className={`${linkString} text-gray-1 bg-transparent px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75`} href={`${process.env.REACT_APP_API_URL}accounts/discord/login/`}>Login</a> }
 
       </nav>
     </header>

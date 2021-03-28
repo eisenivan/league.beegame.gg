@@ -31,17 +31,17 @@ function Circuit () {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`https://api-staging.beegame.gg/circuits/${id}/?format=json`)
+      const response = await fetch(`${process.env.REACT_APP_API_URL}circuits/${id}/?format=json`)
         .catch(handleError)
       const json = await response.json()
         .catch(handleError)
 
-      const teamResponse = await fetch(`https://api-staging.beegame.gg/teams/?circuit=${id}&limit=50`)
+      const teamResponse = await fetch(`${process.env.REACT_APP_API_URL}teams/?circuit=${id}&limit=50`)
         .catch(handleError)
       const teamJson = await teamResponse.json()
         .catch(handleError)
 
-      const matchResponse = await fetch(`https://api-staging.beegame.gg/matches/?circuit=${id}&scheduled=true`)
+      const matchResponse = await fetch(`${process.env.REACT_APP_API_URL}matches/?circuit=${id}&scheduled=true`)
         .catch(handleError)
       const matchJson = await matchResponse.json()
         .catch(handleError)

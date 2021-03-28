@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { not, empty } from 'regent'
 import get from 'lodash.get'
 import Chrome from '../components/Chrome'
-import { PageTitle, PageSubtitle } from '../components/elements'
+import { PageTitle, PageSubtitle, utilityButtonString } from '../components/elements'
 import { useParams, Link, useLocation, useHistory } from 'react-router-dom'
 import fetch from '../modules/fetch-with-headers'
 import handleError from '../modules/handle-error'
@@ -14,6 +14,7 @@ function useQuery () {
 }
 
 function Teams () {
+  console.log(process.env)
   const params = useQuery()
   const page = parseInt(params.get('page') || 1, 10)
   const q = params.get('q')
@@ -26,7 +27,7 @@ function Teams () {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
-      const response = await fetch(`https://api-staging.beegame.gg/teams/?page=${page || 1}&name=${q || ''}`)
+      const response = await fetch(`${process.env.REACT_APP_API_URL}teams/?page=${page || 1}&name=${q || ''}`)
         .catch(handleError)
       const json = await response.json()
         .catch(handleError)
@@ -58,6 +59,7 @@ function Teams () {
           ? <div>loading...</div>
           : (
             <div>
+              <PageTitle>Find a BGL Team</PageTitle>
               <div className='flex items-center mb-8'>
                 <form onSubmit={search}>
                   <input className='-mr-1 py-1 px-2 text-lg text-gray-3 border-solid border-2 border-gray-300' type='text' placeholder='Search' value={query} onChange={(e) => setQuery(e.target.value)} />
@@ -69,17 +71,17 @@ function Teams () {
                   { HAS_DYNASTY(team)
                     ? <PageSubtitle>{get(team, 'dynasty.name')}</PageSubtitle>
                     : null }
-                  <Link to={`/teams/${team.id}`}><PageTitle>{team.name}</PageTitle></Link>
+                  <Link to={`/teams/${team.id}`}><span>{team.name}</span></Link>
                   <div />
                 </div>
               ))}
 
               {teams.previous
-                ? <Link className='mr-2' to={`/teams?page=${page - 1}`}>Previous Page</Link>
+                ? <Link className={`${utilityButtonString} mr-2`} to={`/teams?page=${page - 1}`}>Previous Page</Link>
                 : null }
 
               {teams.next
-                ? <Link to={`/teams?page=${page + 1}`}>Next Page</Link>
+                ? <Link className={utilityButtonString} to={`/teams?page=${page + 1}`}>Next Page</Link>
                 : null }
 
             </div>

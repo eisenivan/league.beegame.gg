@@ -39,7 +39,7 @@ function Profile () {
 
   useEffect(() => {
     const fetchData = async () => {
-      const profile = await fetch('https://api-staging.beegame.gg/me/?format=json')
+      const profile = await fetch(`${process.env.REACT_APP_API_URL}me/?format=json`)
         .then(data => data.json())
         .catch(handleError)
 
@@ -73,7 +73,7 @@ function Profile () {
   if (!loading && !profile) {
     return (
       <Chrome>
-        <div>You must <a href='https://api-staging.beegame.gg/accounts/discord/login/'>login</a> to view your profile</div>
+        <div>You must <a href={`${process.env.REACT_APP_API_URL}accounts/discord/login/`}>login</a> to view your profile</div>
       </Chrome>
     )
   }

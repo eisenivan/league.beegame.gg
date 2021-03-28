@@ -5,7 +5,7 @@ import cookie from 'react-cookies'
 import DateTimePicker from 'react-datetime-picker'
 import moment from 'moment-timezone'
 import Chrome from '../components/Chrome'
-import { PageTitle, PageSubtitle, LightContentBox } from '../components/elements'
+import { PageTitle, PageSubtitle, LightContentBox, UtilityButton } from '../components/elements'
 import guessLocalTz from '../modules/guess-local-tz'
 import { DATE_TIME_FORMAT } from '../constants'
 import { TeamRoster } from '../components/SingleTeam'
@@ -49,7 +49,7 @@ function Team () {
       body: JSON.stringify(data)
     }
 
-    fetch(`https://api-staging.beegame.gg/teams/${id}/`, requestOptions)
+    fetch(`${process.env.REACT_APP_API_URL}teams/${id}/`, requestOptions)
       .then(res => res.json())
       .then((res) => {
         setName(res.name)
@@ -68,7 +68,7 @@ function Team () {
         body: JSON.stringify(data)
       }
 
-      fetch(`https://api-staging.beegame.gg/matches/${matchId}/`, requestOptions)
+      fetch(`${process.env.REACT_APP_API_URL}matches/${matchId}/`, requestOptions)
         .then(res => res.json())
         .then((res) => {
           setLastUpdated(new Date())
@@ -95,9 +95,8 @@ function Team () {
   }
 
   useEffect(() => {
-    console.log(process.env)
     const fetchData = async () => {
-      const response = await fetch(`https://api-staging.beegame.gg/teams/${id}/`)
+      const response = await fetch(`${process.env.REACT_APP_API_URL}teams/${id}/`)
         .then((data) => data.json())
         .catch(handleError)
 
@@ -105,7 +104,7 @@ function Team () {
       setMatches([...response.home_matches, ...response.away_matches])
       setName(response.name)
 
-      const circuit = await fetch(`https://api-staging.beegame.gg/circuits/${response.circuit}/`)
+      const circuit = await fetch(`${process.env.REACT_APP_API_URL}circuits/${response.circuit}/`)
         .then((data) => data.json())
         .catch(handleError)
 
@@ -120,7 +119,7 @@ function Team () {
 
         console.log(requestOptions.body)
 
-        fetch(`https://api-staging.beegame.gg/teams/${id}/join/`, requestOptions)
+        fetch(`${process.env.REACT_APP_API_URL}teams/${id}/join/`, requestOptions)
           .then(res => res.json())
           .then(res => {
             if (res.status === 'joined team') {
@@ -160,7 +159,7 @@ function Team () {
                     <img className='w-20' alt='placeholder team logo' src='/img/bgl_default_logo.png' />
                     { editTeam
                       ? (
-                        <div className=''>
+                        <div>
                           <input
                             className='shadow inline-block appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                             placeholder='Team Name'
@@ -169,19 +168,13 @@ function Team () {
                             onChange={onTitleChange}
                             required />
 
-                          <button
-                            className='ml-2 uppercase bg-blue-3 text-white py-1 px-2 text-center font-head text-xs'
-                            type='submit'
-                            onClick={handleSubmit}>
-                                Update
-                          </button>
+                          <UtilityButton type='submit' className={'ml-2'} onClick={handleSubmit}>
+                            Update
+                          </UtilityButton>
 
-                          <button
-                            className='ml-2 uppercase bg-blue-3 text-white py-1 px-2 text-center font-head text-xs'
-                            type='submit'
-                            onClick={toggleEditTeam}>
-                                Cancel
-                          </button>
+                          <UtilityButton className={'ml-2'} onClick={toggleEditTeam}>
+                            Cancel
+                          </UtilityButton>
                         </div>
                       )
                       : (
@@ -191,8 +184,8 @@ function Team () {
                               // captain only view
                               ? (
                               <>
-                                <button onClick={toggleEditTeam} className='ml-2 uppercase bg-blue-3 text-white py-1 px-2 text-center font-head text-xs' to={`/teams/${id}/edit`}>edit team</button>
-                                <button onClick={copyInviteUrl} className='ml-2 uppercase bg-blue-3 text-white py-1 px-2 text-center font-head text-xs'>{copyText}</button>
+                                <UtilityButton className={'ml-2'} onClick={toggleEditTeam}>edit team</UtilityButton>
+                                <UtilityButton className={'ml-2'} onClick={copyInviteUrl}>{copyText}</UtilityButton>
                               </>
                               )
                               : null }

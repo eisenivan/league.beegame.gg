@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
+export const utilityButtonString = 'uppercase bg-blue-3 hover:bg-blue-900 text-white py-1 px-2 text-center font-head text-xs'
 export const linkString = 'hover:text-yellow-2 transition-colors'
 
 export function Link ({ children, ...props }) {
@@ -50,7 +51,18 @@ export function Input ({ ...props }) {
 export function Button ({ children, ...props }) {
   return (
     <button
-      className='float bg-gray-1 hover:bg-blue-700 text-gray-3 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+      className='float bg-yellow-2 hover:bg-yellow-3 text-gray-3 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+      type={props.type || 'button'}
+      onClick={props.onClick}>
+      {children}
+    </button>
+  )
+}
+
+export function UtilityButton ({ children, ...props }) {
+  return (
+    <button
+      className={`${utilityButtonString} ${props.className || ''}`}
       type={props.type || 'button'}
       onClick={props.onClick}>
       {children}

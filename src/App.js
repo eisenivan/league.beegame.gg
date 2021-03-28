@@ -16,7 +16,7 @@ import Profile from './screens/Profile'
 import RegisterTeam from './screens/RegisterTeam'
 
 async function setUserCookies () {
-  const me = await fetch('https://api-staging.beegame.gg/me/?format=json')
+  const me = await fetch(`${process.env.REACT_APP_API_URL}me/?format=json`)
   const meJson = await me.json()
   cookie.save('userid', meJson.player.id, { path: '/', secure: !process.env.NODE_ENV === 'development' })
   cookie.save('name', meJson.first_name, { path: '/', secure: !process.env.NODE_ENV === 'development' })
