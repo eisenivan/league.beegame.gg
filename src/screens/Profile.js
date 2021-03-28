@@ -86,7 +86,7 @@ function Profile () {
           : (
             <div>
               <div className='flex items-center'>
-                <PageTitle>{profile.first_name}</PageTitle>
+                <PageTitle>{profile.player.name}</PageTitle>
                 <button
                   className='ml-2 uppercase bg-blue-3 text-white py-1 px-2 text-center font-head text-xs mb-4'
                   type='button'

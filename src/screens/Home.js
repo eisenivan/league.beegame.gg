@@ -1,7 +1,8 @@
+import React, { useState, useEffect } from 'react'
 import moment from 'moment'
-import React from 'react'
 import ReactTwitchEmbedVideo from 'react-twitch-embed-video'
 import styled from 'styled-components'
+import fetch from '../modules/fetch-with-headers'
 import Chrome from '../components/Chrome'
 import { PageTitle } from '../components/elements'
 
@@ -45,7 +46,8 @@ const EventText = styled.div`
   margin-left: 27px;
 `
 
-function TvGuide (data) {
+function TvGuide (schedule) {
+  console.log(schedule)
   return (
     <div className='grid grid-cols-7'>
       <DayColumn>
@@ -92,13 +94,39 @@ function TvGuide (data) {
   )
 }
 
+function sortEventsIntoDates (events) {
+  return events
+}
+
 function Home () {
+  const [loading, setLoading] = useState(true)
+  const [schedule, setSchedule] = useState([])
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetch(`${process.env.REACT_APP_API_URL}matches/?scheduled=true`)
+        .then(data => data.json())
+        .then(data => () => sortEventsIntoDates(data.results))
+        .then(data => setSchedule(data))
+
+      setLoading(false)
+    }
+
+    fetchData()
+  }, [])
   return (
     <Chrome>
-      <PageTitle>Check out BeeGameLeague on Twitch</PageTitle>
-      <ReactTwitchEmbedVideo height='300' layout='video' channel='BeeGameLeague' />
+      {
+        loading
+          ? <div>loading...</div>
+          : (
+            <>
+              <PageTitle>Check out BeeGameLeague on Twitch</PageTitle>
+              <ReactTwitchEmbedVideo height='300' layout='video' channel='BeeGameLeague' />
 
-      <TvGuide />
+              <TvGuide schedule={schedule} />
+            </>
+          )
+      }
     </Chrome>
   )
 }
