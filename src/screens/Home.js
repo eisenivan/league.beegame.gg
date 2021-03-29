@@ -54,7 +54,7 @@ function SingleEvent ({ event }) {
 
 function TvGuide ({ schedule }) {
   return (
-    <div className='grid grid-cols-7'>
+    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7'>
       <DayColumn>
         <div>Today</div>
         <CalendarDark>
@@ -179,7 +179,7 @@ function Home () {
           ? <div>loading...</div>
           : (
             <div>
-              <div className='mb-8 grid grid-cols-content'>
+              <div className='mb-8 sm:mt-8 md:mt-0 grid grid-cols-1 md:grid-cols-content'>
                 <div>
                   <PageTitle>Check out BeeGameLeague on Twitch</PageTitle>
                   <ReactTwitchEmbedVideo height='300' layout='video' channel='BeeGameLeague' />
