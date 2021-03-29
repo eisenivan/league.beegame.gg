@@ -7,7 +7,9 @@ import fetch from '../modules/fetch-with-headers'
 import { formatTime } from '../modules/guess-local-tz'
 import getApiUrl from '../modules/get-api-url'
 import Chrome from '../components/Chrome'
+import handleError from '../modules/handle-error'
 import { PageTitle } from '../components/elements'
+import SingleTeam from '../components/SingleTeam'
 
 const DayColumn = styled.div`
 
@@ -17,8 +19,7 @@ const CalendarDark = styled.div`
   box-shadow: 0px 0px 35px -16px rgba(0, 0, 0, 0.75);
   font-family: "Roboto", sans-serif;
   color: #363b41;
-  display: inline-block;
-  background-image: linear-gradient(-222deg, #646464, #454545);
+  background-image: linear-gradient(-222deg, #222, #111);
   color: #fff;
 `
 
@@ -30,23 +31,14 @@ const EventItem = styled.div`
   padding: 5px;
 `
 
-const EventTitle = styled.div`
-  display: inline-block;
-  font-size: 12px;
-`
-
-const EventText = styled.div`
-  font-size: 12px;
-`
-
 function SingleEvent ({ event }) {
   return (
     <EventItem key={`${event.home.name}-${event.away.name}-${event.start_time}`}>
-      <EventTitle>{formatTime(event.start_time)}</EventTitle>
-      <EventText>{`${event.home.name} vs. ${event.away.name}`}</EventText>
+      <p className='italic text-xs'>{formatTime(event.start_time)}</p>
+      <p className='font-bold text-xs'>{`${event.home.name} vs. ${event.away.name}`}</p>
       { event.primary_caster
         ? <a target='_blank' rel='noreferrer' className='text-xs' href={event.primary_caster.stream_link}>{event.primary_caster.name}</a>
-        : <span className='text-xs'>Looking for caster</span> }
+        : <span className='text-xs italic'>Looking for caster</span> }
 
     </EventItem>
   )
@@ -54,9 +46,9 @@ function SingleEvent ({ event }) {
 
 function TvGuide ({ schedule }) {
   return (
-    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7'>
+    <div style={{ backgroundImage: 'repeating-linear-gradient(45deg, #202020, #202020 30px, #222 30px, #222 60px)' }} className='shadow-lg grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7'>
       <DayColumn>
-        <div>Today</div>
+        <div className='bg-blue-3 font-bold text-center p-2'>Today</div>
         <CalendarDark>
           <CalendarEvents>
             { get(schedule, `[${moment().format('YYYYMMDD')}]`, []).map((event) => {
@@ -68,7 +60,7 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div>Tomorrow</div>
+        <div className='bg-blue-3 font-bold text-center p-2'>Tomorrow</div>
         <CalendarDark>
           <CalendarEvents>
             { get(schedule, `[${moment().add(1, 'days').format('YYYYMMDD')}]`, []).map((event) => {
@@ -80,7 +72,7 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div>{moment().add(2, 'days').format('M/D')}</div>
+        <div className='bg-blue-3 font-bold text-center p-2'>{moment().add(2, 'days').format('M/D')}</div>
         <CalendarDark>
           <CalendarEvents>
             { get(schedule, `[${moment().add(2, 'days').format('YYYYMMDD')}]`, []).map((event) => {
@@ -92,7 +84,7 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div>{moment().add(3, 'days').format('M/D')}</div>
+        <div className='bg-blue-3 font-bold text-center p-2'>{moment().add(3, 'days').format('M/D')}</div>
         <CalendarDark>
           <CalendarEvents>
             { get(schedule, `[${moment().add(3, 'days').format('YYYYMMDD')}]`, []).map((event) => {
@@ -104,7 +96,7 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div>{moment().add(4, 'days').format('M/D')}</div>
+        <div className='bg-blue-3 font-bold text-center p-2'>{moment().add(4, 'days').format('M/D')}</div>
         <CalendarDark>
           <CalendarEvents>
             { get(schedule, `[${moment().add(4, 'days').format('YYYYMMDD')}]`, []).map((event) => {
@@ -116,7 +108,7 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div>{moment().add(5, 'days').format('M/D')}</div>
+        <div className='bg-blue-3 font-bold text-center p-2'>{moment().add(5, 'days').format('M/D')}</div>
         <CalendarDark>
           <CalendarEvents>
             { get(schedule, `[${moment().add(5, 'days').format('YYYYMMDD')}]`, []).map((event) => {
@@ -128,7 +120,7 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div>{moment().add(6, 'days').format('M/D')}</div>
+        <div className='bg-blue-3 font-bold text-center p-2'>{moment().add(6, 'days').format('M/D')}</div>
         <CalendarDark>
           <CalendarEvents>
             { get(schedule, `[${moment().add(6, 'days').format('YYYYMMDD')}]`, []).map((event) => {
@@ -160,13 +152,22 @@ function sortEventsIntoDates (events) {
 function Home () {
   const [loading, setLoading] = useState(true)
   const [schedule, setSchedule] = useState([])
+  const [profile, setProfile] = useState({})
   useEffect(() => {
     const fetchData = async () => {
-      await fetch(`${getApiUrl()}matches/?scheduled=true`)
+      const promises = []
+      promises.push(fetch(`${getApiUrl()}matches/?scheduled=true`)
         .then(data => data.json())
         .then(data => () => sortEventsIntoDates(data.results))
         .then(data => setSchedule(data))
+        .catch(handleError))
 
+      promises.push(fetch(`${getApiUrl()}me/?format=json`)
+        .then(data => data.json())
+        .then(data => setProfile(data))
+        .catch(handleError))
+
+      await Promise.all(promises)
       setLoading(false)
     }
 
@@ -186,14 +187,23 @@ function Home () {
                 </div>
                 <div>
                   <PageTitle>Your Teams</PageTitle>
-                  coming soon
+                  { get(profile, 'player.teams')
+                    ? (
+                        <>
+                          { profile.player.teams.map(x => (
+                            <div key={`${x.id}-${x.name}`} className='my-2'>
+                              <SingleTeam className='text-md' team={x} />
+                            </div>
+                          ))}
+                        </>
+                    ) : null}
 
-                  <PageTitle className='mt-8'>Your Upcomming Matches</PageTitle>
+                  <PageTitle className='mt-8'>Your Upcoming Matches</PageTitle>
                   coming soon
                 </div>
               </div>
 
-              <PageTitle className='mt-8'>Upcomming Matches</PageTitle>
+              <PageTitle className='mt-8'>Upcoming Matches</PageTitle>
               <TvGuide schedule={schedule} />
             </div>
 
