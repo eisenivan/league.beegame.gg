@@ -151,7 +151,7 @@ function sortEventsIntoDates (events) {
 
 function Home () {
   const [loading, setLoading] = useState(true)
-  const [schedule, setSchedule] = useState([])
+  const [schedule, setSchedule] = useState({})
   const [profile, setProfile] = useState({})
   useEffect(() => {
     const fetchData = async () => {
@@ -197,9 +197,6 @@ function Home () {
                           ))}
                         </>
                     ) : null}
-
-                  <PageTitle className='mt-8'>Your Upcoming Matches</PageTitle>
-                  coming soon
                 </div>
               </div>
 

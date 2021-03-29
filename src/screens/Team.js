@@ -203,22 +203,28 @@ function Team () {
               </div>
 
               <LightContentBox>
-                <div className='grid grid-cols-1 md:grid-cols-content md:gap-12'>
+                <div className='grid grid-cols-1 md:grid-cols-2 md:gap-12'>
                   <TeamRoster className='mt-4' vertical team={team} />
                   <div>
-                    <PageSubtitle>Matches</PageSubtitle>
-                    { matches.map(x => (
-                      <div key={`${x.home.name}${x.away.name}${x.id}`} className='shadow-xl'>
+                    { matches.map(match => (
+                      <div key={`${match.home.name}${match.away.name}${match.id}`} className='shadow-xl mb-4'>
                         <div className='uppercase font-head text-2xl'>
-                          <div className='text-gray-1 bg-blue-2 p-4 truncate text-shadow'>
-                            {x.away.name}
+                          <div className='text-gray-1 bg-blue-2 p-4 truncate text-shadow flex justify-between'>
+                            <span>{match.away.name}</span>
+                            { match.result
+                              ? <span>{match.result.sets_home}</span>
+                              : null }
+
                           </div>
-                          <div className='text-gray-1 bg-yellow-2 p-4 ellipsis text-shadow'>
-                            {x.home.name}
+                          <div className='text-gray-1 bg-yellow-2 p-4 ellipsis text-shadow flex justify-between'>
+                            <span>{match.home.name}</span>
+                            { match.result
+                              ? <span>{match.result.sets_away}</span>
+                              : null }
                           </div>
 
-                          <div className='bg-gray-3 text-gray-1 p-4 py-2 text-right text-shadow'>
-                            { x.start_time === null && parseInt(userId) === parseInt(team.captain.id)
+                          <div className='bg-gray-3 text-gray-1 p-2 text-right'>
+                            { match.start_time === null && parseInt(userId) === parseInt(team.captain.id)
                               ? (
                                 <>
                                   <DateTimePicker
@@ -228,14 +234,14 @@ function Team () {
                                     maxDetail={'minute'}
                                     disableClock
                                   />
-                                  <button className='bg-yellow-1 text-gray-3 rounded-sm ml-2 px-2 py-1 text-shadow text-sm font-head uppercase' onClick={(e) => scheduleMatch(e, x.id)}>Schedule</button>
+                                  <button className='bg-yellow-1 text-gray-3 rounded-sm ml-2 px-2 py-1 text-sm font-head uppercase' onClick={(e) => scheduleMatch(e, match.id)}>Schedule</button>
                                   { matchError ? <div className='mt-2 text-red-500'>{matchError}</div> : null }
                                 </>
                               )
                               : (
-                                <span className='text-lg'>
-                                  { x.start_time
-                                    ? formatDateTime(x.start_time)
+                                <span className='text-sm'>
+                                  { match.start_time
+                                    ? formatDateTime(match.start_time)
                                     : <span>TBD</span> }
                                 </span>
                               )
