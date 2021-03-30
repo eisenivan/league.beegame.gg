@@ -153,6 +153,7 @@ function Home () {
   const [loading, setLoading] = useState(true)
   const [schedule, setSchedule] = useState({})
   const [profile, setProfile] = useState({})
+  const [playerMatches, setPlayerMatches] = useState({})
   useEffect(() => {
     const fetchData = async () => {
       const promises = []
@@ -166,6 +167,10 @@ function Home () {
         .then(data => data.json())
         .then(data => setProfile(data))
         .catch(handleError))
+
+      promises.push(fetch(`${getApiUrl()}matches/?player=559&days=90`)
+        .then(data => data.json())
+        .then(data => setPlayerMatches(data.results)))
 
       await Promise.all(promises)
       setLoading(false)
@@ -197,6 +202,16 @@ function Home () {
                           ))}
                         </>
                     ) : null}
+
+                  <PageTitle>Your Upcoming Matches</PageTitle>
+                  { playerMatches.length
+                    ? (
+                      playerMatches.map((match) => (
+                        <pre>{match}</pre>
+                      ))
+                    )
+                    : <span>No Upcoming Matches</span> }
+
                 </div>
               </div>
 
