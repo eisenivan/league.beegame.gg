@@ -68,19 +68,12 @@ function Team () {
   async function assignCaster (e, matchId) {
     e.preventDefault()
     const casterId = e.target.value
-    console.log(casterId, casters)
-    const { id, name, bio_link, stream_link } = casters.find(x => parseInt(x.id, 10) === parseInt(casterId, 10)) || null // eslint-disable-line
 
     const requestOptions = {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        primary_caster: {
-          id,
-          name,
-          bio_link,
-          stream_link
-        }
+        primary_caster: casterId
       })
     }
 
@@ -258,9 +251,9 @@ function Team () {
                     { matches.map((match) => (
                       <MatchBox key={`match-${match.id}`} match={match}>
                         <div className='bg-gray-3 text-gray-1 p-2 text-right flex justify-between'>
-                          <select value={get(match, 'primary_caster.id')} onChange={(e) => assignCaster(e, match.id)} className='text-gray-3'>
+                          <select value={`${get(match, 'primary_caster.id')}`} onChange={(e) => assignCaster(e, match.id)} className='text-gray-3'>
                             <option>-- SELECT CASTER --</option>
-                            { casters.map(x => <option key={`caster-${x.id}`} value={x.id}>{x.name}</option>) }
+                            { casters.map(x => <option key={`caster-${x.id}`} value={`${x.id}`}>{x.name}</option>) }
                           </select>
                           { match.start_time === null && parseInt(userId) === parseInt(team.captain.id)
                             ? (
