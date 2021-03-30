@@ -60,6 +60,7 @@ function RegisterTeam () {
           : (
             <div className='max-w-md m-auto'>
               <PageTitle>Register a Bee Game League Team</PageTitle>
+              <p className='-mt-4 mb-4 text-xs'>Once your team has been created you will be given a join url to distribute to your team members.</p>
               <FormBox>
                 <label>Team Name</label>
                 <Input required placeholder='Team Name' value={name} onChange={e => setName(e.target.value)} />

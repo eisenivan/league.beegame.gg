@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react'
 import moment from 'moment'
 import get from 'lodash.get'
 import ReactTwitchEmbedVideo from 'react-twitch-embed-video'
+import cookie from 'react-cookies'
 import styled from 'styled-components'
 import fetch from '../modules/fetch-with-headers'
-import { formatTime } from '../modules/guess-local-tz'
+import { formatTime, formatDateTime } from '../modules/guess-local-tz'
 import getApiUrl from '../modules/get-api-url'
 import Chrome from '../components/Chrome'
 import handleError from '../modules/handle-error'
-import { PageTitle } from '../components/elements'
+import { PageTitle, MatchBox } from '../components/elements'
 import SingleTeam from '../components/SingleTeam'
 
 const DayColumn = styled.div`
@@ -168,9 +169,11 @@ function Home () {
         .then(data => setProfile(data))
         .catch(handleError))
 
-      promises.push(fetch(`${getApiUrl()}matches/?player=559&days=90`)
+      const userId = await cookie.load('userid')
+      promises.push(fetch(`${getApiUrl()}matches/?player=${userId}&days=90`)
         .then(data => data.json())
-        .then(data => setPlayerMatches(data.results)))
+        .then(data => setPlayerMatches(data.results))
+        .catch(handleError))
 
       await Promise.all(promises)
       setLoading(false)
@@ -207,7 +210,9 @@ function Home () {
                   { playerMatches.length
                     ? (
                       playerMatches.map((match) => (
-                        <pre>{match}</pre>
+                        <MatchBox key={`match-${match.id}`} match={match}>
+                          {formatDateTime(match.start_time)}
+                        </MatchBox>
                       ))
                     )
                     : <span>No Upcoming Matches</span> }

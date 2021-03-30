@@ -5,7 +5,7 @@ import cookie from 'react-cookies'
 import DateTimePicker from 'react-datetime-picker'
 import moment from 'moment-timezone'
 import Chrome from '../components/Chrome'
-import { PageTitle, PageSubtitle, LightContentBox, UtilityButton } from '../components/elements'
+import { PageTitle, PageSubtitle, LightContentBox, UtilityButton, MatchBox } from '../components/elements'
 import { formatDateTime } from '../modules/guess-local-tz'
 import { TeamRoster } from '../components/SingleTeam'
 import { useParams, useHistory, Link } from 'react-router-dom'
@@ -23,13 +23,20 @@ function Team () {
   const [circuit, setCircuit] = useState({})
   const [editTeam, setEditTeam] = useState(false)
   const [matches, setMatches] = useState([])
-  const [matchTime, setMatchTime] = useState()
+  const [matchTime, setMatchTime] = useState({})
+  const [casters, setCasters] = useState([])
   const [matchError, setMatchError] = useState()
   const [name, setName] = useState()
   const [userId, setUserId] = useState()
   const [lastUpdated, setLastUpdated] = useState(new Date())
   const [copyText, setCopyText] = useState('Copy invite url')
   const history = useHistory()
+
+  function changeMatchTime (val, id) {
+    const obj = { ...matchTime }
+    obj[id] = val
+    setMatchTime(obj)
+  }
 
   function toggleEditTeam () {
     setEditTeam(!editTeam)
@@ -58,10 +65,37 @@ function Team () {
       .catch(handleError)
   }
 
-  async function scheduleMatch (e, matchId) {
+  async function assignCaster (e, matchId) {
+    e.preventDefault()
+    const casterId = e.target.value
+    console.log(casterId, casters)
+    const { id, name, bio_link, stream_link } = casters.find(x => parseInt(x.id, 10) === parseInt(casterId, 10)) || null // eslint-disable-line
+
+    const requestOptions = {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        primary_caster: {
+          id,
+          name,
+          bio_link,
+          stream_link
+        }
+      })
+    }
+
+    fetch(`${getApiUrl()}matches/${matchId}/`, requestOptions)
+      .then(res => res.json())
+      .then((res) => {
+        setLastUpdated(new Date())
+      })
+      .catch(handleError)
+  }
+
+  async function scheduleMatch (e, matchId, clear = false) {
     e.preventDefault()
     if (matchTime) {
-      const data = { start_time: moment(matchTime).tz('UTC').format() }
+      const data = { start_time: clear ? null : moment(matchTime[matchId]).tz('UTC').format() }
       const requestOptions = {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
@@ -96,20 +130,27 @@ function Team () {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${getApiUrl()}teams/${id}/`)
+      setUserId(cookie.load('userid'))
+
+      const promises = []
+
+      // fetch the basic team data
+      promises.push(fetch(`${getApiUrl()}teams/${id}/`)
         .then((data) => data.json())
-        .catch(handleError)
+        .then((data) => {
+          setTeam(data)
+          setMatches([...data.home_matches, ...data.away_matches])
+          setName(data.name)
+          fetch(`${getApiUrl()}circuits/${data.circuit}/`)
+            .then((data) => data.json())
+            .then((data) => {
+              setCircuit(data)
+            })
+            .catch(handleError)
+        })
+        .catch(handleError))
 
-      setTeam(response)
-      setMatches([...response.home_matches, ...response.away_matches])
-      setName(response.name)
-
-      const circuit = await fetch(`${getApiUrl()}circuits/${response.circuit}/`)
-        .then((data) => data.json())
-        .catch(handleError)
-
-      setCircuit(circuit)
-
+      // if this is a join team request, make call the api to attempt an add
       if (code) {
         const requestOptions = {
           method: 'POST',
@@ -117,9 +158,7 @@ function Team () {
           body: JSON.stringify({ invite_code: code })
         }
 
-        console.log(requestOptions.body)
-
-        fetch(`${getApiUrl()}teams/${id}/join/`, requestOptions)
+        promises.push(fetch(`${getApiUrl()}teams/${id}/join/`, requestOptions)
           .then(res => res.json())
           .then(res => {
             if (res.status === 'joined team') {
@@ -132,11 +171,20 @@ function Team () {
               setJoinMsg('Sorry, we could not add you to the team. Check with the team captain to make sure you\'re eligible to join')
             }
           })
-          .catch(handleError)
+          .catch(handleError))
       }
 
-      setUserId(cookie.load('userid'))
+      // When all our calls have resolved
+      await Promise.all(promises)
+
+      // Remove loading screen
       setLoading(false)
+
+      // get our casters (this is non-blocking)
+      fetch(`${getApiUrl()}casters/`)
+        .then(data => data.json())
+        .then(data => setCasters(data.results))
+        .catch(handleError)
     }
 
     fetchData()
@@ -154,12 +202,12 @@ function Team () {
                   : null}
 
                 <div style={{ backgroundImage: 'url(/img/bgl_default_banner.png)', backgroundSize: 'cover', backgroundPosition: 'center' }} className='w-full h-80 hidden md:block' />
-                <div className='grid grid-cols-2'>
-                  <div className='flex items-center'>
+                <div className='grid md:grid-cols-content'>
+                  <div className='flex flex-col md:flex-row items-center'>
                     <img className='w-20' alt='placeholder team logo' src='/img/bgl_default_logo.png' />
                     { editTeam
                       ? (
-                        <div>
+                        <div className='flex flex-col lg:flex-row'>
                           <input
                             className='shadow inline-block appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                             placeholder='Team Name'
@@ -167,32 +215,33 @@ function Team () {
                             value={name}
                             onChange={onTitleChange}
                             required />
+                          <>
+                            <UtilityButton type='submit' className={'ml-2'} onClick={handleSubmit}>
+                              Update
+                            </UtilityButton>
 
-                          <UtilityButton type='submit' className={'ml-2'} onClick={handleSubmit}>
-                            Update
-                          </UtilityButton>
-
-                          <UtilityButton className={'ml-2'} onClick={toggleEditTeam}>
-                            Cancel
-                          </UtilityButton>
+                            <UtilityButton className={'ml-2'} onClick={toggleEditTeam}>
+                              Cancel
+                            </UtilityButton>
+                          </>
                         </div>
                       )
                       : (
-                          <>
-                            <PageTitle style={{ marginBottom: 0 }}>{name}</PageTitle>
-                            { parseInt(userId) === parseInt(team.captain.id)
-                              // captain only view
-                              ? (
-                              <>
-                                <UtilityButton className={'ml-2'} onClick={toggleEditTeam}>edit team</UtilityButton>
+                        <div className='flex flex-col'>
+                          <PageTitle className='truncate max-w-xs sm:max-width-sm md:max-w-full' style={{ marginBottom: 0 }}>{name}</PageTitle>
+                          { parseInt(userId) === parseInt(team.captain.id)
+                          // captain only view
+                            ? (
+                              <div>
+                                <UtilityButton onClick={toggleEditTeam}>edit team</UtilityButton>
                                 <UtilityButton className={'ml-2'} onClick={copyInviteUrl}>{copyText}</UtilityButton>
-                              </>
-                              )
-                              : null }
-                            { HAS_DYNASTY(team)
-                              ? <PageSubtitle>Dynasty: {get(team, 'dynasty.name')}</PageSubtitle>
-                              : null }
-                          </>
+                              </div>
+                            )
+                            : null }
+                          { HAS_DYNASTY(team)
+                            ? <PageSubtitle>Dynasty: {get(team, 'dynasty.name')}</PageSubtitle>
+                            : null }
+                        </div>
                       )
                     }
 
@@ -206,49 +255,46 @@ function Team () {
                 <div className='grid grid-cols-1 md:grid-cols-2 md:gap-12'>
                   <TeamRoster className='mt-4' vertical team={team} />
                   <div>
-                    { matches.map(match => (
-                      <div key={`${match.home.name}${match.away.name}${match.id}`} className='shadow-xl mb-4'>
-                        <div className='uppercase font-head text-2xl'>
-                          <div className='text-gray-1 bg-blue-2 p-4 truncate text-shadow flex justify-between'>
-                            <Link className='text-white' to={`/teams/${match.away.id}/`}>{match.away.name}</Link>
-                            { match.result
-                              ? <span>{match.result.sets_home}</span>
-                              : null }
-
-                          </div>
-                          <div className='text-gray-1 bg-yellow-2 p-4 ellipsis text-shadow flex justify-between'>
-                            <Link className='text-white' to={`/teams/${match.home.id}/`}>{match.home.name}</Link>
-                            { match.result
-                              ? <span>{match.result.sets_away}</span>
-                              : null }
-                          </div>
-
-                          <div className='bg-gray-3 text-gray-1 p-2 text-right'>
-                            { match.start_time === null && parseInt(userId) === parseInt(team.captain.id)
-                              ? (
-                                <>
+                    { matches.map((match) => (
+                      <MatchBox key={`match-${match.id}`} match={match}>
+                        <div className='bg-gray-3 text-gray-1 p-2 text-right flex justify-between'>
+                          <select value={get(match, 'primary_caster.id')} onChange={(e) => assignCaster(e, match.id)} className='text-gray-3'>
+                            <option>-- SELECT CASTER --</option>
+                            { casters.map(x => <option key={`caster-${x.id}`} value={x.id}>{x.name}</option>) }
+                          </select>
+                          { match.start_time === null && parseInt(userId) === parseInt(team.captain.id)
+                            ? (
+                              <div className='flex justify-between'>
+                                <span>
                                   <DateTimePicker
                                     className='text-gray-3 bg-gray-1 text-sm'
-                                    onChange={setMatchTime}
-                                    value={matchTime}
+                                    onChange={(val) => changeMatchTime(val, match.id)}
+                                    value={matchTime[match.id]}
                                     maxDetail={'minute'}
                                     disableClock
                                   />
                                   <button className='bg-yellow-1 text-gray-3 rounded-sm ml-2 px-2 py-1 text-sm font-head uppercase' onClick={(e) => scheduleMatch(e, match.id)}>Schedule</button>
                                   { matchError ? <div className='mt-2 text-red-500'>{matchError}</div> : null }
-                                </>
-                              )
-                              : (
-                                <span className='text-sm'>
-                                  { match.start_time
-                                    ? formatDateTime(match.start_time)
-                                    : <span>TBD</span> }
                                 </span>
-                              )
-                            }
-                          </div>
+                              </div>
+                            )
+                            : (
+                              <span className='text-sm'>
+                                { match.start_time
+                                  ? (
+                                    <>
+                                      {formatDateTime(match.start_time)}
+                                      { parseInt(userId) === parseInt(team.captain.id)
+                                        ? <button onClick={(e) => scheduleMatch(e, match.id, true)} className='bg-yellow-1 text-gray-3 rounded-sm ml-2 px-2 py-1 text-sm font-head uppercase'>Reschedule</button>
+                                        : null }
+                                    </>
+                                  )
+                                  : <span>TBD</span> }
+                              </span>
+                            )
+                          }
                         </div>
-                      </div>
+                      </MatchBox>
                     )) }
                   </div>
                 </div>

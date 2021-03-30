@@ -1,8 +1,34 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link as RouterLink } from 'react-router-dom'
 
 export const utilityButtonString = 'uppercase bg-blue-3 hover:bg-blue-900 text-white py-1 px-2 text-center font-head text-xs'
 export const linkString = 'hover:text-yellow-2 transition-colors'
+
+export function MatchBox ({ match, children }) {
+  return (
+    <div key={`${match.home.name}${match.away.name}${match.id}`} className='shadow-xl mb-4 max-w-lg'>
+      <div className='uppercase font-head text-2xl'>
+        <div className='text-gray-1 bg-blue-2 p-4 truncate text-shadow flex justify-between'>
+          <RouterLink className='text-white truncate' to={`/teams/${match.away.id}/`}>{match.away.name}</RouterLink>
+          { match.result
+            ? <span className='ml-2'>{match.result.sets_home}</span>
+            : null }
+
+        </div>
+        <div className='text-gray-1 bg-yellow-2 p-4 ellipsis text-shadow flex justify-between'>
+          <RouterLink className='text-white truncate' to={`/teams/${match.home.id}/`}>{match.home.name}</RouterLink>
+          { match.result
+            ? <span>{match.result.sets_away}</span>
+            : null }
+        </div>
+        <div className='bg-gray-3 text-gray-1 text-right pr-2 pb-0 text-sm'>
+          {children}
+        </div>
+      </div>
+    </div>
+  )
+}
 
 export function Link ({ children, ...props }) {
   return (
@@ -73,7 +99,7 @@ export function UtilityButton ({ children, ...props }) {
 export function Select ({ children, ...props }) {
   return (
     <select
-      className='shadow inline-block appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+      className={`shadow inline-block appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${props.className}`}
       placeholder={props.placeholder}
       name={props.name}
       value={props.value}
