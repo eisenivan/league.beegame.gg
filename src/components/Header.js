@@ -5,6 +5,8 @@ import { NavLink, Link } from 'react-router-dom'
 import cookie from 'react-cookies'
 import getApiUrl from '../modules/get-api-url'
 
+const navStyle = 'bg-transparent p-1 lg:py-2 lg:px-3 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75'
+
 const HeaderLogo = styled.img`
   margin: -0.5rem -1rem -1.6rem -1.7rem;
   min-width: 7rem;
@@ -13,7 +15,7 @@ const HeaderLogo = styled.img`
 
 function NavItem ({ children, to, exact = false }) {
   return (
-    <NavLink activeClassName='text-yellow-2' exact={exact} className='bg-transparent px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75' to={to}>
+    <NavLink activeClassName='text-yellow-2' exact={exact} className={navStyle} to={to}>
       {children}
     </NavLink>
   )
@@ -45,10 +47,10 @@ function Header () {
           ? (
             <>
               <NavItem className={`${linkString} text-gray-1`} to='/profile'>Profile</NavItem>
-              <button className={`${linkString} text-gray-1 bg-transparent px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75`} onClick={logout}>Logout</button>
+              <button className={`${linkString} ${navStyle}`} onClick={logout}>Logout</button>
             </>
           )
-          : <a className={`${linkString} text-gray-1 bg-transparent px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75`} href={`${getApiUrl()}accounts/discord/login/`}>Login</a> }
+          : <a className={`${linkString} ${navStyle}`} href={`${getApiUrl()}accounts/discord/login/`}>Login</a> }
 
       </nav>
     </header>
