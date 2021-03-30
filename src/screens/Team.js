@@ -251,10 +251,14 @@ function Team () {
                     { matches.map((match) => (
                       <MatchBox key={`match-${match.id}`} match={match}>
                         <div className='bg-gray-3 text-gray-1 p-2 text-right flex justify-between'>
-                          <select value={`${get(match, 'primary_caster.id')}`} onChange={(e) => assignCaster(e, match.id)} className='text-gray-3'>
-                            <option>-- SELECT CASTER --</option>
-                            { casters.map(x => <option key={`caster-${x.id}`} value={`${x.id}`}>{x.name}</option>) }
-                          </select>
+                          {parseInt(userId) === parseInt(team.captain.id)
+                            ? (
+                              <select value={`${get(match, 'primary_caster.id')}`} onChange={(e) => assignCaster(e, match.id)} className='text-gray-3'>
+                                <option>-- SELECT CASTER --</option>
+                                { casters.map(x => <option key={`caster-${x.id}`} value={`${x.id}`}>{x.name}</option>) }
+                              </select>
+                            ) : null }
+
                           { match.start_time === null && parseInt(userId) === parseInt(team.captain.id)
                             ? (
                               <div className='flex justify-between'>
