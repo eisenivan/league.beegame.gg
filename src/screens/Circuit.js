@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import sortBy from 'lodash.sortby'
 import Chrome from '../components/Chrome'
-import SingleTeam from '../components/SingleTeam'
 import MatchList from '../components/MatchList'
-import { PageTitle, H2, LightContentBox } from '../components/elements'
+import { PageTitle, H2 } from '../components/elements'
 import { useParams } from 'react-router-dom'
 import fetch from '../modules/fetch-with-headers'
 import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
 
 function Standings ({ teams }) {
-  const sorted = sortBy(teams, 'wins').reverse()
+  const sorted = sortBy(teams, ['wins', o => o.losses * -1]).reverse()
   return (
     <>
       { sorted.map(x => (
@@ -66,17 +65,8 @@ function Circuit () {
               <PageTitle>{circuit.name}</PageTitle>
               <div className='grid grid-cols-1 md:grid-cols-content md:gap-12'>
                 <div>
-                  <H2 className='text-2xl'>Schedule</H2>
+                  <H2 className='text-2xl'>Upcoming Matches</H2>
                   <MatchList matches={matches} />
-
-                  <hr className='my-8' />
-
-                  <H2 className='text-2xl'>Teams</H2>
-                  <LightContentBox>
-                    { teams.map((team) => (
-                      <SingleTeam key={`${team.name}-${circuit.name}-${team.id}`} team={team} />
-                    ))}
-                  </LightContentBox>
                 </div>
                 <div>
                   <H2 className='text-2xl'>Standings</H2>

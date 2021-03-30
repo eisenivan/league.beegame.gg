@@ -8,7 +8,7 @@ import Chrome from '../components/Chrome'
 import { PageTitle, PageSubtitle, LightContentBox, UtilityButton } from '../components/elements'
 import { formatDateTime } from '../modules/guess-local-tz'
 import { TeamRoster } from '../components/SingleTeam'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams, useHistory, Link } from 'react-router-dom'
 import fetch from '../modules/fetch-with-headers'
 import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
@@ -198,7 +198,7 @@ function Team () {
 
                   </div>
 
-                  <div className='font-head text-lg text-right self-center'>{circuit.name}</div>
+                  <div className='font-head text-lg text-right self-center'><Link className='text-white' to={`/circuits/${circuit.id}/`}>{circuit.name}</Link></div>
                 </div>
               </div>
 
@@ -210,14 +210,14 @@ function Team () {
                       <div key={`${match.home.name}${match.away.name}${match.id}`} className='shadow-xl mb-4'>
                         <div className='uppercase font-head text-2xl'>
                           <div className='text-gray-1 bg-blue-2 p-4 truncate text-shadow flex justify-between'>
-                            <span>{match.away.name}</span>
+                            <Link className='text-white' to={`/teams/${match.away.id}/`}>{match.away.name}</Link>
                             { match.result
                               ? <span>{match.result.sets_home}</span>
                               : null }
 
                           </div>
                           <div className='text-gray-1 bg-yellow-2 p-4 ellipsis text-shadow flex justify-between'>
-                            <span>{match.home.name}</span>
+                            <Link className='text-white' to={`/teams/${match.home.id}/`}>{match.home.name}</Link>
                             { match.result
                               ? <span>{match.result.sets_away}</span>
                               : null }
