@@ -39,7 +39,7 @@ function Header () {
         <Link to='/' className={`${linkString} text-gray-1 font-head uppercase text-2xl flex items-center`}><HeaderLogo className='h-28' alt='Beegame.gg emblem logo' src='/img/logo_BGL_emblem.png' /> League.Beegame.gg</Link>
       </div>
       <nav className='flex items-center'>
-        <NavItem to='/register' className={`${linkString} text-gray-1`}>Register a team</NavItem>
+        <NavItem to='/register' className={`${linkString} text-gray-1`}>Register</NavItem>
         <NavItem to='/circuits' className={`${linkString} text-gray-1`}>Circuits</NavItem>
         <NavItem to='/teams' className={`${linkString} text-gray-1`}>Teams</NavItem>
 
