@@ -67,7 +67,11 @@ function Team () {
 
   async function assignCaster (e, matchId) {
     e.preventDefault()
-    const casterId = e.target.value
+    let casterId = e.target.value
+
+    if (casterId === '') {
+      casterId = null
+    }
 
     const requestOptions = {
       method: 'PATCH',
@@ -254,7 +258,7 @@ function Team () {
                           {parseInt(userId) === parseInt(team.captain.id)
                             ? (
                               <select value={`${get(match, 'primary_caster.id')}`} onChange={(e) => assignCaster(e, match.id)} className='text-gray-3'>
-                                <option>-- SELECT CASTER --</option>
+                                <option value=''>-- SELECT CASTER --</option>
                                 { casters.map(x => <option key={`caster-${x.id}`} value={`${x.id}`}>{x.name}</option>) }
                               </select>
                             ) : null }

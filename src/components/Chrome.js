@@ -1,15 +1,19 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 import cookie from 'react-cookies'
 import Header from './Header'
 import Footer from './Footer'
 
 function Chrome ({ children }) {
+  const history = useHistory()
   const search = useLocation().search
   const token = new URLSearchParams(search).get('token')
 
   if (token) {
     cookie.save('token', token, { path: '/', secure: !process.env.NODE_ENV === 'development' })
+    history.push({
+      search: ''
+    })
   }
 
   return (

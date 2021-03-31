@@ -160,19 +160,19 @@ function Home () {
       const promises = []
       promises.push(fetch(`${getApiUrl()}matches/?scheduled=true`)
         .then(data => data.json())
-        .then(data => () => sortEventsIntoDates(data.results))
-        .then(data => setSchedule(data))
+        .then(data => () => sortEventsIntoDates(data.results || []))
+        .then(data => setSchedule(data || []))
         .catch(handleError))
 
       promises.push(fetch(`${getApiUrl()}me/?format=json`)
         .then(data => data.json())
-        .then(data => setProfile(data))
+        .then(data => setProfile(data || {}))
         .catch(handleError))
 
-      const userId = await cookie.load('userid')
+      const userId = await cookie.load('userId')
       promises.push(fetch(`${getApiUrl()}matches/?player=${userId}&days=90`)
         .then(data => data.json())
-        .then(data => setPlayerMatches(data.results))
+        .then(data => setPlayerMatches(data.results || []))
         .catch(handleError))
 
       await Promise.all(promises)

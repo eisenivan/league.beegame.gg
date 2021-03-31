@@ -15,7 +15,6 @@ function useQuery () {
 }
 
 function Teams () {
-  console.log(process.env)
   const params = useQuery()
   const offset = parseInt(params.get('offset') || 0, 10)
   const q = params.get('q')

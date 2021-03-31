@@ -15,12 +15,17 @@ import Team from './screens/Team'
 import Player from './screens/Player'
 import Profile from './screens/Profile'
 import RegisterTeam from './screens/RegisterTeam'
+import handleError from './modules/handle-error'
 
 async function setUserCookies () {
-  const me = await fetch(`${getApiUrl()}me/?format=json`)
-  const meJson = await me.json()
-  cookie.save('userid', meJson.player.id, { path: '/', secure: !process.env.NODE_ENV === 'development' })
-  cookie.save('name', meJson.first_name, { path: '/', secure: !process.env.NODE_ENV === 'development' })
+  const meJson = await fetch(`${getApiUrl()}me/?format=json`)
+    .then(data => data.json())
+    .catch(handleError)
+
+  if (meJson.id) {
+    cookie.save('userId', meJson.player.id, { path: '/', secure: !process.env.NODE_ENV === 'development' })
+    cookie.save('name', meJson.first_name, { path: '/', secure: !process.env.NODE_ENV === 'development' })
+  }
 }
 
 function App () {

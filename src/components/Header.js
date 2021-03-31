@@ -4,6 +4,7 @@ import { linkString } from './elements'
 import { NavLink, Link } from 'react-router-dom'
 import cookie from 'react-cookies'
 import getApiUrl from '../modules/get-api-url'
+import nukeTokens from '../modules/nuke-tokens'
 
 const navStyle = 'bg-transparent p-1 lg:py-2 lg:px-3 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75'
 
@@ -25,7 +26,7 @@ function Header () {
   const [token, setToken] = useState(null)
 
   async function logout () {
-    await cookie.remove('token', { path: '/' })
+    await nukeTokens()
     setToken(null)
   }
 
