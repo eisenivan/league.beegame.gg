@@ -11,6 +11,8 @@ function Chrome ({ children }) {
 
   if (token) {
     cookie.save('token', token, { path: '/', secure: !process.env.NODE_ENV === 'development' })
+
+    // navigate browser to the current page with no query string
     history.push({
       search: ''
     })
