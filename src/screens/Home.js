@@ -4,6 +4,7 @@ import get from 'lodash.get'
 import ReactTwitchEmbedVideo from 'react-twitch-embed-video'
 import cookie from 'react-cookies'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import fetch from '../modules/fetch-with-headers'
 import { formatTime, formatDateTime } from '../modules/guess-local-tz'
 import getApiUrl from '../modules/get-api-url'
@@ -209,9 +210,9 @@ function Home () {
                             </div>
                           ))}
                         </>
-                    ) : null}
+                    ) : <span>You're not on any teams. <Link to='/register'>Register a new one</Link></span>}
 
-                  <PageTitle>Your Upcoming Matches</PageTitle>
+                  <PageTitle className='mt-4'>Your Upcoming Matches</PageTitle>
                   { playerMatches.length
                     ? (
                       playerMatches.map((match) => (
