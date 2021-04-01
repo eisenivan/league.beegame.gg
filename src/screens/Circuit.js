@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import sortBy from 'lodash.sortby'
 import Chrome from '../components/Chrome'
-import MatchList from '../components/MatchList'
-import { PageTitle, H2 } from '../components/elements'
-import { useParams } from 'react-router-dom'
+import { formatDateTime } from '../modules/guess-local-tz'
+import { PageTitle, H2, MatchBox } from '../components/elements'
+import { useParams, Link } from 'react-router-dom'
 import fetch from '../modules/fetch-with-headers'
 import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
@@ -11,14 +11,14 @@ import handleError from '../modules/handle-error'
 function Standings ({ teams }) {
   const sorted = sortBy(teams, ['wins', o => o.losses * -1]).reverse()
   return (
-    <>
-      { sorted.map(x => (
-        <div key={`${x.name}-${x.wins}-${x.losses}`}>
-          <div>{x.name}</div>
-          <div>{x.wins} - {x.losses}</div>
+    <div className='border-2 border-gray-2  shadow-xl'>
+      { sorted.map((x, i) => (
+        <div className={`border-2 border-gray-2 shadow-xl font-head text-xl font-bold text-white text-shadow p-1 flex items-center justify-between ${i % 2 ? 'bg-blue-2' : 'bg-yellow-2'}`} key={`${x.name}-${x.wins}-${x.losses}`}>
+          <div className='max-w-md p-1 font-head uppercase truncate'><Link className='text-white' to={`/teams/${x.id}`}>{x.name}</Link></div>
+          <div className='w-16 p-1 mr-2 font-head uppercase text-right'><strong className='inline-block text-3xl'>{x.wins}</strong> - <strong className='inline-block text-3xl'>{x.losses}</strong></div>
         </div>
       )) }
-    </>
+    </div>
   )
 }
 
@@ -65,11 +65,18 @@ function Circuit () {
               <PageTitle>{circuit.name}</PageTitle>
               <div className='grid grid-cols-1 md:grid-cols-content md:gap-12'>
                 <div>
-                  <H2 className='text-2xl'>Upcoming Matches</H2>
-                  <MatchList matches={matches} />
+                  <H2>Upcoming Matches</H2>
+                  { matches.map((match) => (
+                    <MatchBox key={`match-${match.id}`} match={match}>
+                      { match.primary_caster
+                        ? <a className='mr-2' target='_blank' rel='noreferrer' href={match.primary_caster.stream_link}>{match.primary_caster.name}</a>
+                        : null }
+                      {formatDateTime(match.start_time)}
+                    </MatchBox>
+                  )) }
                 </div>
                 <div>
-                  <H2 className='text-2xl'>Standings</H2>
+                  <H2>Standings</H2>
                   <Standings teams={teams} />
                 </div>
               </div>
