@@ -255,7 +255,7 @@ function Team () {
                     { matches.map((match) => (
                       <MatchBox key={`match-${match.id}`} match={match}>
                         <div className='bg-gray-3 text-gray-1 p-2 text-right flex justify-between'>
-                          {parseInt(userId) === parseInt(team.captain.id)
+                          {parseInt(userId) === parseInt(team.captain.id) && !match.result
                             ? (
                               <select value={`${get(match, 'primary_caster.id')}`} onChange={(e) => assignCaster(e, match.id)} className='text-gray-3'>
                                 <option value=''>-- SELECT CASTER --</option>
@@ -263,7 +263,7 @@ function Team () {
                               </select>
                             ) : null }
 
-                          { match.start_time === null && parseInt(userId) === parseInt(team.captain.id)
+                          { match.start_time === null && parseInt(userId) === parseInt(team.captain.id) && !match.result
                             ? (
                               <div className='flex justify-between'>
                                 <span>
@@ -280,7 +280,7 @@ function Team () {
                               </div>
                             )
                             : (
-                              <span className='text-sm'>
+                              <span className='text-sm block flex-grow'>
                                 { match.start_time
                                   ? (
                                     <>
@@ -290,7 +290,7 @@ function Team () {
                                         : null }
                                     </>
                                   )
-                                  : <span>TBD</span> }
+                                  : <span className='block align-right'>TBD</span> }
                               </span>
                             )
                           }
