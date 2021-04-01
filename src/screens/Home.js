@@ -37,6 +37,11 @@ function SingleEvent ({ event }) {
     <EventItem key={`${event.home.name}-${event.away.name}-${event.start_time}`}>
       <p className='italic text-xs'>{formatTime(event.start_time)}</p>
       <p className='font-bold text-xs'>{`${event.home.name} vs. ${event.away.name}`}</p>
+
+      { event.circuit
+        ? <p className='mt-1 text-xs italic'>{event.circuit.name}</p>
+        : null }
+
       { event.primary_caster
         ? <a target='_blank' rel='noreferrer' className='text-xs' href={event.primary_caster.stream_link}>{event.primary_caster.name}</a>
         : <span className='text-xs italic'>Looking for caster</span> }
