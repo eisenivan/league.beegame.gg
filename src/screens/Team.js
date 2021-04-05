@@ -127,7 +127,7 @@ function Team () {
 
   useEffect(() => {
     const fetchData = async () => {
-      setUserId(cookie.load('userid'))
+      setUserId(cookie.load('userId'))
 
       const promises = []
 

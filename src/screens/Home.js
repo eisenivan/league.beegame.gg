@@ -19,14 +19,13 @@ const DayColumn = styled.div`
 
 const CalendarDark = styled.div`
   box-shadow: 0px 0px 35px -16px rgba(0, 0, 0, 0.75);
-  font-family: "Roboto", sans-serif;
   color: #363b41;
   background-image: linear-gradient(-222deg, #222, #111);
   color: #fff;
 `
 
 const CalendarEvents = styled.div`
-  color: #A39D9E;
+  color: white;
 `
 
 const EventItem = styled.div`
@@ -40,7 +39,7 @@ function SingleEvent ({ event }) {
       <p className='font-bold text-xs'>{`${event.home.name} vs. ${event.away.name}`}</p>
 
       { event.circuit
-        ? <p className='mt-1 text-xs italic'>{event.circuit.name}</p>
+        ? <p className='mt-1 text-xs italic'><Link className='text-gray-1' to={`/circuits/${event.circuit.id}/`}>{event.circuit.name}</Link></p>
         : null }
 
       { event.primary_caster
