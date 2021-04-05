@@ -180,8 +180,9 @@ function Home () {
         .then(data => setPlayerMatches(data.results))
         .catch(handleError))
 
-      await Promise.all(promises)
-      setLoading(false)
+      Promise.all(promises).then(() => {
+        setLoading(false)
+      })
     }
 
     fetchData()
@@ -220,7 +221,13 @@ function Home () {
                         </MatchBox>
                       ))
                     )
-                    : <span>No Upcoming Matches</span> }
+                    : (
+                    <>
+                      <span>You have no match this week</span>
+                      <span className='text-xs'>(That may be because you have a Bye week)</span>
+                    </>
+                    )
+                  }
 
                 </div>
               </div>

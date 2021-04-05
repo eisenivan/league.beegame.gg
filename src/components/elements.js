@@ -12,14 +12,14 @@ export function MatchBox ({ match, children }) {
         <div className='text-gray-1 bg-blue-2 p-4 truncate text-shadow flex justify-between'>
           <RouterLink className='text-white truncate' to={`/teams/${match.away.id}/`}>{match.away.name}</RouterLink>
           { match.result
-            ? <span className='ml-2 text-3xl'>{match.result.sets_home}</span>
+            ? <span className='ml-2 text-3xl'>{match.result.sets_away}</span>
             : null }
 
         </div>
         <div className='text-gray-1 bg-yellow-2 p-4 ellipsis text-shadow flex justify-between'>
           <RouterLink className='text-white truncate' to={`/teams/${match.home.id}/`}>{match.home.name}</RouterLink>
           { match.result
-            ? <span className='text-3xl'>{match.result.sets_away}</span>
+            ? <span className='text-3xl'>{match.result.sets_home}</span>
             : null }
         </div>
         <div className='bg-gray-3 text-gray-1 text-right pr-2 pb-0 text-sm'>

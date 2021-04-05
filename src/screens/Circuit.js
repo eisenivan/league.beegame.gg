@@ -65,7 +65,7 @@ function Circuit () {
               <PageTitle>{circuit.name}</PageTitle>
               <div className='grid grid-cols-1 md:grid-cols-content md:gap-12'>
                 <div>
-                  <H2>Upcoming Matches</H2>
+                  <H2>Matches This Week</H2>
                   { matches.map((match) => (
                     <MatchBox key={`match-${match.id}`} match={match}>
                       { match.primary_caster

@@ -137,6 +137,7 @@ function Team () {
         .then((data) => {
           setTeam(data)
           setMatches([...data.home_matches, ...data.away_matches])
+          console.log(matches)
           setName(data.name)
           fetch(`${getApiUrl()}circuits/${data.circuit}/`)
             .then((data) => data.json())
@@ -252,51 +253,63 @@ function Team () {
                 <div className='grid grid-cols-1 md:grid-cols-2 md:gap-12'>
                   <TeamRoster className='mt-4' vertical team={team} />
                   <div>
-                    { matches.map((match) => (
-                      <MatchBox key={`match-${match.id}`} match={match}>
-                        <div className='bg-gray-3 text-gray-1 p-2 text-right flex justify-between'>
-                          {parseInt(userId) === parseInt(team.captain.id) && !match.result
-                            ? (
-                              <select value={`${get(match, 'primary_caster.id')}`} onChange={(e) => assignCaster(e, match.id)} className='text-gray-3'>
-                                <option value=''>-- SELECT CASTER --</option>
-                                { casters.map(x => <option key={`caster-${x.id}`} value={`${x.id}`}>{x.name}</option>) }
-                              </select>
-                            ) : null }
-
-                          { match.start_time === null && parseInt(userId) === parseInt(team.captain.id) && !match.result
-                            ? (
-                              <div className='flex justify-between'>
-                                <span>
-                                  <DateTimePicker
-                                    className='text-gray-3 bg-gray-1 text-sm'
-                                    onChange={(val) => changeMatchTime(val, match.id)}
-                                    value={matchTime[match.id]}
-                                    maxDetail={'minute'}
-                                    disableClock
-                                  />
-                                  <button className='bg-yellow-1 text-gray-3 rounded-sm ml-2 px-2 py-1 text-sm font-head uppercase' onClick={(e) => scheduleMatch(e, match.id)}>Schedule</button>
-                                  { matchError ? <div className='mt-2 text-red-500'>{matchError}</div> : null }
-                                </span>
-                              </div>
-                            )
-                            : (
-                              <span className='text-sm block flex-grow'>
-                                { match.start_time
+                    {
+                      matches.length
+                        ? (
+                          matches.map((match) => (
+                            <MatchBox key={`match-${match.id}`} match={match}>
+                              <div className='bg-gray-3 text-gray-1 p-2 text-right flex justify-between'>
+                                {parseInt(userId) === parseInt(team.captain.id) && !match.result
                                   ? (
-                                    <>
-                                      {formatDateTime(match.start_time)}
-                                      { parseInt(userId) === parseInt(team.captain.id)
-                                        ? <button onClick={(e) => scheduleMatch(e, match.id, true)} className='bg-yellow-1 text-gray-3 rounded-sm ml-2 px-2 py-1 text-sm font-head uppercase'>Reschedule</button>
-                                        : null }
-                                    </>
+                                    <select value={`${get(match, 'primary_caster.id')}`} onChange={(e) => assignCaster(e, match.id)} className='text-gray-3'>
+                                      <option value=''>-- SELECT CASTER --</option>
+                                      { casters.map(x => <option key={`caster-${x.id}`} value={`${x.id}`}>{x.name}</option>) }
+                                    </select>
+                                  ) : null }
+
+                                { match.start_time === null && parseInt(userId) === parseInt(team.captain.id) && !match.result
+                                  ? (
+                                    <div className='flex justify-between'>
+                                      <span>
+                                        <DateTimePicker
+                                          className='text-gray-3 bg-gray-1 text-sm'
+                                          onChange={(val) => changeMatchTime(val, match.id)}
+                                          value={matchTime[match.id]}
+                                          maxDetail={'minute'}
+                                          disableClock
+                                        />
+                                        <button className='bg-yellow-1 text-gray-3 rounded-sm ml-2 px-2 py-1 text-sm font-head uppercase' onClick={(e) => scheduleMatch(e, match.id)}>Schedule</button>
+                                        { matchError ? <div className='mt-2 text-red-500'>{matchError}</div> : null }
+                                      </span>
+                                    </div>
                                   )
-                                  : <span className='block align-right'>TBD</span> }
-                              </span>
-                            )
-                          }
-                        </div>
-                      </MatchBox>
-                    )) }
+                                  : (
+                                    <span className='text-sm block flex-grow'>
+                                      { match.start_time
+                                        ? (
+                                      <>
+                                        {formatDateTime(match.start_time)}
+                                        { parseInt(userId) === parseInt(team.captain.id)
+                                          ? <button onClick={(e) => scheduleMatch(e, match.id, true)} className='bg-yellow-1 text-gray-3 rounded-sm ml-2 px-2 py-1 text-sm font-head uppercase'>Reschedule</button>
+                                          : null }
+                                      </>
+                                        )
+                                        : <span className='block align-right'>TBD</span> }
+                                    </span>
+                                  )
+                                }
+                              </div>
+                            </MatchBox>
+                          )
+                          )
+                        )
+                        : (
+                            <>
+                              <span>You have no match this week</span>
+                              <span className='text-xs'>(That may be because you have a Bye week)</span>
+                            </>
+                        )
+                    }
                   </div>
                 </div>
               </LightContentBox>
