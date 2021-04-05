@@ -127,7 +127,7 @@ function Team () {
 
   useEffect(() => {
     const fetchData = async () => {
-      setUserId(cookie.load('userId'))
+      await setUserId(cookie.load('userId'))
 
       const promises = []
 
@@ -186,7 +186,7 @@ function Team () {
     }
 
     fetchData()
-  }, [id, lastUpdated, code, history])
+  }, [id, matches, lastUpdated, code, history])
   return (
     <Chrome>
       {
