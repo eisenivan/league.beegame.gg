@@ -186,7 +186,7 @@ function Team () {
     }
 
     fetchData()
-  }, [id, matches, lastUpdated, code, history])
+  }, [id, lastUpdated, code, history])
   return (
     <Chrome>
       {
