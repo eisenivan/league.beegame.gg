@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { linkString } from './elements'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink, Link, useHistory } from 'react-router-dom'
 import cookie from 'react-cookies'
 import getApiUrl from '../modules/get-api-url'
 import nukeTokens from '../modules/nuke-tokens'
@@ -24,11 +24,12 @@ function NavItem ({ children, to, exact = false }) {
 
 function Header () {
   const [token, setToken] = useState(null)
+  const history = useHistory()
 
   async function logout () {
-    await nukeTokens()
+    nukeTokens()
     setToken(null)
-    window.location.reload(true)
+    history.go(0)
   }
 
   useEffect(() => {

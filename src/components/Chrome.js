@@ -3,6 +3,7 @@ import { useLocation, useHistory } from 'react-router-dom'
 import cookie from 'react-cookies'
 import Header from './Header'
 import Footer from './Footer'
+import setUserCookies from '../modules/set-tokens'
 
 function Chrome ({ children }) {
   const history = useHistory()
@@ -11,6 +12,7 @@ function Chrome ({ children }) {
 
   if (token) {
     cookie.save('token', token, { path: '/', secure: !process.env.NODE_ENV === 'development' })
+    setUserCookies()
 
     // navigate browser to the current page with no query string
     history.push({

@@ -156,6 +156,7 @@ function sortEventsIntoDates (events) {
 }
 
 function Home () {
+  const userId = cookie.load('userId')
   const [loading, setLoading] = useState(true)
   const [schedule, setSchedule] = useState({})
   const [profile, setProfile] = useState({})
@@ -174,7 +175,6 @@ function Home () {
         .then(data => setProfile(data))
         .catch(handleError))
 
-      const userId = await cookie.load('userId')
       promises.push(fetch(`${getApiUrl()}matches/?player=${userId}&days=90`)
         .then(data => data.json())
         .then(data => setPlayerMatches(data.results))
@@ -184,7 +184,7 @@ function Home () {
         setLoading(false)
       })
     }
-
+    console.log(userId)
     fetchData()
   }, [])
 
