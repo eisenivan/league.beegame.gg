@@ -137,7 +137,7 @@ function Team () {
         .then((data) => {
           setTeam(data)
           setMatches([...data.home_matches, ...data.away_matches])
-          console.log(matches)
+
           setName(data.name)
           fetch(`${getApiUrl()}circuits/${data.circuit}/`)
             .then((data) => data.json())

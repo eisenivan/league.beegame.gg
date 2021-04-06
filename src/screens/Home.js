@@ -184,7 +184,7 @@ function Home () {
         setLoading(false)
       })
     }
-    console.log(userId)
+
     fetchData()
   }, [])
 
