@@ -16,6 +16,7 @@ import Player from './screens/Player'
 import Profile from './screens/Profile'
 import RegisterTeam from './screens/RegisterTeam'
 import handleError from './modules/handle-error'
+import nukeTokens from './modules/nuke-tokens'
 
 async function setUserCookies () {
   const meJson = await fetch(`${getApiUrl()}me/?format=json`)
@@ -30,10 +31,11 @@ async function setUserCookies () {
 
 function App () {
   const token = cookie.load('token', true)
-  const userId = cookie.load('userId', true)
 
-  if (token && !userId) {
+  if (token) {
     setUserCookies()
+  } else {
+    nukeTokens()
   }
 
   return (

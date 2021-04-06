@@ -126,9 +126,9 @@ function Team () {
   }
 
   useEffect(() => {
-    const fetchData = async () => {
-      await setUserId(cookie.load('userId'))
+    setUserId(cookie.load('userId'))
 
+    const fetchData = async () => {
       const promises = []
 
       // fetch the basic team data
@@ -173,10 +173,10 @@ function Team () {
       }
 
       // When all our calls have resolved
-      await Promise.all(promises)
-
-      // Remove loading screen
-      setLoading(false)
+      await Promise.all(promises).then(() => {
+        // Remove loading screen
+        setLoading(false)
+      })
 
       // get our casters (this is non-blocking)
       fetch(`${getApiUrl()}casters/`)
@@ -186,6 +186,7 @@ function Team () {
     }
 
     fetchData()
+    // we don't want to refire on match update
   }, [id, lastUpdated, code, history])
   return (
     <Chrome>

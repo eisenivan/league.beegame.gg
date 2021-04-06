@@ -10,7 +10,7 @@ import { formatTime, formatDateTime } from '../modules/guess-local-tz'
 import getApiUrl from '../modules/get-api-url'
 import Chrome from '../components/Chrome'
 import handleError from '../modules/handle-error'
-import { PageTitle, MatchBox } from '../components/elements'
+import { PageTitle, MatchBox, linkString } from '../components/elements'
 import SingleTeam from '../components/SingleTeam'
 
 const DayColumn = styled.div`
@@ -187,6 +187,8 @@ function Home () {
 
     fetchData()
   }, [])
+
+  const token = cookie.load('token', true)
   return (
     <Chrome>
       {
@@ -199,37 +201,47 @@ function Home () {
                   <PageTitle>Check out BeeGameLeague on Twitch</PageTitle>
                   <ReactTwitchEmbedVideo width={window.outerWidth} height='300' layout='video' channel='BeeGameLeague' />
                 </div>
-                <div>
-                  <PageTitle>Your Teams</PageTitle>
-                  { get(profile, 'player.teams')
+                {
+                  token
                     ? (
-                        <>
-                          { profile.player.teams.map(x => (
-                            <div key={`${x.id}-${x.name}`} className='my-2'>
-                              <SingleTeam className='text-md' team={x} />
-                            </div>
-                          ))}
-                        </>
-                    ) : <span>You're not on any teams. <Link to='/register'>Register a new one</Link></span>}
+                      <div>
+                        <PageTitle>Your Teams</PageTitle>
+                        { get(profile, 'player.teams')
+                          ? (
+                            <>
+                              { profile.player.teams.map(x => (
+                                <div key={`${x.id}-${x.name}`} className='my-2'>
+                                  <SingleTeam className='text-md' team={x} />
+                                </div>
+                              ))}
+                            </>
+                          ) : <span>You're not on any teams. <Link to='/register'>Register a new one</Link></span>}
 
-                  <PageTitle className='mt-4'>Your Upcoming Matches</PageTitle>
-                  { playerMatches.length
-                    ? (
-                      playerMatches.map((match) => (
-                        <MatchBox key={`match-${match.id}`} match={match}>
-                          {formatDateTime(match.start_time)}
-                        </MatchBox>
-                      ))
+                        <PageTitle className='mt-4'>Your Upcoming Matches</PageTitle>
+                        { playerMatches.length
+                          ? (
+                            playerMatches.map((match) => (
+                              <MatchBox key={`match-${match.id}`} match={match}>
+                                {formatDateTime(match.start_time)}
+                              </MatchBox>
+                            ))
+                          )
+                          : (
+                        <>
+                          <div>You have no match this week</div>
+                          <div className='text-xs'>(That may be because you have a Bye week)</div>
+                        </>
+                          )
+                        }
+
+                      </div>
                     )
                     : (
-                    <>
-                      <span>You have no match this week</span>
-                      <span className='text-xs'>(That may be because you have a Bye week)</span>
-                    </>
+                      <div className='text-xl'>
+                        <a className={`${linkString}`} href={`${getApiUrl()}accounts/discord/login/`}>Login</a> to see your upcoming matches or register a team
+                      </div>
                     )
-                  }
-
-                </div>
+                }
               </div>
 
               <PageTitle className='mt-8'>Upcoming Matches</PageTitle>

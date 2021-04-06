@@ -28,6 +28,7 @@ function Header () {
   async function logout () {
     await nukeTokens()
     setToken(null)
+    window.location.reload(true)
   }
 
   useEffect(() => {
