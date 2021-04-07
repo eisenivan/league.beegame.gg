@@ -38,7 +38,8 @@ function Profile () {
               <PageTitle>{player.name}</PageTitle>
               <PageSubtitle>
                 {player.name_phonetic || ''} {player.pronouns ? `(${player.pronouns})` : ''}</PageSubtitle>
-              <hr className='my-4' />
+              <div className='my-4'>{player.bio}</div>
+
               <H3>Teams</H3>
               { player.teams.map(x => (
                 <div key={x.id}>

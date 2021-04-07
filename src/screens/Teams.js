@@ -28,11 +28,10 @@ function Teams () {
     const fetchData = async () => {
       setLoading(true)
       const response = await fetch(`${getApiUrl()}teams/?offset=${offset || 0}&name=${q || ''}`)
-        .catch(handleError)
-      const json = await response.json()
+        .then(data => data.json())
         .catch(handleError)
 
-      setTeams(json)
+      setTeams(response)
       setLoading(false)
     }
 

@@ -8,6 +8,8 @@ import Circuits from './screens/Circuits'
 import Circuit from './screens/Circuit'
 import Teams from './screens/Teams'
 import Team from './screens/Team'
+import Casters from './screens/Casters'
+import Caster from './screens/Caster'
 import Player from './screens/Player'
 import Profile from './screens/Profile'
 import RegisterTeam from './screens/RegisterTeam'
@@ -24,6 +26,12 @@ function App () {
         </Route>
         <Route path='/teams/:id/:code?' exact>
           <Team />
+        </Route>
+        <Route path='/casters' exact>
+          <Casters />
+        </Route>
+        <Route path='/casters/:id' exact>
+          <Caster />
         </Route>
         <Route path='/circuits' exact>
           <Circuits />
