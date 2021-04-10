@@ -2,11 +2,14 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { AvatarContainer } from './elements'
 
-function PlayerCard ({ children, id, img = '', name = '', imgUrl, captain }) {
+function PlayerCard ({ children, id, img = '', name = '', imgUrl, captain, pronouns }) {
   return (
     <Link to={`/player/${id}`} className='p-2 w-full h-20 flex hover:bg-yellow-2'>
       <AvatarContainer alt={`Avatar for BGL player ${name}`} imgUrl={imgUrl} className='bg-gray-2 h-16 w-16 mr-2' />
-      <span className='text-gray-3 font-head font-lg uppercase'>{captain ? '🌟' : ''}{name}</span>
+      <div>
+        <div className='text-gray-3 font-head font-lg uppercase'>{captain ? '🌟' : ''}{name}</div>
+        <div className='text-xs text-gray-3'>{pronouns}</div>
+      </div>
     </Link>
   )
 }
@@ -16,7 +19,7 @@ export function TeamRoster ({ team = {}, vertical, className = '' }) {
     <div style={{ gridTemplateRows: 'repeat(4, 85px)' }} className={`${className} grid grid-cols-2 gap-4"`}>
       { team.captain
         ? (
-          <PlayerCard name={team.captain.name} id={team.captain.id} imgUrl={team.captain.avatar_url} captain />
+          <PlayerCard name={team.captain.name} id={team.captain.id} imgUrl={team.captain.avatar_url} pronouns={team.captain.pronouns} captain />
         )
         : null }
 
@@ -25,7 +28,7 @@ export function TeamRoster ({ team = {}, vertical, className = '' }) {
         .filter(x => team.captain && x.name !== team.captain.name)
         .map((member) => {
           return (
-            <PlayerCard id={member.id} key={`${team.name}-${member.name}`} name={member.name} imgUrl={member.avatar_url} />
+            <PlayerCard id={member.id} key={`${team.name}-${member.name}`} name={member.name} imgUrl={member.avatar_url} pronouns={member.pronouns} />
           )
         })}
     </div>
