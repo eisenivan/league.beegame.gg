@@ -201,7 +201,7 @@ function Team () {
                   : null}
 
                 <div style={{ backgroundImage: 'url(/img/bgl_default_banner.png)', backgroundSize: 'cover', backgroundPosition: 'center' }} className='w-full h-80 hidden md:block' />
-                <div className='grid md:grid-cols-content'>
+                <div className='grid md:grid-cols-content mb-4'>
                   <div className='flex flex-col md:flex-row items-center'>
                     <img className='w-20' alt='placeholder team logo' src='/img/bgl_default_logo.png' />
                     { editTeam
