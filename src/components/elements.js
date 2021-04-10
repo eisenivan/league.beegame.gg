@@ -119,6 +119,14 @@ export function FormBox ({ children }) {
   )
 }
 
+export function CenterContent ({ children }) {
+  return (
+    <div className='max-w-md m-auto'>
+      {children}
+    </div>
+  )
+}
+
 export function Error ({ error, className }) {
   let msg
   if (typeof error === 'string') {

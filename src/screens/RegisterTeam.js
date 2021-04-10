@@ -4,7 +4,7 @@ import Chrome from '../components/Chrome'
 import fetch from '../modules/fetch-with-headers'
 import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
-import { Input, Select, Button, FormBox, Error, PageTitle } from '../components/elements'
+import { Input, Select, Button, FormBox, Error, PageTitle, CenterContent } from '../components/elements'
 
 function RegisterTeam () {
   const [loading, setLoading] = useState(true)
@@ -58,7 +58,7 @@ function RegisterTeam () {
         loading
           ? <div>loading...</div>
           : (
-            <div className='max-w-md m-auto'>
+            <CenterContent>
               <PageTitle>Register a Bee Game League Team</PageTitle>
               <p className='-mt-4 mb-4 text-xs'>Once your team has been created you will be given a join url to distribute to your team members.</p>
               <FormBox>
@@ -85,7 +85,7 @@ function RegisterTeam () {
                   <Error className='ml-4' error={error} />
                 )
                 : null }
-            </div>
+            </CenterContent>
           )
       }
     </Chrome>
