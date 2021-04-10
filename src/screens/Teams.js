@@ -68,7 +68,7 @@ function Teams () {
               {get(teams, 'results', []).map((team) => (
                 <div key={`${team.name}-${team.circuit}`} className='mb-2'>
                   { HAS_DYNASTY(team)
-                    ? <PageSubtitle>{get(team, 'dynasty.name')}</PageSubtitle>
+                    ? <PageSubtitle style={{ marginTop: '0rem', marginBottom: '-0.25rem' }}>{get(team, 'dynasty.name')}</PageSubtitle>
                     : null }
                   <Link to={`/teams/${team.id}`}><span>{team.name}</span></Link>
                   <div />
