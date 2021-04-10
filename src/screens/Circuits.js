@@ -4,6 +4,7 @@ import Chrome from '../components/Chrome'
 import fetch from '../modules/fetch-with-headers'
 import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
+import { PageTitle, CenterContent } from '../components/elements'
 
 function Circuits () {
   const [loading, setLoading] = useState(true)
@@ -29,6 +30,7 @@ function Circuits () {
           ? <div>loading...</div>
           : (
             <div>
+              <PageTitle>Circuits</PageTitle>
               { leagues.map(x => (<Link key={`${x.name}`} className='block' to={`/circuits/${x.id}`}>{x.name}</Link>)) }
             </div>
           )

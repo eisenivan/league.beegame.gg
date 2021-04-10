@@ -238,7 +238,7 @@ function Team () {
                             )
                             : null }
                           { HAS_DYNASTY(team)
-                            ? <PageSubtitle>Dynasty: {get(team, 'dynasty.name')}</PageSubtitle>
+                            ? <PageSubtitle style={{ marginTop: 0 }}>Dynasty: {get(team, 'dynasty.name')}</PageSubtitle>
                             : null }
                         </div>
                       )
