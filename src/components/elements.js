@@ -46,8 +46,8 @@ export function PageTitle ({ children, className = '', style = {} }) {
   return <h1 style={style} className={`${className} text-2xl mb-4 font-head uppercase block`}>{children}</h1>
 }
 
-export function PageSubtitle ({ children }) {
-  return <div className='text-xs -mt-4'>{children}</div>
+export function PageSubtitle ({ children, style = {} }) {
+  return <div style={style} className='text-xs -mt-4'>{children}</div>
 }
 
 export function H2 ({ children }) {

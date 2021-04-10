@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import get from 'lodash.get'
-import { PageTitle, PageSubtitle, H2 } from '../components/elements'
+import { PageTitle, PageSubtitle, H2, UtilityButton } from '../components/elements'
 import Chrome from '../components/Chrome'
 import SingleTeam from '../components/SingleTeam'
 import fetch from '../modules/fetch-with-headers'
@@ -8,35 +8,17 @@ import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
 import cookie from 'react-cookies'
 
-// function getAwardEmoji (str) {
-//   switch (str) {
-//     case 'Queen of the Hive':
-//       return '👑'
-
-//     case 'Eternal Warrior':
-//       return '⚔'
-
-//     case 'Purple Heart':
-//       return '💜'
-
-//     case 'Berry Bonanza':
-//       return '🍒'
-
-//     case 'Snail Whisperer':
-//       return '🐌'
-
-//     case 'Triple Threat':
-//       return '♻'
-
-//     default:
-//       return ''
-//   }
-// }
-
 function Profile () {
   const [loading, setLoading] = useState(true)
+  const [editProfile, setEditProfile] = useState(false)
   const [profile, setProfile] = useState([])
+  const [pronouns, setPronouns] = useState('')
+  const [bio, setBio] = useState()
   const [tokenButtonText, setTokenButtonText] = useState('copy auth token')
+
+  function toggleEditProfile () {
+    setEditProfile(!editProfile)
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,11 +27,34 @@ function Profile () {
         .catch(handleError)
 
       setProfile(profile)
+      setPronouns(profile.player.pronouns)
+      setBio(profile.player.bio)
       setLoading(false)
     }
 
     fetchData()
   }, [])
+
+  async function handleSubmit (e) {
+    e.preventDefault()
+
+    const data = { bio, pronouns }
+    const requestOptions = {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }
+
+    fetch(`${getApiUrl()}players/${profile.player.id}/`, requestOptions)
+      .then(res => res.json())
+      .then((res) => {
+        console.log(res)
+        setPronouns(res.pronouns)
+        setBio(res.bio)
+        toggleEditProfile()
+      })
+      .catch(handleError)
+  }
 
   // Function to copy user token to clipboard on button click
   async function handleTokenCopy (e) {
@@ -87,32 +92,71 @@ function Profile () {
           : (
             <div>
               <div className='flex items-center'>
-                <PageTitle>{profile.player.name}</PageTitle>
-                <button
-                  className='ml-2 uppercase bg-blue-3 text-white py-1 px-2 text-center font-head text-xs mb-4'
+                <PageTitle className='truncate max-w-xs sm:max-width-sm md:max-w-full' style={{ marginBottom: 0 }}>{profile.player.name}</PageTitle>
+                {!editProfile
+                  ? (
+                    <UtilityButton
+                      className='ml-2'
+                      type='button'
+                      onClick={toggleEditProfile}>
+                      Edit Profile
+                    </UtilityButton>
+                  ) : null }
+
+                <UtilityButton
+                  className='ml-2'
                   type='button'
                   onClick={handleTokenCopy}>
                   {tokenButtonText}
-                </button>
+                </UtilityButton>
               </div>
-              <PageSubtitle>{profile.player.name_phonetic} ({profile.player.pronouns})</PageSubtitle>
-              <p className='italic mt-2'>{profile.player.bio}</p>
 
-              { get(profile, 'player.teams')
-                ? (
-                  <>
-                    <H2>Teams</H2>
-                    { profile.player.teams.map(x => (
-                      <div key={`${x.id}-${x.name}`} className='my-2'>
-                        <SingleTeam className='text-md' team={x} />
-                        {/* {
-                    get(x.members.find(y => y.name === profile.player.name), 'award_summary', [])
-                      .map(x => <span key={`${x.id}-${x.name}`} className='mr-2'>{getAwardEmoji(x.name)}<span className='text-xs italic'>x{x.count}</span></span>)
-                  } */}
+              {
+                editProfile
+                  ? (
+                    <div className='flex flex-col'>
+                      <input
+                        className='shadow inline-block appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                        placeholder='Pronouns'
+                        name='pronouns'
+                        value={pronouns}
+                        onChange={e => setPronouns(e.target.value)}
+                        required />
+                      <textarea
+                        className='mt-2 shadow inline-block appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                        onChange={e => setBio(e.target.value)}
+                        value={bio} />
+                      <div className='mt-2 flex'>
+                        <UtilityButton type='submit' onClick={handleSubmit}>
+                          Update
+                        </UtilityButton>
+
+                        <UtilityButton className={'ml-2'} onClick={toggleEditProfile}>
+                          Cancel
+                        </UtilityButton>
                       </div>
-                    ))}
+                    </div>
+                  )
+                  : (
+                  <>
+                    <PageSubtitle style={{ marginTop: 0 }}>{profile.player.name_phonetic} ({pronouns})</PageSubtitle>
+                    <div className='grid md:grid-cols-content'>
+                      <p className='italic mt-2'>{bio}</p>
+                      { get(profile, 'player.teams')
+                        ? (
+                          <div>
+                            <H2>Teams</H2>
+                            { profile.player.teams.map(x => (
+                              <div key={`${x.id}-${x.name}`} className='my-2'>
+                                <SingleTeam className='text-md' team={x} />
+                              </div>
+                            ))}
+                          </div>
+                        ) : null}
+                    </div>
                   </>
-                ) : null}
+                  )
+              }
 
             </div>
           )

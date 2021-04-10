@@ -3,6 +3,7 @@ import nukeTokens from './nuke-tokens'
 
 async function makeRequest (url, params = {}) {
   const token = cookie.load('token', { path: '/' })
+  console.log(token)
   const init = params
   if (token) {
     init.headers = {
@@ -16,7 +17,7 @@ async function makeRequest (url, params = {}) {
 
   // if the token is bad, delete it from local cookies
   if (res.status === 403) {
-    await nukeTokens()
+    // await nukeTokens()
     return { error: 'Invalid token.' }
   }
 
