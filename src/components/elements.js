@@ -9,14 +9,14 @@ export function MatchBox ({ match, children }) {
   return (
     <div key={`${match.home.name}${match.away.name}${match.id}`} className='shadow-xl mb-4 max-w-lg'>
       <div className='uppercase font-head text-2xl'>
-        <div className='text-gray-1 bg-blue-2 p-4 truncate text-shadow flex justify-between'>
+        <div className='text-gray-1 bg-blue-2 p-4 truncate text-shadow shadow-match flex justify-between'>
           <RouterLink className='text-white truncate' to={`/teams/${match.away.id}/`}>{match.away.name}</RouterLink>
           { match.result
             ? <span className='ml-2 text-3xl'>{match.result.sets_away}</span>
             : null }
 
         </div>
-        <div className='text-gray-1 bg-yellow-2 p-4 ellipsis text-shadow flex justify-between'>
+        <div className='text-gray-1 bg-yellow-2 p-4 ellipsis text-shadow shadow-match flex justify-between'>
           <RouterLink className='text-white truncate' to={`/teams/${match.home.id}/`}>{match.home.name}</RouterLink>
           { match.result
             ? <span className='text-3xl'>{match.result.sets_home}</span>

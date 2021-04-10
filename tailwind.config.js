@@ -7,6 +7,9 @@ module.exports = {
       'subhead': '"Open Sans"',
       'body': '"Montserrat"'
     },
+    boxShadow: {
+      match: 'inset 0 0 40px 0 rgba(0, 0, 0, 0.7)'
+    },
     extend: {
       backgroundImage: theme => ({
         'triangle_bg_dark': "url('/src/img/triangle_bg_dark.png')",

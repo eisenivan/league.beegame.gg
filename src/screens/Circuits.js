@@ -31,7 +31,7 @@ function Circuits () {
           : (
             <div>
               <PageTitle>Circuits</PageTitle>
-              { leagues.map(x => (<Link key={`${x.name}`} className='block' to={`/circuits/${x.id}`}>{x.name}</Link>)) }
+              { leagues.map(x => (<Link key={`${x.name}`} className='block text-lg' to={`/circuits/${x.id}`}>{x.name}</Link>)) }
             </div>
           )
       }

@@ -11,7 +11,7 @@ import handleError from '../modules/handle-error'
 function Standings ({ teams }) {
   const sorted = sortBy(teams, ['wins', o => o.losses * -1]).reverse()
   return (
-    <div className='border-2 border-gray-2  shadow-xl'>
+    <div className='shadow-xl'>
       { sorted.map((x, i) => (
         <div className={`border-2 border-gray-2 shadow-xl font-head text-xl font-bold text-white text-shadow p-1 px-2 flex items-center justify-between ${i % 2 ? 'bg-blue-2' : 'bg-yellow-2'}`} key={`${x.name}-${x.wins}-${x.losses}`}>
           <div className='max-w-md p-1 font-head uppercase truncate'><Link className='text-white' to={`/teams/${x.id}`}>{`${i + 1}. ${x.name}`}</Link></div>
