@@ -209,11 +209,13 @@ function Home () {
                         { get(profile, 'player.teams')
                           ? (
                             <>
-                              { profile.player.teams.map(x => (
-                                <div key={`${x.id}-${x.name}`} className='my-2'>
-                                  <SingleTeam className='text-md' team={x} />
-                                </div>
-                              ))}
+                              { profile.player.teams
+                                .filter(x => x.is_active)
+                                .map(x => (
+                                  <div key={`${x.id}-${x.name}`} className='my-2'>
+                                    <SingleTeam className='text-md' team={x} />
+                                  </div>
+                                ))}
                             </>
                           ) : <span>You're not on any teams. <Link to='/register'>Register a new one</Link></span>}
 
