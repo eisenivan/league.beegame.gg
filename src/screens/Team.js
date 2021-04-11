@@ -181,7 +181,9 @@ function Team () {
       // get our casters (this is non-blocking)
       fetch(`${getApiUrl()}casters/`)
         .then(data => data.json())
-        .then(data => setCasters(data.results))
+        .then(data => setCasters(data
+          .results
+          .filter(x => x.is_active)))
         .catch(handleError)
     }
 
@@ -259,12 +261,12 @@ function Team () {
                         ? (
                           matches.map((match) => (
                             <MatchBox key={`match-${match.id}`} match={match}>
-                              <div className='bg-gray-3 text-gray-1 p-2 text-right flex justify-between'>
+                              <div className='bg-gray-3 text-gray-1 p-2 text-right flex flex-col lg:flex-row justify-between'>
                                 {parseInt(userId) === parseInt(team.captain.id) && !match.result
                                   ? (
-                                    <select value={`${get(match, 'primary_caster.id')}`} onChange={(e) => assignCaster(e, match.id)} className='text-gray-3'>
+                                    <select value={`${get(match, 'primary_caster.id')}`} onChange={(e) => assignCaster(e, match.id)} className='text-gray-3 mb-2 md:lg-0'>
                                       <option value=''>-- SELECT CASTER --</option>
-                                      { casters.map(x => <option key={`caster-${x.id}`} value={`${x.id}`}>{x.name}</option>) }
+                                      { casters.map(x => <option key={`caster-${x.id}`} value={`${x.id}`}>{x.name.substr(0, 20)}{x.name.length > 20 ? '...' : ''}</option>) }
                                     </select>
                                   ) : null }
 
