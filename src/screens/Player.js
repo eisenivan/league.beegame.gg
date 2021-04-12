@@ -31,21 +31,24 @@ function Profile () {
         loading
           ? <div>loading...</div>
           : (
-            <div>
-              { player.avatar_url
-                ? <AvatarContainer alt={`Avatar for BGL player ${player.name}`} imgUrl={player.avatar_url} className='lg:float-left bg-gray-2 h-32 w-32 lg:mr-8 mb-4 lg:mb-0' />
-                : null }
-              <PageTitle>{player.name}</PageTitle>
-              <PageSubtitle>
-                {player.name_phonetic || ''} {player.pronouns ? `(${player.pronouns})` : ''}</PageSubtitle>
-              <div className='my-4'>{player.bio}</div>
-
-              <H3>Teams</H3>
-              { player.teams.map(x => (
-                <div key={x.id}>
-                  <SingleTeam className='text-md' team={x} />
-                </div>
-              ))}
+            <div className='grid grid-cols-content'>
+              <div>
+                { player.avatar_url
+                  ? <AvatarContainer alt={`Avatar for BGL player ${player.name}`} imgUrl={player.avatar_url} className='bg-gray-2 h-32 w-32 lg:mr-8 mb-4 lg:mb-0 lg:float-left' />
+                  : null }
+                <PageTitle>{player.name}</PageTitle>
+                <PageSubtitle>
+                  {player.name_phonetic || ''} {player.pronouns ? `(${player.pronouns})` : ''}</PageSubtitle>
+                <div className='my-4'>{player.bio}</div>
+              </div>
+              <div className='clear'>
+                <H3>Teams</H3>
+                { player.teams.map(x => (
+                  <div key={x.id}>
+                    <SingleTeam className='text-md' team={x} />
+                  </div>
+                ))}
+              </div>
             </div>
           )
       }
