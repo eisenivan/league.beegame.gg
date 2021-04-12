@@ -13,6 +13,7 @@ import Caster from './screens/Caster'
 import Player from './screens/Player'
 import Profile from './screens/Profile'
 import RegisterTeam from './screens/RegisterTeam'
+import Help from './screens/Help'
 
 function App () {
   return (
@@ -47,6 +48,9 @@ function App () {
         </Route>
         <Route path='/register'>
           <RegisterTeam />
+        </Route>
+        <Route path='/help'>
+          <Help />
         </Route>
       </Switch>
     </Router>
