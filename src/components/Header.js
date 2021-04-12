@@ -45,6 +45,7 @@ function Header () {
         <NavItem to='/register' className={`${linkString} text-gray-1`}>Register</NavItem>
         <NavItem to='/circuits' className={`${linkString} text-gray-1`}>Circuits</NavItem>
         <NavItem to='/teams' className={`${linkString} text-gray-1`}>Teams</NavItem>
+        <NavItem to='/help' className={`${linkString} text-gray-1`}>Help</NavItem>
 
         { token
           ? (
