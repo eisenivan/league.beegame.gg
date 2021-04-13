@@ -292,7 +292,7 @@ function Team () {
                                         ? (
                                       <>
                                         {formatDateTime(match.start_time)}
-                                        { parseInt(userId) === parseInt(team.captain.id)
+                                        { parseInt(userId) === parseInt(team.captain.id) && !match.result
                                           ? <button onClick={(e) => scheduleMatch(e, match.id, true)} className='bg-yellow-1 text-gray-3 rounded-sm ml-2 px-2 py-1 text-sm font-head uppercase'>Reschedule</button>
                                           : null }
                                       </>
