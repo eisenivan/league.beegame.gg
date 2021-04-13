@@ -1,9 +1,8 @@
 import cookie from 'react-cookies'
-import nukeTokens from './nuke-tokens'
+// import nukeTokens from './nuke-tokens'
 
 async function makeRequest (url, params = {}) {
   const token = cookie.load('token', { path: '/' })
-  console.log(token)
   const init = params
   if (token) {
     init.headers = {

@@ -48,7 +48,6 @@ function Profile () {
     fetch(`${getApiUrl()}players/${profile.player.id}/`, requestOptions)
       .then(res => res.json())
       .then((res) => {
-        console.log(res)
         setPronouns(res.pronouns)
         setBio(res.bio)
         toggleEditProfile()
