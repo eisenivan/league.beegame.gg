@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { not, empty } from 'regent'
 import get from 'lodash.get'
 import cookie from 'react-cookies'
-import DateTimePicker from 'react-datetime-picker'
+// import DateTimePicker from 'react-datetime-picker'
+import DatePicker from 'react-datepicker'
 import moment from 'moment-timezone'
 import Chrome from '../components/Chrome'
 import { PageTitle, PageSubtitle, LightContentBox, UtilityButton, MatchBox } from '../components/elements'
@@ -13,9 +14,11 @@ import fetch from '../modules/fetch-with-headers'
 import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
 
+import "react-datepicker/dist/react-datepicker.css";
+
 const HAS_DYNASTY = not(empty('@dynasty'))
 
-function Team () {
+function Team() {
   const { id, code = null } = useParams()
   const [loading, setLoading] = useState(true)
   const [joinMsg, setJoinMsg] = useState()
@@ -32,21 +35,21 @@ function Team () {
   const [copyText, setCopyText] = useState('Copy invite url')
   const history = useHistory()
 
-  function changeMatchTime (val, id) {
+  function changeMatchTime(val, id) {
     const obj = { ...matchTime }
     obj[id] = val
     setMatchTime(obj)
   }
 
-  function toggleEditTeam () {
+  function toggleEditTeam() {
     setEditTeam(!editTeam)
   }
 
-  function onTitleChange (e) {
+  function onTitleChange(e) {
     return setName(e.target.value)
   }
 
-  async function handleSubmit (e) {
+  async function handleSubmit(e) {
     e.preventDefault()
 
     const data = { name }
@@ -65,7 +68,7 @@ function Team () {
       .catch(handleError)
   }
 
-  async function assignCaster (e, matchId) {
+  async function assignCaster(e, matchId) {
     e.preventDefault()
     let casterId = e.target.value
 
@@ -89,7 +92,7 @@ function Team () {
       .catch(handleError)
   }
 
-  async function scheduleMatch (e, matchId, clear = false) {
+  async function scheduleMatch(e, matchId, clear = false) {
     e.preventDefault()
     if (matchTime) {
       const data = { start_time: clear ? null : moment(matchTime[matchId]).tz('UTC').format() }
@@ -110,7 +113,7 @@ function Team () {
     }
   }
 
-  async function copyInviteUrl (e) {
+  async function copyInviteUrl(e) {
     e.preventDefault()
 
     try {
@@ -196,7 +199,7 @@ function Team () {
           : (
             <div>
               <div>
-                { joinMsg
+                {joinMsg
                   ? <div className='bg-blue-3 text-white p-4'>{joinMsg}</div>
                   : null}
 
@@ -204,7 +207,7 @@ function Team () {
                 <div className='grid md:grid-cols-content mb-4'>
                   <div className='flex flex-col md:flex-row items-center'>
                     <img className='w-20' alt='placeholder team logo' src='/img/bgl_default_logo.png' />
-                    { editTeam
+                    {editTeam
                       ? (
                         <div className='flex flex-col lg:flex-row'>
                           <input
@@ -229,17 +232,17 @@ function Team () {
                         <div className='flex flex-col'>
                           <PageTitle className='truncate max-w-xs sm:max-width-sm md:max-w-full' style={{ marginBottom: 0 }}>{name}</PageTitle>
                           { parseInt(userId) === parseInt(team.captain.id)
-                          // captain only view
+                            // captain only view
                             ? (
                               <div>
                                 <UtilityButton onClick={toggleEditTeam}>edit team</UtilityButton>
                                 <UtilityButton className={'ml-2'} onClick={copyInviteUrl}>{copyText}</UtilityButton>
                               </div>
                             )
-                            : null }
+                            : null}
                           { HAS_DYNASTY(team)
                             ? <PageSubtitle style={{ marginTop: 0 }}>Dynasty: {get(team, 'dynasty.name')}</PageSubtitle>
-                            : null }
+                            : null}
                         </div>
                       )
                     }
@@ -264,22 +267,31 @@ function Team () {
                                   ? (
                                     <select value={`${get(match, 'primary_caster.id')}`} onChange={(e) => assignCaster(e, match.id)} className='text-gray-3 mb-2 md:lg-0'>
                                       <option value=''>-- SELECT CASTER --</option>
-                                      { casters.map(x => <option key={`caster-${x.id}`} value={`${x.id}`}>{x.name.substr(0, 20)}{x.name.length > 20 ? '...' : ''}</option>) }
+                                      { casters.map(x => <option key={`caster-${x.id}`} value={`${x.id}`}>{x.name.substr(0, 20)}{x.name.length > 20 ? '...' : ''}</option>)}
                                     </select>
-                                  ) : null }
-                                { match.start_time === null && parseInt(userId) === parseInt(team.captain.id) && !match.result
+                                  ) : null}
+                                {match.start_time === null && parseInt(userId) === parseInt(team.captain.id) && !match.result
                                   ? (
                                     <div className='flex justify-between'>
                                       <span>
-                                        <DateTimePicker
+                                        {/* <DateTimePicker
                                           className='text-gray-3 bg-gray-1 text-sm'
                                           onChange={(val) => changeMatchTime(val, match.id)}
                                           value={matchTime[match.id]}
                                           maxDetail={'minute'}
                                           disableClock
+                                        /> */}
+                                        <DatePicker
+                                          className='text-gray-3 bg-gray-1 text-sm'
+                                          selected={matchTime[match.id]}
+                                          onChange={(val) => changeMatchTime(val, match.id)}
+                                          showTimeSelect
+                                          timeFormat="p"
+                                          timeIntervals={15}
+                                          dateFormat="MMMM d, yyyy h:mm aa"
                                         />
                                         <button className='bg-yellow-1 text-gray-3 rounded-sm ml-2 px-2 py-1 text-sm font-head uppercase' onClick={(e) => scheduleMatch(e, match.id)}>Schedule</button>
-                                        { matchError ? <div className='mt-2 text-red-500'>{matchError}</div> : null }
+                                        {matchError ? <div className='mt-2 text-red-500'>{matchError}</div> : null}
                                       </span>
                                     </div>
                                   )
@@ -287,14 +299,14 @@ function Team () {
                                     <span className='text-sm block flex-grow'>
                                       { match.start_time
                                         ? (
-                                      <>
-                                        {formatDateTime(match.start_time)}
-                                        { parseInt(userId) === parseInt(team.captain.id) && !match.result
-                                          ? <button onClick={(e) => scheduleMatch(e, match.id, true)} className='bg-yellow-1 text-gray-3 rounded-sm ml-2 px-2 py-1 text-sm font-head uppercase'>Reschedule</button>
-                                          : null }
-                                      </>
+                                          <>
+                                            {formatDateTime(match.start_time)}
+                                            { parseInt(userId) === parseInt(team.captain.id) && !match.result
+                                              ? <button onClick={(e) => scheduleMatch(e, match.id, true)} className='bg-yellow-1 text-gray-3 rounded-sm ml-2 px-2 py-1 text-sm font-head uppercase'>Reschedule</button>
+                                              : null}
+                                          </>
                                         )
-                                        : <span className='block align-right'>TBD</span> }
+                                        : <span className='block align-right'>TBD</span>}
                                     </span>
                                   )
                                 }
@@ -304,10 +316,10 @@ function Team () {
                           )
                         )
                         : (
-                            <>
-                              <span>You have no match this week</span>
-                              <span className='text-xs'>(That may be because you have a Bye week)</span>
-                            </>
+                          <>
+                            <span>You have no match this week</span>
+                            <span className='text-xs'>(That may be because you have a Bye week)</span>
+                          </>
                         )
                     }
                   </div>
