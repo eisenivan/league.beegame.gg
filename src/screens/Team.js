@@ -14,7 +14,7 @@ import fetch from '../modules/fetch-with-headers'
 import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
 
-import "react-datepicker/dist/react-datepicker.css";
+import 'react-datepicker/dist/react-datepicker.css'
 
 const HAS_DYNASTY = not(empty('@dynasty'))
 
@@ -286,10 +286,10 @@ function Team () {
                                           selected={matchTime[match.id]}
                                           onChange={(val) => changeMatchTime(val, match.id)}
                                           showTimeSelect
-                                          timeFormat="p"
+                                          timeFormat='p'
                                           timeIntervals={15}
-                                          dateFormat="MMMM d, yyyy h:mm aa"
-                                          placeholderText="Select Match Time"
+                                          dateFormat='MMMM d, yyyy h:mm aa'
+                                          placeholderText='Select Match Time'
                                         />
                                         <button className='bg-yellow-1 text-gray-3 rounded-sm ml-2 px-2 py-1 text-sm font-head uppercase' onClick={(e) => scheduleMatch(e, match.id)}>Schedule</button>
                                         { matchError ? <div className='mt-2 text-red-500'>{matchError}</div> : null }
