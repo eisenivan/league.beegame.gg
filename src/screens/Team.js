@@ -179,11 +179,9 @@ function Team () {
       })
 
       // get our casters (this is non-blocking)
-      fetch(`${getApiUrl()}casters/`)
+      fetch(`${getApiUrl()}casters/?is_active=true&limit=30`)
         .then(data => data.json())
-        .then(data => setCasters(data
-          .results
-          .filter(x => x.is_active)))
+        .then(data => setCasters(data.results))
         .catch(handleError)
     }
 
@@ -269,7 +267,6 @@ function Team () {
                                       { casters.map(x => <option key={`caster-${x.id}`} value={`${x.id}`}>{x.name.substr(0, 20)}{x.name.length > 20 ? '...' : ''}</option>) }
                                     </select>
                                   ) : null }
-
                                 { match.start_time === null && parseInt(userId) === parseInt(team.captain.id) && !match.result
                                   ? (
                                     <div className='flex justify-between'>

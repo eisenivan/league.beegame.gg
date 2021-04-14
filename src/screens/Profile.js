@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import get from 'lodash.get'
-import { PageTitle, PageSubtitle, H2, UtilityButton } from '../components/elements'
+import { PageTitle, PageSubtitle, H2, H3, UtilityButton } from '../components/elements'
 import Chrome from '../components/Chrome'
 import SingleTeam from '../components/SingleTeam'
 import fetch from '../modules/fetch-with-headers'
@@ -145,7 +145,15 @@ function Profile () {
                         ? (
                           <div>
                             <H2>Teams</H2>
-                            { profile.player.teams.map(x => (
+                            <br />
+                            <H3>Active</H3>
+                            { profile.player.teams.filter(x => x.is_active).map(x => (
+                              <div key={`${x.id}-${x.name}`} className='my-2'>
+                                <SingleTeam className='text-md' team={x} />
+                              </div>
+                            ))}
+                            <H3>Past</H3>
+                            { profile.player.teams.filter(x => !x.is_active).map(x => (
                               <div key={`${x.id}-${x.name}`} className='my-2'>
                                 <SingleTeam className='text-md' team={x} />
                               </div>
