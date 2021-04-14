@@ -199,7 +199,7 @@ function Home () {
               <div className='mb-8 sm:mt-8 md:mt-0 grid grid-cols-1 md:grid-cols-content'>
                 <div className='max-w-lg overflow-hidden'>
                   <PageTitle>Check out BeeGameLeague on Twitch</PageTitle>
-                  <ReactTwitchEmbedVideo width={window.outerWidth} height='300' layout='video' channel='BeeGameLeague' />
+                  <ReactTwitchEmbedVideo height='300' layout='video' channel='BeeGameLeague' />
                 </div>
                 {
                   token

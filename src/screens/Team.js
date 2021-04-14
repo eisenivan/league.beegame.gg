@@ -14,7 +14,7 @@ import fetch from '../modules/fetch-with-headers'
 import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
 
-import "react-datepicker/dist/react-datepicker.css";
+import 'react-datepicker/dist/react-datepicker.css'
 
 const HAS_DYNASTY = not(empty('@dynasty'))
 
@@ -286,7 +286,7 @@ function Team () {
                                           selected={matchTime[match.id]}
                                           onChange={(val) => changeMatchTime(val, match.id)}
                                           showTimeSelect
-                                          timeFormat="p"
+                                          timeFormat='p'
                                           timeIntervals={15}
                                           autoFocus={false}
                                           dateFormat="MMMM d, yyyy h:mm aa"

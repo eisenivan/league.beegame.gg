@@ -69,7 +69,11 @@ function Circuit () {
                   { matches.map((match) => (
                     <MatchBox key={`match-${match.id}`} match={match}>
                       { match.primary_caster
-                        ? <a className='mr-2' target='_blank' rel='noreferrer' href={match.primary_caster.stream_link}>{match.primary_caster.name}</a>
+                        ? (
+                          match.primary_caster.stream_link
+                            ? <a className='mr-2' target='_blank' rel='noreferrer' href={match.primary_caster.stream_link}>{match.primary_caster.name}</a>
+                            : <span>{match.primary_caster.name}</span>
+                        )
                         : null }
                       {formatDateTime(match.start_time)}
                     </MatchBox>
