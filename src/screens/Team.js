@@ -289,8 +289,8 @@ function Team () {
                                           timeFormat='p'
                                           timeIntervals={15}
                                           autoFocus={false}
-                                          dateFormat="MMMM d, yyyy h:mm aa"
-                                          placeholderText="Match Time (Local TZ)"
+                                          dateFormat="MM/dd/yyyy h:mm aa"
+                                          placeholderText={"Match Time (in " + moment.tz(Date.now(), moment.tz.guess()).format('z') + ")"}
                                         />
                                         <button className='bg-yellow-1 text-gray-3 rounded-sm ml-2 px-2 py-1 text-sm font-head uppercase' onClick={(e) => scheduleMatch(e, match.id)}>Schedule</button>
                                         { matchError ? <div className='mt-2 text-red-500'>{matchError}</div> : null }
