@@ -22,7 +22,7 @@ export function MatchBox ({ match, children }) {
             ? <span className='text-3xl'>{match.result.sets_home}</span>
             : null }
         </div>
-        <div className='bg-gray-3 text-gray-1 text-right pr-2 pb-0 text-sm'>
+        <div className='bg-gray-3 text-gray-1 text-right pb-0 text-sm'>
           {children}
         </div>
       </div>

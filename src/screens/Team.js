@@ -262,17 +262,17 @@ function Team () {
                         ? (
                           matches.map((match) => (
                             <MatchBox key={`match-${match.id}`} match={match}>
-                              <div className='bg-gray-3 text-gray-1 p-2 text-right flex flex-col lg:flex-row justify-between'>
+                              <div className='bg-gray-3 text-gray-1 p-2 text-right flex flex-row flex-wrap items-center'>
                                 {parseInt(userId) === parseInt(team.captain.id) && !match.result
                                   ? (
-                                    <select value={`${get(match, 'primary_caster.id')}`} onChange={(e) => assignCaster(e, match.id)} className='text-gray-3 mb-2 md:lg-0'>
+                                    <select value={`${get(match, 'primary_caster.id')}`} onChange={(e) => assignCaster(e, match.id)} className='text-gray-3 md:lg-0 flex-shrink justify-start'>
                                       <option value=''>-- SELECT CASTER --</option>
                                       { casters.map(x => <option key={`caster-${x.id}`} value={`${x.id}`}>{x.name.substr(0, 20)}{x.name.length > 20 ? '...' : ''}</option>)}
                                     </select>
                                   ) : null }
                                 { match.start_time === null && parseInt(userId) === parseInt(team.captain.id) && !match.result
                                   ? (
-                                    <div className='flex justify-between'>
+                                    <div className='flex-auto justify-end'>
                                       <span>
                                         {/* <DateTimePicker
                                           className='text-gray-3 bg-gray-1 text-sm'
@@ -288,8 +288,9 @@ function Team () {
                                           showTimeSelect
                                           timeFormat="p"
                                           timeIntervals={15}
+                                          autoFocus={false}
                                           dateFormat="MMMM d, yyyy h:mm aa"
-                                          placeholderText="Select Match Time"
+                                          placeholderText="Match Time (Local TZ)"
                                         />
                                         <button className='bg-yellow-1 text-gray-3 rounded-sm ml-2 px-2 py-1 text-sm font-head uppercase' onClick={(e) => scheduleMatch(e, match.id)}>Schedule</button>
                                         { matchError ? <div className='mt-2 text-red-500'>{matchError}</div> : null }
@@ -297,7 +298,7 @@ function Team () {
                                     </div>
                                   )
                                   : (
-                                    <span className='text-sm block flex-grow'>
+                                    <span className='text-sm block flex-grow justify-end'>
                                       { match.start_time
                                         ? (
                                       <>
