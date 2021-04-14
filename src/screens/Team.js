@@ -35,7 +35,7 @@ function Team () {
   const [copyText, setCopyText] = useState('Copy invite url')
   const history = useHistory()
 
-  function changeMatchTime(val, id) {
+  function changeMatchTime (val, id) {
     const obj = { ...matchTime }
     obj[id] = val
     setMatchTime(obj)
@@ -232,7 +232,7 @@ function Team () {
                         <div className='flex flex-col'>
                           <PageTitle className='truncate max-w-xs sm:max-width-sm md:max-w-full' style={{ marginBottom: 0 }}>{name}</PageTitle>
                           { parseInt(userId) === parseInt(team.captain.id)
-                            // captain only view
+                          // captain only view
                             ? (
                               <div>
                                 <UtilityButton onClick={toggleEditTeam}>edit team</UtilityButton>
@@ -269,7 +269,7 @@ function Team () {
                                       <option value=''>-- SELECT CASTER --</option>
                                       { casters.map(x => <option key={`caster-${x.id}`} value={`${x.id}`}>{x.name.substr(0, 20)}{x.name.length > 20 ? '...' : ''}</option>)}
                                     </select>
-                                  ) : null}
+                                  ) : null }
                                 { match.start_time === null && parseInt(userId) === parseInt(team.captain.id) && !match.result
                                   ? (
                                     <div className='flex justify-between'>
@@ -304,7 +304,7 @@ function Team () {
                                         {formatDateTime(match.start_time)}
                                         { parseInt(userId) === parseInt(team.captain.id) && !match.result
                                           ? <button onClick={(e) => scheduleMatch(e, match.id, true)} className='bg-yellow-1 text-gray-3 rounded-sm ml-2 px-2 py-1 text-sm font-head uppercase'>Reschedule</button>
-                                          : null}
+                                          : null }
                                       </>
                                         )
                                         : <span className='block align-right'>TBD</span> }
