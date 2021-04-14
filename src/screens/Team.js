@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { not, empty } from 'regent'
 import get from 'lodash.get'
 import cookie from 'react-cookies'
-import DateTimePicker from 'react-datetime-picker'
+// import DateTimePicker from 'react-datetime-picker'
+import DatePicker from 'react-datepicker'
 import moment from 'moment-timezone'
 import Chrome from '../components/Chrome'
 import { PageTitle, PageSubtitle, LightContentBox, UtilityButton, MatchBox } from '../components/elements'
@@ -12,6 +13,8 @@ import { useParams, useHistory, Link } from 'react-router-dom'
 import fetch from '../modules/fetch-with-headers'
 import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
+
+import "react-datepicker/dist/react-datepicker.css";
 
 const HAS_DYNASTY = not(empty('@dynasty'))
 
@@ -264,19 +267,29 @@ function Team () {
                                   ? (
                                     <select value={`${get(match, 'primary_caster.id')}`} onChange={(e) => assignCaster(e, match.id)} className='text-gray-3 mb-2 md:lg-0'>
                                       <option value=''>-- SELECT CASTER --</option>
-                                      { casters.map(x => <option key={`caster-${x.id}`} value={`${x.id}`}>{x.name.substr(0, 20)}{x.name.length > 20 ? '...' : ''}</option>) }
+                                      { casters.map(x => <option key={`caster-${x.id}`} value={`${x.id}`}>{x.name.substr(0, 20)}{x.name.length > 20 ? '...' : ''}</option>)}
                                     </select>
                                   ) : null }
                                 { match.start_time === null && parseInt(userId) === parseInt(team.captain.id) && !match.result
                                   ? (
                                     <div className='flex justify-between'>
                                       <span>
-                                        <DateTimePicker
+                                        {/* <DateTimePicker
                                           className='text-gray-3 bg-gray-1 text-sm'
                                           onChange={(val) => changeMatchTime(val, match.id)}
                                           value={matchTime[match.id]}
                                           maxDetail={'minute'}
                                           disableClock
+                                        /> */}
+                                        <DatePicker
+                                          className='text-gray-3 bg-gray-1 text-sm'
+                                          selected={matchTime[match.id]}
+                                          onChange={(val) => changeMatchTime(val, match.id)}
+                                          showTimeSelect
+                                          timeFormat="p"
+                                          timeIntervals={15}
+                                          dateFormat="MMMM d, yyyy h:mm aa"
+                                          placeholderText="Select Match Time"
                                         />
                                         <button className='bg-yellow-1 text-gray-3 rounded-sm ml-2 px-2 py-1 text-sm font-head uppercase' onClick={(e) => scheduleMatch(e, match.id)}>Schedule</button>
                                         { matchError ? <div className='mt-2 text-red-500'>{matchError}</div> : null }
