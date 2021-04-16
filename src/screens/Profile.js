@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import get from 'lodash.get'
-import { PageTitle, PageSubtitle, H2, H3, UtilityButton, AvatarContainer } from '../components/elements'
+import { PageTitle, PageSubtitle, H2, H3, UtilityButton, AvatarContainer, FormBox } from '../components/elements'
 import Chrome from '../components/Chrome'
 import SingleTeam from '../components/SingleTeam'
 import fetch from '../modules/fetch-with-headers'
@@ -93,7 +93,7 @@ function Profile () {
               { profile.player.avatar_url
                 ? <AvatarContainer alt={`Avatar for BGL player ${profile.player.name}`} imgUrl={profile.player.avatar_url} className='bg-gray-2 h-32 w-32 lg:mr-8 mb-4 lg:mb-0 lg:float-left' />
                 : null }
-              <div className='flex items-center'>
+              <div className='flex items-center mb-4'>
                 <PageTitle className='truncate max-w-xs sm:max-width-sm md:max-w-full' style={{ marginBottom: 0 }}>{profile.player.name}</PageTitle>
                 {!editProfile
                   ? (
@@ -117,17 +117,24 @@ function Profile () {
                 editProfile
                   ? (
                     <div className='flex flex-col'>
-                      <input
-                        className='shadow inline-block appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                        placeholder='Pronouns'
-                        name='pronouns'
-                        value={pronouns}
-                        onChange={e => setPronouns(e.target.value)}
-                        required />
-                      <textarea
-                        className='mt-2 shadow inline-block appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                        onChange={e => setBio(e.target.value)}
-                        value={bio} />
+                      <FormBox>
+                        <label for='pronouns'>Pronouns</label>
+                        <input
+                          className='shadow inline-block appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-1/2'
+                          placeholder='Pronouns'
+                          name='pronouns'
+                          value={pronouns}
+                          onChange={e => setPronouns(e.target.value)}
+                          required />
+                      </FormBox>
+                      <FormBox>
+                        <label for='bio'>Bio</label>
+                        <textarea
+                          className='mt-2 shadow inline-block appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-1/2'
+                          name='bio'
+                          onChange={e => setBio(e.target.value)}
+                          value={bio} />
+                      </FormBox>
                       <div className='mt-2 flex'>
                         <UtilityButton type='submit' onClick={handleSubmit}>
                           Update
@@ -150,17 +157,27 @@ function Profile () {
                             <H2>Teams</H2>
                             <br />
                             <H3>Active</H3>
+                            <br />
                             { profile.player.teams.filter(x => x.is_active).map(x => (
                               <div key={`${x.id}-${x.name}`} className='my-2'>
                                 <SingleTeam className='text-md' team={x} />
                               </div>
                             ))}
+                            {
+                              profile.player.teams.filter(x => x.is_active).length == 0
+                                ? <p>None</p> : null
+                            }
                             <H3>Past</H3>
+                            <br />
                             { profile.player.teams.filter(x => !x.is_active).map(x => (
                               <div key={`${x.id}-${x.name}`} className='my-2'>
                                 <SingleTeam className='text-md' team={x} />
                               </div>
                             ))}
+                            {
+                              profile.player.teams.filter(x => !x.is_active).length == 0
+                                ? <p>None</p> : null
+                            }
                           </div>
                         ) : null}
                     </div>

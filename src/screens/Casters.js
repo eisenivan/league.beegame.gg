@@ -30,6 +30,7 @@ function Teams () {
         loading
           ? <div>loading...</div>
           : (
+            <>
             <div>
               <PageTitle>Caster</PageTitle>
               {casters.map((caster) => (
@@ -38,8 +39,13 @@ function Teams () {
                 </div>
               ))}
             </div>
+            {casters.length == 0 
+            ? <span className="text-normal mb-2">Casters coming soon...</span>
+            : null }
+            </>
           )
       }
+      <div className="mt-5 text-sm">Apply to be a caster <a href="https://forms.gle/qVy83m72xVQRtgsDA" target="_blank">here</a>.</div>
     </Chrome>
   )
 }
