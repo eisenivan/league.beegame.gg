@@ -45,7 +45,7 @@ function Teams () {
             </>
           )
       }
-      <div className="text-sm">Apply to be a caster <a href="https://forms.gle/E32TkhWY1K1frvru7" target="_blank">here</a>.</div>
+      <div className="mt-5 text-sm">Apply to be a caster <a href="https://forms.gle/qVy83m72xVQRtgsDA" target="_blank">here</a>.</div>
     </Chrome>
   )
 }
