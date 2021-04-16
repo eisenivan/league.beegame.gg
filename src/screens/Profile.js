@@ -147,6 +147,7 @@ function Profile () {
                             <H2>Teams</H2>
                             <br />
                             <H3>Active</H3>
+                            <br />
                             { profile.player.teams.filter(x => x.is_active).map(x => (
                               <div key={`${x.id}-${x.name}`} className='my-2'>
                                 <SingleTeam className='text-md' team={x} />
