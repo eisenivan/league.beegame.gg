@@ -91,10 +91,10 @@ function Profile () {
           : (
             <div>
               { profile.player.avatar_url
-                ? <AvatarContainer alt={`Avatar for BGL player ${profile.player.name}`} imgUrl={profile.player.avatar_url} className='bg-gray-2 h-32 w-32 lg:mr-8 mb-4 lg:mb-0 lg:float-left' />
+                ? <AvatarContainer alt={`Avatar for BGL player ${profile.player.name}`} imgUrl={profile.player.avatar_url} className='w-32 h-32 mb-4 bg-gray-2 lg:mr-8 lg:mb-0 lg:float-left' />
                 : null }
               <div className='flex items-center mb-4'>
-                <PageTitle className='truncate max-w-xs sm:max-width-sm md:max-w-full' style={{ marginBottom: 0 }}>{profile.player.name}</PageTitle>
+                <PageTitle className='max-w-xs truncate sm:max-width-sm md:max-w-full' style={{ marginBottom: 0 }}>{profile.player.name}</PageTitle>
                 {!editProfile
                   ? (
                     <UtilityButton
@@ -120,7 +120,7 @@ function Profile () {
                       <FormBox>
                         <label for='pronouns'>Pronouns</label>
                         <input
-                          className='shadow inline-block appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-1/2'
+                          className='inline-block px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline lg:w-1/2'
                           placeholder='Pronouns'
                           name='pronouns'
                           value={pronouns}
@@ -130,12 +130,12 @@ function Profile () {
                       <FormBox>
                         <label for='bio'>Bio</label>
                         <textarea
-                          className='mt-2 shadow inline-block appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-1/2'
+                          className='inline-block px-3 py-2 mt-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline lg:w-1/2'
                           name='bio'
                           onChange={e => setBio(e.target.value)}
                           value={bio} />
                       </FormBox>
-                      <div className='mt-2 flex'>
+                      <div className='flex mt-2'>
                         <UtilityButton type='submit' onClick={handleSubmit}>
                           Update
                         </UtilityButton>
@@ -148,9 +148,9 @@ function Profile () {
                   )
                   : (
                   <>
-                    <PageSubtitle style={{ marginTop: 0 }}>{profile.player.name_phonetic} ({pronouns})</PageSubtitle>
+                  <PageSubtitle style={{ marginTop: 0 }}>{profile.player.name_phonetic}{pronouns.length > 0 && <span>{'(' + pronouns + ')'}</span>}</PageSubtitle>
                     <div className='grid md:grid-cols-content'>
-                      <p className='italic mt-2'>{bio}</p>
+                      <p className='mt-2 italic'>{bio}</p>
                       { get(profile, 'player.teams')
                         ? (
                           <div>
