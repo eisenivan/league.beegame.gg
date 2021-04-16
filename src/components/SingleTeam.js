@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { AvatarContainer } from './elements'
+import { AvatarContainer, PageSubtitle } from './elements'
 
 function PlayerCard ({ children, id, img = '', name = '', imgUrl, captain, pronouns }) {
   return (
@@ -38,6 +38,9 @@ export function TeamRoster ({ team = {}, vertical, className = '' }) {
 function SingleTeam ({ team, className, showRoster }) {
   return (
     <div>
+      { team.circuit_display
+        ? <PageSubtitle style={{ marginTop: '0rem', marginBottom: '-0.25rem' }}>{team.circuit_display}</PageSubtitle>
+        : null }
       <Link to={`/teams/${team.id}/`} className={className || 'text-xl mb-4'}>{team.name}</Link>
       { team.members && showRoster
         ? <TeamRoster team={team} />
