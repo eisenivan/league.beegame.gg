@@ -7,22 +7,22 @@ export const linkString = 'hover:text-yellow-2 transition-colors'
 
 export function MatchBox ({ match, children }) {
   return (
-    <div key={`${match.home.name}${match.away.name}${match.id}`} className='shadow-xl mb-4 max-w-lg'>
-      <div className='uppercase font-head text-2xl'>
-        <div className='text-gray-1 bg-blue-2 p-4 truncate text-shadow shadow-match flex justify-between'>
+    <div key={`${match.home.name}${match.away.name}${match.id}`} className='max-w-lg mb-4 shadow-xl'>
+      <div className='text-2xl uppercase font-head'>
+        <div className='flex justify-between p-4 truncate text-gray-1 bg-blue-2 text-shadow shadow-match'>
           <RouterLink className='text-white truncate' to={`/teams/${match.away.id}/`}>{match.away.name}</RouterLink>
           { match.result
             ? <span className='ml-2 text-3xl'>{match.result.sets_away}</span>
             : null }
 
         </div>
-        <div className='text-gray-1 bg-yellow-2 p-4 ellipsis text-shadow shadow-match flex justify-between'>
+        <div className='flex justify-between p-4 text-gray-1 bg-yellow-2 ellipsis text-shadow shadow-match'>
           <RouterLink className='text-white truncate' to={`/teams/${match.home.id}/`}>{match.home.name}</RouterLink>
           { match.result
             ? <span className='text-3xl'>{match.result.sets_home}</span>
             : null }
         </div>
-        <div className='bg-gray-3 text-gray-1 text-right pb-0 text-sm'>
+        <div className='pb-0 text-sm text-right bg-gray-3 text-gray-1'>
           {children}
         </div>
       </div>
@@ -47,25 +47,25 @@ export function PageTitle ({ children, className = '', style = {} }) {
 }
 
 export function PageSubtitle ({ children, style = {} }) {
-  return <div style={style} className='text-xs -mt-4'>{children}</div>
+  return <div style={style} className='-mt-4 text-xs'>{children}</div>
 }
 
 export function H2 ({ children }) {
-  return <h2 className='text-xl my-2 font-subhead inline-block'>{children}</h2>
+  return <h2 className='inline-block my-2 text-xl font-subhead'>{children}</h2>
 }
 
 export function H3 ({ children }) {
-  return <h3 className='text-xl my-2 font-subhead inline-block'>{children}</h3>
+  return <h3 className='inline-block my-2 text-xl font-subhead'>{children}</h3>
 }
 
 export function LightContentBox ({ children }) {
-  return <div className='bg-triangle_bg_light p-2 lg:p-8'>{children}</div>
+  return <div className='p-4 bg-triangle_bg_light lg:p-8'>{children}</div>
 }
 
 export function Input ({ ...props }) {
   return (
     <input
-      className='shadow inline-block appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+      className='inline-block px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline'
       placeholder={props.placeholder || ''}
       name={props.name || ''}
       value={props.value || ''}
@@ -77,7 +77,7 @@ export function Input ({ ...props }) {
 export function Button ({ children, ...props }) {
   return (
     <button
-      className='float bg-yellow-2 hover:bg-yellow-3 text-gray-3 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+      className='px-4 py-2 font-bold rounded float bg-yellow-2 hover:bg-yellow-3 text-gray-3 focus:outline-none focus:shadow-outline'
       type={props.type || 'button'}
       onClick={props.onClick}>
       {children}

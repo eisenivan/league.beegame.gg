@@ -21,12 +21,12 @@ function Chrome ({ children }) {
   }
 
   return (
-    <div id='app' className='bg-triangle_bg_dark text-gray-1 min-h-screen'>
+    <div id='app' className='flex flex-col min-h-screen bg-triangle_bg_dark text-gray-1'>
       { process.env.REACT_APP_STAGE === 'true'
-        ? <div className='bg-red-800 text-white text-center'>This is not production data</div>
+        ? <div className='text-center text-white bg-red-800'>This is not production data</div>
         : null}
       <Header />
-      <main className='container p-2 m-auto lg:p-8'>
+      <main className='container flex-1 p-5 m-auto lg:p-8'>
         {children}
       </main>
       <Footer />
