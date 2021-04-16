@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import get from 'lodash.get'
-import { PageTitle, PageSubtitle, H2, H3, UtilityButton } from '../components/elements'
+import { PageTitle, PageSubtitle, H2, H3, UtilityButton, AvatarContainer } from '../components/elements'
 import Chrome from '../components/Chrome'
 import SingleTeam from '../components/SingleTeam'
 import fetch from '../modules/fetch-with-headers'
@@ -90,6 +90,9 @@ function Profile () {
           ? <div>loading...</div>
           : (
             <div>
+              { profile.player.avatar_url
+                ? <AvatarContainer alt={`Avatar for BGL player ${profile.player.name}`} imgUrl={profile.player.avatar_url} className='bg-gray-2 h-32 w-32 lg:mr-8 mb-4 lg:mb-0 lg:float-left' />
+                : null }
               <div className='flex items-center'>
                 <PageTitle className='truncate max-w-xs sm:max-width-sm md:max-w-full' style={{ marginBottom: 0 }}>{profile.player.name}</PageTitle>
                 {!editProfile
