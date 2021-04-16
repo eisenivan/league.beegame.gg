@@ -200,18 +200,18 @@ function Team () {
             <div>
               <div>
                 { joinMsg
-                  ? <div className='bg-blue-3 text-white p-4'>{joinMsg}</div>
+                  ? <div className='p-4 text-white bg-blue-3'>{joinMsg}</div>
                   : null}
 
-                <div style={{ backgroundImage: 'url(/img/bgl_default_banner.png)', backgroundSize: 'cover', backgroundPosition: 'center' }} className='w-full h-80 hidden md:block' />
-                <div className='grid md:grid-cols-content mb-4'>
-                  <div className='flex flex-col md:flex-row items-center'>
+                <div style={{ backgroundImage: 'url(/img/bgl_default_banner.png)', backgroundSize: 'cover', backgroundPosition: 'center' }} className='hidden w-full h-80 md:block' />
+                <div className='grid mb-4 md:grid-cols-content'>
+                  <div className='flex flex-col items-center md:flex-row'>
                     <img className='w-20' alt='placeholder team logo' src='/img/bgl_default_logo.png' />
                     { editTeam
                       ? (
                         <div className='flex flex-col lg:flex-row'>
                           <input
-                            className='shadow inline-block appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                            className='inline-block px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline'
                             placeholder='Team Name'
                             name='name'
                             value={name}
@@ -230,7 +230,7 @@ function Team () {
                       )
                       : (
                         <div className='flex flex-col'>
-                          <PageTitle className='truncate max-w-xs sm:max-width-sm md:max-w-full' style={{ marginBottom: 0 }}>{name}</PageTitle>
+                          <PageTitle className='max-w-xs truncate sm:max-width-sm md:max-w-full' style={{ marginBottom: 0 }}>{name}</PageTitle>
                           { parseInt(userId) === parseInt(team.captain.id)
                           // captain only view
                             ? (
@@ -249,7 +249,7 @@ function Team () {
 
                   </div>
 
-                  <div className='font-head text-lg text-right self-center'><Link className='text-white' to={`/circuits/${circuit.id}/`}>{circuit.name}</Link></div>
+                  <div className='flex self-center justify-center text-lg text-right md:block font-head'><Link className='text-white' to={`/circuits/${circuit.id}/`}>{circuit.name}</Link></div>
                 </div>
               </div>
 
@@ -262,27 +262,27 @@ function Team () {
                         ? (
                           matches.map((match) => (
                             <MatchBox key={`match-${match.id}`} match={match}>
-                              <div className='bg-gray-3 text-gray-1 p-2 text-right flex flex-row flex-wrap items-center'>
+                              <div className='flex flex-row flex-wrap items-center p-2 text-right bg-gray-3 text-gray-1'>
                                 {parseInt(userId) === parseInt(team.captain.id) && !match.result
                                   ? (
-                                    <select value={`${get(match, 'primary_caster.id')}`} onChange={(e) => assignCaster(e, match.id)} className='text-gray-3 md:lg-0 flex-shrink justify-start'>
+                                    <select value={`${get(match, 'primary_caster.id')}`} onChange={(e) => assignCaster(e, match.id)} className='justify-start flex-shrink text-gray-3 md:lg-0'>
                                       <option value=''>-- SELECT CASTER --</option>
                                       { casters.map(x => <option key={`caster-${x.id}`} value={`${x.id}`}>{x.name.substr(0, 20)}{x.name.length > 20 ? '...' : ''}</option>)}
                                     </select>
                                   ) : null }
                                 { match.start_time === null && parseInt(userId) === parseInt(team.captain.id) && !match.result
                                   ? (
-                                    <div className='flex-auto justify-end'>
+                                    <div className='justify-end flex-auto'>
                                       <span>
                                         {/* <DateTimePicker
-                                          className='text-gray-3 bg-gray-1 text-sm'
+                                          className='text-sm text-gray-3 bg-gray-1'
                                           onChange={(val) => changeMatchTime(val, match.id)}
                                           value={matchTime[match.id]}
                                           maxDetail={'minute'}
                                           disableClock
                                         /> */}
                                         <DatePicker
-                                          className='text-gray-3 bg-gray-1 text-sm'
+                                          className='text-sm text-gray-3 bg-gray-1'
                                           selected={matchTime[match.id]}
                                           onChange={(val) => changeMatchTime(val, match.id)}
                                           showTimeSelect
@@ -292,19 +292,19 @@ function Team () {
                                           dateFormat="MM/dd/yyyy h:mm aa"
                                           placeholderText={"Match Time (in " + moment.tz(Date.now(), moment.tz.guess()).format('z') + ")"}
                                         />
-                                        <button className='bg-yellow-1 text-gray-3 rounded-sm ml-2 px-2 py-1 text-sm font-head uppercase' onClick={(e) => scheduleMatch(e, match.id)}>Schedule</button>
+                                        <button className='px-2 py-1 ml-2 text-sm uppercase rounded-sm bg-yellow-1 text-gray-3 font-head' onClick={(e) => scheduleMatch(e, match.id)}>Schedule</button>
                                         { matchError ? <div className='mt-2 text-red-500'>{matchError}</div> : null }
                                       </span>
                                     </div>
                                   )
                                   : (
-                                    <span className='text-sm block flex-grow justify-end'>
+                                    <span className='justify-end flex-grow block text-sm'>
                                       { match.start_time
                                         ? (
                                       <>
                                         {formatDateTime(match.start_time)}
                                         { parseInt(userId) === parseInt(team.captain.id) && !match.result
-                                          ? <button onClick={(e) => scheduleMatch(e, match.id, true)} className='bg-yellow-1 text-gray-3 rounded-sm ml-2 px-2 py-1 text-sm font-head uppercase'>Reschedule</button>
+                                          ? <button onClick={(e) => scheduleMatch(e, match.id, true)} className='px-2 py-1 ml-2 text-sm uppercase rounded-sm bg-yellow-1 text-gray-3 font-head'>Reschedule</button>
                                           : null }
                                       </>
                                         )
