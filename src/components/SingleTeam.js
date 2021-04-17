@@ -16,7 +16,7 @@ function PlayerCard ({ children, id, img = '', name = '', imgUrl, captain, prono
 
 export function TeamRoster ({ team = {}, vertical, className = '' }) {
   return (
-    <div style={{ gridTemplateRows: 'repeat(4, 85px)' }} className={`${className} grid md:grid-cols-2 gap-4"`}>
+    <div style={{ gridTemplateRows: 'repeat(4, 85px)' }} className={`${className} grid md:grid-cols-2 gap-4 mb-4 md:mb-0"`}>
       { team.captain
         ? (
           <PlayerCard name={team.captain.name} id={team.captain.id} imgUrl={team.captain.avatar_url} pronouns={team.captain.pronouns} captain />
