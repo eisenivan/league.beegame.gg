@@ -37,7 +37,7 @@ function Header () {
   }, [token])
 
   return (
-    <header className='justify-between p-2 md:flex lg:px-8'>
+    <header className='justify-between pt-2 pb-4 border-b border-gray-700 md:p-2 md:border-none md:flex lg:px-8'>
       <div className='flex items-center justify-center md:justify-start'>
         <Link to='/' className={`${linkString} text-gray-1 font-head uppercase text-2xl flex flex-wrap items-center`}><HeaderLogo className='h-28' alt='Beegame.gg emblem logo' src='/img/logo_BGL_emblem.png' /> League.Beegame.gg</Link>
       </div>
