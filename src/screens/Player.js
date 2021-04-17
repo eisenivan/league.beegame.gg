@@ -34,7 +34,7 @@ function Profile () {
             <div className='grid grid-cols-content'>
               <div>
                 { player.avatar_url
-                  ? <AvatarContainer alt={`Avatar for BGL player ${player.name}`} imgUrl={player.avatar_url} className='bg-gray-2 h-32 w-32 lg:mr-8 mb-4 lg:mb-0 lg:float-left' />
+                  ? <AvatarContainer alt={`Avatar for BGL player ${player.name}`} imgUrl={player.avatar_url} className='w-32 h-32 mb-4 bg-gray-2 lg:mr-8 lg:mb-0 lg:float-left' />
                   : null }
                 <PageTitle>{player.name}</PageTitle>
                 <PageSubtitle>

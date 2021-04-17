@@ -37,11 +37,11 @@ function Header () {
   }, [token])
 
   return (
-    <header className='md:flex justify-between p-2 lg:px-8'>
-      <div className='flex items-center'>
-        <Link to='/' className={`${linkString} text-gray-1 font-head uppercase text-2xl flex items-center`}><HeaderLogo className='h-28' alt='Beegame.gg emblem logo' src='/img/logo_BGL_emblem.png' /> League.Beegame.gg</Link>
+    <header className='justify-between pt-2 pb-4 border-b border-gray-700 md:p-2 md:border-none md:flex lg:px-8'>
+      <div className='flex items-center justify-center md:justify-start'>
+        <Link to='/' className={`${linkString} text-gray-1 font-head uppercase text-2xl flex flex-wrap items-center`}><HeaderLogo className='h-28' alt='Beegame.gg emblem logo' src='/img/logo_BGL_emblem.png' /> League.Beegame.gg</Link>
       </div>
-      <nav className='flex items-center'>
+      <nav className='flex flex-wrap items-center justify-center md:justify-start'>
         <NavItem to='/register' className={`${linkString} text-gray-1`}>Register</NavItem>
         <NavItem to='/circuits' className={`${linkString} text-gray-1`}>Circuits</NavItem>
         {/* <NavItem to='/teams' className={`${linkString} text-gray-1`}>Teams</NavItem> */}

@@ -4,10 +4,10 @@ import { AvatarContainer, PageSubtitle } from './elements'
 
 function PlayerCard ({ children, id, img = '', name = '', imgUrl, captain, pronouns }) {
   return (
-    <Link to={`/player/${id}`} className='p-2 w-full h-20 flex hover:bg-yellow-2'>
-      <AvatarContainer alt={`Avatar for BGL player ${name}`} imgUrl={imgUrl} className='bg-gray-2 h-16 w-16 mr-2' />
+    <Link to={`/player/${id}`} className='flex w-full h-20 p-2 hover:bg-yellow-2'>
+      <AvatarContainer alt={`Avatar for BGL player ${name}`} imgUrl={imgUrl} className='flex-shrink-0 w-16 h-16 mr-2 bg-gray-2' />
       <div>
-        <div className='text-gray-3 font-head font-lg uppercase'>{captain ? '🌟' : ''}{name}</div>
+        <div className='uppercase break-all text-gray-3 font-head font-lg'>{captain ? '🌟' : ''}{name}</div>
         <div className='text-xs text-gray-3'>{pronouns}</div>
       </div>
     </Link>
@@ -16,7 +16,7 @@ function PlayerCard ({ children, id, img = '', name = '', imgUrl, captain, prono
 
 export function TeamRoster ({ team = {}, vertical, className = '' }) {
   return (
-    <div style={{ gridTemplateRows: 'repeat(4, 85px)' }} className={`${className} grid grid-cols-2 gap-4"`}>
+    <div style={{ gridTemplateRows: 'repeat(4, 85px)' }} className={`${className} grid md:grid-cols-2 gap-4 mb-4 md:mb-0"`}>
       { team.captain
         ? (
           <PlayerCard name={team.captain.name} id={team.captain.id} imgUrl={team.captain.avatar_url} pronouns={team.captain.pronouns} captain />
