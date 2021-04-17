@@ -151,7 +151,7 @@ function Profile () {
                   )
                   : (
                   <>
-                  <PageSubtitle style={{ marginTop: 0 }}>{profile.player.name_phonetic}{pronouns.length > 0 && <span>{'(' + pronouns + ')'}</span>}</PageSubtitle>
+                  <PageSubtitle style={{ marginTop: 0 }}>{profile.player.name_phonetic}{pronouns && <span>{'(' + pronouns + ')'}</span>}</PageSubtitle>
                     <div className='grid md:grid-cols-content'>
                       <p className='mt-2 italic'>{bio}</p>
                       { get(profile, 'player.teams')
