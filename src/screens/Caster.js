@@ -36,9 +36,9 @@ function Teams () {
                 {caster.player.name_phonetic || ''} {caster.player.pronouns ? `(${caster.player.pronouns})` : ''}</PageSubtitle>
               <div className='mt-4'>{caster.player.bio}</div>              
 
-              <Link to={caster.stream_link} className={`flex mt-5 ${caster.player.twitch_username ? "" : "hidden"}`}>
+              <a href={caster.stream_link} class={`flex mt-5 ${caster.player.twitch_username ? "" : "hidden"}`}>
                   twitch.tv/{ caster.player.twitch_username }
-              </Link>                              
+              </a>         
 
               <span></span>
             </div>
