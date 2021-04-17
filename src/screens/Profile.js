@@ -93,24 +93,27 @@ function Profile () {
               { profile.player.avatar_url
                 ? <AvatarContainer alt={`Avatar for BGL player ${profile.player.name}`} imgUrl={profile.player.avatar_url} className='w-32 h-32 mb-4 bg-gray-2 lg:mr-8 lg:mb-0 lg:float-left' />
                 : null }
-              <div className='flex items-center mb-4'>
+              <div className='flex flex-col mb-4 md:flex-row md:items-center md:'>
                 <PageTitle className='max-w-xs truncate sm:max-width-sm md:max-w-full' style={{ marginBottom: 0 }}>{profile.player.name}</PageTitle>
-                {!editProfile
-                  ? (
-                    <UtilityButton
-                      className='ml-2'
-                      type='button'
-                      onClick={toggleEditProfile}>
-                      Edit Profile
-                    </UtilityButton>
-                  ) : null }
+                
+                <div>
+                  {!editProfile
+                    ? (
+                      <UtilityButton
+                        className='md:ml-2'
+                        type='button'
+                        onClick={toggleEditProfile}>
+                        Edit Profile
+                      </UtilityButton>
+                    ) : null }
 
-                <UtilityButton
-                  className='ml-2'
-                  type='button'
-                  onClick={handleTokenCopy}>
-                  {tokenButtonText}
-                </UtilityButton>
+                  <UtilityButton
+                    className='ml-2'
+                    type='button'
+                    onClick={handleTokenCopy}>
+                    {tokenButtonText}
+                  </UtilityButton>
+                </div>
               </div>
 
               {
