@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Chrome from '../components/Chrome'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { PageTitle, PageSubtitle } from '../components/elements'
 import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
@@ -34,7 +34,13 @@ function Teams () {
               <PageTitle>{caster.name}</PageTitle>
               <PageSubtitle>
                 {caster.player.name_phonetic || ''} {caster.player.pronouns ? `(${caster.player.pronouns})` : ''}</PageSubtitle>
-              <div className='mt-4'>{caster.player.bio}</div>
+              <div className='mt-4'>{caster.player.bio}</div>              
+
+              <Link to={caster.stream_link} className={`flex mt-5 ${caster.player.twitch_username ? "" : "hidden"}`}>
+                  twitch.tv/{ caster.player.twitch_username }
+              </Link>                              
+
+              <span></span>
             </div>
           )
       }

@@ -12,6 +12,7 @@ function Profile () {
   const [loading, setLoading] = useState(true)
   const [editProfile, setEditProfile] = useState(false)
   const [profile, setProfile] = useState([])
+  const [namePhonetic, setNamePhonetic] = useState('')
   const [pronouns, setPronouns] = useState('')
   const [bio, setBio] = useState()
   const [tokenButtonText, setTokenButtonText] = useState('copy auth token')
@@ -27,6 +28,7 @@ function Profile () {
         .catch(handleError)
 
       setProfile(profile)
+      setNamePhonetic(profile.player.name_phonetic)
       setPronouns(profile.player.pronouns)
       setBio(profile.player.bio)
       setLoading(false)
@@ -39,15 +41,18 @@ function Profile () {
     e.preventDefault()
 
     const data = { bio, pronouns }
+    data.name_phonetic = namePhonetic
+    
     const requestOptions = {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     }
-
+    
     fetch(`${getApiUrl()}players/${profile.player.id}/`, requestOptions)
       .then(res => res.json())
       .then((res) => {
+        setNamePhonetic(res.name_phonetic)
         setPronouns(res.pronouns)
         setBio(res.bio)
         toggleEditProfile()
@@ -120,20 +125,40 @@ function Profile () {
                 editProfile
                   ? (
                     <div className='flex flex-col'>
-                      <FormBox>
-                        <label for='pronouns'>Pronouns</label>
-                        <input
-                          className='inline-block px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline lg:w-1/2'
-                          placeholder='Pronouns'
-                          name='pronouns'
-                          value={pronouns}
-                          onChange={e => setPronouns(e.target.value)}
-                          required />
-                      </FormBox>
+                      <div class="md:flex md:w-1/2">
+
+                        <div class="md:w-1/2 md:mr-4">
+                          <FormBox>
+                            <label for='namePhonetic'>Name Phonetically</label>
+                            <input
+                              className='inline-block px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline'
+                              placeholder='example: beez-neez'
+                              name='namePhonetic'
+                              value={namePhonetic}
+                              onChange={e => setNamePhonetic(e.target.value)}
+                              required />
+                          </FormBox>
+                        </div>
+
+                        <div class="md:w-1/2">
+                          <FormBox>
+                            <label for='pronouns'>Pronouns</label>
+                            <input
+                              className='inline-block px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline'
+                              placeholder='Pronouns do you prefer'
+                              name='pronouns'
+                              value={pronouns}
+                              onChange={e => setPronouns(e.target.value)}
+                              />
+                          </FormBox>
+                        </div>
+
+                      </div>
                       <FormBox>
                         <label for='bio'>Bio</label>
                         <textarea
                           className='inline-block px-3 py-2 mt-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline lg:w-1/2'
+                          placeholder='Tell us a bit about yourself'
                           name='bio'
                           onChange={e => setBio(e.target.value)}
                           value={bio} />
@@ -151,7 +176,7 @@ function Profile () {
                   )
                   : (
                   <>
-                  <PageSubtitle style={{ marginTop: 0 }}>{profile.player.name_phonetic}{pronouns.length > 0 && <span>{'(' + pronouns + ')'}</span>}</PageSubtitle>
+                  <PageSubtitle style={{ marginTop: 0 }}>{namePhonetic}{pronouns && <span>{' (' + pronouns + ')'}</span>}</PageSubtitle>
                     <div className='grid md:grid-cols-content'>
                       <p className='mt-2 italic'>{bio}</p>
                       { get(profile, 'player.teams')
