@@ -139,7 +139,7 @@ function Team () {
         .then((data) => data.json())
         .then((data) => {
           setTeam(data)
-          setMatches([...data.home_matches, ...data.away_matches])
+          setMatches([...data.home_matches, ...data.away_matches].sort((a, b) => (a.start_time > b.start_time ? 1 : -1)))
 
           setName(data.name)
           fetch(`${getApiUrl()}circuits/${data.circuit}/`)
