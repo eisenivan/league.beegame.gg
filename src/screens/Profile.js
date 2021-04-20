@@ -94,12 +94,12 @@ function Profile () {
         loading
           ? <div>loading...</div>
           : (
-            <div>
+            <div class="flex flex-col md:block items-center">
               { profile.player.avatar_url
-                ? <AvatarContainer alt={`Avatar for BGL player ${profile.player.name}`} imgUrl={profile.player.avatar_url} className='w-16 h-16 mb-4 rounded md:w-32 md:h-32 bg-gray-2 lg:mr-8 lg:mb-0 lg:float-left' />
+                ? <AvatarContainer alt={`Avatar for BGL player ${profile.player.name}`} imgUrl={profile.player.avatar_url} className='w-16 h-16 mb-1 rounded md:w-32 md:h-32 bg-gray-2 lg:mr-8 lg:mb-0 lg:float-left' />
                 : null }
-              <div className='flex flex-col mb-4 md:flex-row md:items-center md:'>
-                <PageTitle className='max-w-xs truncate sm:max-width-sm md:max-w-full' style={{ marginBottom: 0 }}>{profile.player.name}</PageTitle>
+              <div className='flex flex-col items-center mb-4 md:flex-row'>
+                <PageTitle className='max-w-xs break-allmd:truncate sm:max-width-sm md:max-w-full' style={{ marginBottom: 0 }}>{profile.player.name}</PageTitle>
                 
                 <div>
                   {!editProfile
@@ -124,7 +124,7 @@ function Profile () {
               {
                 editProfile
                   ? (
-                    <div className='flex flex-col'>
+                    <div className='flex flex-col w-full md:w-auto'>
                       <div class="md:flex md:w-1/2">
 
                         <div class="md:w-1/2 md:mr-4">
@@ -177,8 +177,22 @@ function Profile () {
                   : (
                   <>
                   <PageSubtitle style={{ marginTop: 0 }}>{namePhonetic}{pronouns && <span>{' (' + pronouns + ')'}</span>}</PageSubtitle>
-                    <div className='grid md:grid-cols-content'>
-                      <p className='mt-2 italic'>{bio}</p>
+                    <div className='grid w-full md:w-auto md:grid-cols-content'>
+                      
+                    <div className='mb-2 md:pr-10'>
+                        { bio
+                        ?(
+                          <div>
+                            <H3>Bio</H3>
+                            <p class="-mt-2">{bio}</p>
+                          </div>
+                        )
+                        : null
+                        }
+                      </div>
+
+
+
                       { get(profile, 'player.teams')
                         ? (
                           <div>
