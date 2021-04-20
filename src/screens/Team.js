@@ -147,6 +147,11 @@ function Team () {
           setMatchesWon(countOfMatchesWon)
           setMatchesLost(matchesPlayed.length - countOfMatchesWon)
 
+          const matchesPlayed = [...data.home_matches, ...data.away_matches].filter(m => m.result && m.result.status == "Completed")
+          const countOfMatchesWon = matchesPlayed.filter(m => m.result.winner == data.name).length
+          setMatchesWon(countOfMatchesWon)
+          setMatchesLost(matchesPlayed.length - countOfMatchesWon)
+
           setName(data.name)
           fetch(`${getApiUrl()}circuits/${data.circuit}/`)
             .then((data) => data.json())
