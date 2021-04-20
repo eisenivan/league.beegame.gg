@@ -142,13 +142,8 @@ function Team () {
         .then((data) => {
           setTeam(data)
           setMatches([...data.home_matches, ...data.away_matches].sort((a, b) => (a.start_time > b.start_time ? 1 : -1)))
-          const matchesPlayed = [...data.home_matches, ...data.away_matches].filter(m => m.result && m.result.status == 'Completed')
-          const countOfMatchesWon = matchesPlayed.filter(m => m.result.winner == data.name).length
-          setMatchesWon(countOfMatchesWon)
-          setMatchesLost(matchesPlayed.length - countOfMatchesWon)
-
-          const matchesPlayed = [...data.home_matches, ...data.away_matches].filter(m => m.result && m.result.status == "Completed")
-          const countOfMatchesWon = matchesPlayed.filter(m => m.result.winner == data.name).length
+          const matchesPlayed = [...data.home_matches, ...data.away_matches].filter(m => m.result && m.result.status === 'Completed')
+          const countOfMatchesWon = matchesPlayed.filter(m => m.result.winner === data.name).length
           setMatchesWon(countOfMatchesWon)
           setMatchesLost(matchesPlayed.length - countOfMatchesWon)
 
