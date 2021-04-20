@@ -6,6 +6,7 @@ import SingleTeam from '../components/SingleTeam'
 import fetch from '../modules/fetch-with-headers'
 import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
+import cookie from "react-cookies";
 
 function Profile () {
   const { id } = useParams()
@@ -25,6 +26,8 @@ function Profile () {
     fetchData()
   }, [id])
 
+  const token = cookie.load('token', true)
+
   return (
     <Chrome>
       {
@@ -36,7 +39,16 @@ function Profile () {
                 { player.avatar_url
                   ? <AvatarContainer alt={`Avatar for BGL player ${player.name}`} imgUrl={player.avatar_url} className='w-32 h-32 mb-4 bg-gray-2 lg:mr-8 lg:mb-0 lg:float-left' />
                   : null }
-                <PageTitle>{player.name}</PageTitle>
+                <div className='flex'>
+                  <PageTitle>{player.name}</PageTitle>
+                  {token && player.discord_username && player.discord_username.trim().length > 0
+                    ? (
+                      <div className='ml-10 pt-1'>
+                        <img src='/img/Discord-Logo-Color.png' className='h-6 inline' alt='Discord Username' />
+                        {player.discord_username.trim()}
+                      </div>
+                    ) : null }
+                </div>
                 <PageSubtitle>
                   {player.name_phonetic || ''} {player.pronouns ? `(${player.pronouns})` : ''}</PageSubtitle>
                 <div className='my-4'>{player.bio}</div>
