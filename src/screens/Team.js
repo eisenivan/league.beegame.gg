@@ -26,6 +26,8 @@ function Team () {
   const [circuit, setCircuit] = useState({})
   const [editTeam, setEditTeam] = useState(false)
   const [matches, setMatches] = useState([])
+  const [matchesWon, setMatchesWon] = useState(0)
+  const [matchesLost, setMatchesLost] = useState(0)
   const [matchTime, setMatchTime] = useState({})
   const [casters, setCasters] = useState([])
   const [matchError, setMatchError] = useState()
@@ -141,6 +143,11 @@ function Team () {
           setTeam(data)
           setMatches([...data.home_matches, ...data.away_matches].sort((a, b) => (a.start_time > b.start_time ? 1 : -1)))
 
+          const matchesPlayed = [...data.home_matches, ...data.away_matches].filter(m => m.result && m.result.status == "Completed")
+          const countOfMatchesWon = matchesPlayed.filter(m => m.result.winner == data.name).length
+          setMatchesWon(countOfMatchesWon)
+          setMatchesLost(matchesPlayed.length - countOfMatchesWon)
+
           setName(data.name)
           fetch(`${getApiUrl()}circuits/${data.circuit}/`)
             .then((data) => data.json())
@@ -230,7 +237,9 @@ function Team () {
                       )
                       : (
                         <div className='flex flex-col'>
-                          <PageTitle className='max-w-xs truncate sm:max-width-sm md:max-w-full' style={{ marginBottom: 0 }}>{name}</PageTitle>
+                          <PageTitle className='max-w-xs truncate sm:max-width-sm md:max-w-full' style={{ marginBottom: 0 }}>
+                            {name} ({matchesWon} - {matchesLost})
+                          </PageTitle>
                           { parseInt(userId) === parseInt(team.captain.id)
                           // captain only view
                             ? (
