@@ -42,13 +42,13 @@ function Profile () {
 
     const data = { bio, pronouns }
     data.name_phonetic = namePhonetic
-    
+
     const requestOptions = {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     }
-    
+
     fetch(`${getApiUrl()}players/${profile.player.id}/`, requestOptions)
       .then(res => res.json())
       .then((res) => {
@@ -94,13 +94,13 @@ function Profile () {
         loading
           ? <div>loading...</div>
           : (
-            <div class="flex flex-col md:block items-center">
+            <div class='flex flex-col md:block items-center'>
               { profile.player.avatar_url
                 ? <AvatarContainer alt={`Avatar for BGL player ${profile.player.name}`} imgUrl={profile.player.avatar_url} className='w-16 h-16 mb-1 rounded md:w-32 md:h-32 bg-gray-2 lg:mr-8 lg:mb-0 lg:float-left' />
                 : null }
               <div className='flex flex-col items-center mb-4 md:flex-row'>
                 <PageTitle className='max-w-xs break-allmd:truncate sm:max-width-sm md:max-w-full' style={{ marginBottom: 0 }}>{profile.player.name}</PageTitle>
-                
+
                 <div>
                   {!editProfile
                     ? (
@@ -125,9 +125,9 @@ function Profile () {
                 editProfile
                   ? (
                     <div className='flex flex-col w-full md:w-auto'>
-                      <div class="md:flex md:w-1/2">
+                      <div class='md:flex md:w-1/2'>
 
-                        <div class="md:w-1/2 md:mr-4">
+                        <div class='md:w-1/2 md:mr-4'>
                           <FormBox>
                             <label for='namePhonetic'>Name Phonetically</label>
                             <input
@@ -140,7 +140,7 @@ function Profile () {
                           </FormBox>
                         </div>
 
-                        <div class="md:w-1/2">
+                        <div class='md:w-1/2'>
                           <FormBox>
                             <label for='pronouns'>Pronouns</label>
                             <input
@@ -149,7 +149,7 @@ function Profile () {
                               name='pronouns'
                               value={pronouns}
                               onChange={e => setPronouns(e.target.value)}
-                              />
+                            />
                           </FormBox>
                         </div>
 
@@ -176,22 +176,20 @@ function Profile () {
                   )
                   : (
                   <>
-                  <PageSubtitle style={{ marginTop: 0 }}>{namePhonetic}{pronouns && <span>{' (' + pronouns + ')'}</span>}</PageSubtitle>
+                    <PageSubtitle style={{ marginTop: 0 }}>{namePhonetic}{pronouns && <span>{' (' + pronouns + ')'}</span>}</PageSubtitle>
                     <div className='grid w-full md:w-auto md:grid-cols-content'>
-                      
-                    <div className='mb-2 md:pr-10'>
+
+                      <div className='mb-2 md:pr-10'>
                         { bio
-                        ?(
-                          <div>
-                            <H3>Bio</H3>
-                            <p class="-mt-2">{bio}</p>
-                          </div>
-                        )
-                        : null
+                          ? (
+                            <div>
+                              <H3>Bio</H3>
+                              <p class='-mt-2'>{bio}</p>
+                            </div>
+                          )
+                          : null
                         }
                       </div>
-
-
 
                       { get(profile, 'player.teams')
                         ? (
@@ -206,7 +204,7 @@ function Profile () {
                               </div>
                             ))}
                             {
-                              profile.player.teams.filter(x => x.is_active).length == 0
+                              profile.player.teams.filter(x => x.is_active).length === 0
                                 ? <p>None</p> : null
                             }
                             <H3>Past</H3>
@@ -217,7 +215,7 @@ function Profile () {
                               </div>
                             ))}
                             {
-                              profile.player.teams.filter(x => !x.is_active).length == 0
+                              profile.player.teams.filter(x => !x.is_active).length === 0
                                 ? <p>None</p> : null
                             }
                           </div>

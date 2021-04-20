@@ -4,7 +4,7 @@ import Chrome from '../components/Chrome'
 import fetch from '../modules/fetch-with-headers'
 import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
-import { PageTitle, CenterContent, PageSubtitle } from '../components/elements'
+import { PageTitle, PageSubtitle } from '../components/elements'
 
 function Circuits () {
   const [loading, setLoading] = useState(true)
@@ -33,8 +33,8 @@ function Circuits () {
               <PageTitle>Circuits</PageTitle>
               { leagues.map(x => (
               <>
-              <PageSubtitle style={{ marginTop: '0rem', marginBottom: '-0.25rem' }}>{x.season.name}</PageSubtitle>
-              <Link key={`${x.name}`} className='block text-lg mb-2' to={`/circuits/${x.id}`}>{x.name}</Link>
+                <PageSubtitle style={{ marginTop: '0rem', marginBottom: '-0.25rem' }}>{x.season.name}</PageSubtitle>
+                <Link key={`${x.name}`} className='block text-lg mb-2' to={`/circuits/${x.id}`}>{x.name}</Link>
               </>
               )) }
             </div>

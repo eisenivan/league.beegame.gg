@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import Chrome from '../components/Chrome'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { PageTitle, PageSubtitle } from '../components/elements'
 import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
+import fetch from '../modules/fetch-with-headers'
 
 function Teams () {
   const { id } = useParams()
@@ -11,7 +12,7 @@ function Teams () {
   const [caster, setCaster] = useState([])
 
   useEffect(() => {
-    const fetchData = async () => {      
+    const fetchData = async () => {
       setLoading(true)
       const response = await fetch(`${getApiUrl()}casters/${id}/`)
         .then(data => data.json())
@@ -22,7 +23,7 @@ function Teams () {
     }
 
     fetchData()
-  }, [])
+  }, [id])
 
   return (
     <Chrome>
@@ -34,13 +35,13 @@ function Teams () {
               <PageTitle>{caster.name}</PageTitle>
               <PageSubtitle>
                 {caster.player.name_phonetic || ''} {caster.player.pronouns ? `(${caster.player.pronouns})` : ''}</PageSubtitle>
-              <div className='mt-4'>{caster.player.bio}</div>              
+              <div className='mt-4'>{caster.player.bio}</div>
 
-              <a href={caster.stream_link} class={`flex mt-5 ${caster.player.twitch_username ? "" : "hidden"}`}>
+              <a href={caster.stream_link} class={`flex mt-5 ${caster.player.twitch_username ? '' : 'hidden'}`}>
                   twitch.tv/{ caster.player.twitch_username }
-              </a>         
+              </a>
 
-              <span></span>
+              <span />
             </div>
           )
       }

@@ -31,21 +31,21 @@ function Teams () {
           ? <div>loading...</div>
           : (
             <>
-            <div>
-              <PageTitle>Caster</PageTitle>
-              {casters.map((caster) => (
-                <div>
-                  <Link to={`/casters/${caster.id}/`}>{caster.name}</Link>
-                </div>
-              ))}
-            </div>
-            {casters.length == 0 
-            ? <span className="text-normal mb-2">Casters coming soon...</span>
-            : null }
+              <div>
+                <PageTitle>Caster</PageTitle>
+                {casters.map((caster) => (
+                  <div>
+                    <Link to={`/casters/${caster.id}/`}>{caster.name}</Link>
+                  </div>
+                ))}
+              </div>
+              {casters.length === 0
+                ? <span className='text-normal mb-2'>Casters coming soon...</span>
+                : null }
             </>
           )
       }
-      <div className="mt-5 text-sm">Apply to be a caster <a href="https://forms.gle/qVy83m72xVQRtgsDA" target="_blank">here</a>.</div>
+      <div className='mt-5 text-sm'>Apply to be a caster <a rel='noreferrer' href='https://forms.gle/qVy83m72xVQRtgsDA' target='_blank'>here</a>.</div>
     </Chrome>
   )
 }
