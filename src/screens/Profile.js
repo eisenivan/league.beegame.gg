@@ -96,7 +96,7 @@ function Profile () {
           : (
             <div>
               { profile.player.avatar_url
-                ? <AvatarContainer alt={`Avatar for BGL player ${profile.player.name}`} imgUrl={profile.player.avatar_url} className='w-32 h-32 mb-4 bg-gray-2 lg:mr-8 lg:mb-0 lg:float-left' />
+                ? <AvatarContainer alt={`Avatar for BGL player ${profile.player.name}`} imgUrl={profile.player.avatar_url} className='w-16 h-16 mb-4 rounded md:w-32 md:h-32 bg-gray-2 lg:mr-8 lg:mb-0 lg:float-left' />
                 : null }
               <div className='flex flex-col mb-4 md:flex-row md:items-center md:'>
                 <PageTitle className='max-w-xs truncate sm:max-width-sm md:max-w-full' style={{ marginBottom: 0 }}>{profile.player.name}</PageTitle>
