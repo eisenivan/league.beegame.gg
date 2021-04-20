@@ -52,7 +52,8 @@ function Header () {
           ? (
             <>
               <NavItem className={`${linkString} text-gray-1`} to='/profile'>Profile</NavItem>
-              <button className={`${linkString} ${navStyle}`} onClick={logout}>Logout</button>
+              <button className={`${linkString} ${navStyle} hidden md:inline`} onClick={logout}>Logout</button>
+              <button className='absolute top-0 right-0 px-1 mt-2 mr-2 text-gray-500 underline rounded-sm md:hidden text-2xs' onClick={logout}>Logout</button>
             </>
           )
           : <a className={`${linkString} ${navStyle}`} href={`${getApiUrl()}accounts/discord/login/`}>Login</a> }
