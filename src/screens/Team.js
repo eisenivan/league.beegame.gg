@@ -169,7 +169,7 @@ function Team () {
                 pathname: `/teams/${id}`
               })
             } else {
-              setJoinMsg('Sorry, we could not add you to the team. Check with the team captain to make sure you\'re eligible to join')
+              setJoinMsg('Sorry, we could not add you to the team. There could be a few reasons for this: 1. You need to sign in first. 2. Already on a team in this region. 3. This team is full. 4. You have already joined this team. 5. Registration has closed. 6. Invalid or expired invite link. For more help, please visit #bgl-help on the Bee Game Discord for assistance.')
             }
           })
           .catch(handleError))
