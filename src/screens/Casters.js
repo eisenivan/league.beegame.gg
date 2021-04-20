@@ -32,7 +32,7 @@ function Teams () {
           : (
             <>
               <div>
-                <PageTitle>Caster</PageTitle>
+                <PageTitle>Casters</PageTitle>
                 {casters.map((caster) => (
                   <div>
                     <Link to={`/casters/${caster.id}/`}>{caster.name}</Link>
