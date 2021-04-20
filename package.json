@@ -25,6 +25,7 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
+    "start:prod": "REACT_APP_STAGE=false craco start",
     "start": "REACT_APP_STAGE=true craco start",
     "build:dev": "REACT_APP_STAGE=true craco build",
     "build": "REACT_APP_STAGE=false craco build",
