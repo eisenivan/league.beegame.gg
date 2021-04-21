@@ -52,12 +52,27 @@ function Profile () {
     fetch(`${getApiUrl()}players/${profile.player.id}/`, requestOptions)
       .then(res => res.json())
       .then((res) => {
+        // If we don't patch profile here with the patched object, then backing out after first set of edits later will
+        // return to an earlier value, because profile.player is used in reset.
+        profile.player = res
+        setProfile(profile)
         setNamePhonetic(res.name_phonetic)
         setPronouns(res.pronouns)
         setBio(res.bio)
         toggleEditProfile()
       })
       .catch(handleError)
+  }
+
+  function handleCancel (e) {
+    e.preventDefault()
+
+    // Reset all three fields
+    setNamePhonetic(profile.player.name_phonetic)
+    setPronouns(profile.player.pronouns)
+    setBio(profile.player.bio)
+
+    toggleEditProfile()
   }
 
   // Function to copy user token to clipboard on button click
@@ -168,7 +183,7 @@ function Profile () {
                           Update
                         </UtilityButton>
 
-                        <UtilityButton className={'ml-2'} onClick={toggleEditProfile}>
+                        <UtilityButton className={'ml-2'} onClick={handleCancel}>
                           Cancel
                         </UtilityButton>
                       </div>
