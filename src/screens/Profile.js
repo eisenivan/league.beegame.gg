@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import get from 'lodash.get'
 import { PageTitle, PageSubtitle, H2, H3, UtilityButton, AvatarContainer, FormBox } from '../components/elements'
 import Chrome from '../components/Chrome'
-import SingleTeam from '../components/SingleTeam'
+import PlayerTeamList from "../components/PlayerTeamList";
 import fetch from '../modules/fetch-with-headers'
 import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
@@ -208,32 +208,7 @@ function Profile () {
 
                       { get(profile, 'player.teams')
                         ? (
-                          <div>
-                            <H2>Teams</H2>
-                            <br />
-                            <H3>Active</H3>
-                            <br />
-                            { profile.player.teams.filter(x => x.is_active).map(x => (
-                              <div key={`${x.id}-${x.name}`} className='my-2'>
-                                <SingleTeam className='text-md' team={x} />
-                              </div>
-                            ))}
-                            {
-                              profile.player.teams.filter(x => x.is_active).length === 0
-                                ? <p>None</p> : null
-                            }
-                            <H3>Past</H3>
-                            <br />
-                            { profile.player.teams.filter(x => !x.is_active).map(x => (
-                              <div key={`${x.id}-${x.name}`} className='my-2'>
-                                <SingleTeam className='text-md' team={x} />
-                              </div>
-                            ))}
-                            {
-                              profile.player.teams.filter(x => !x.is_active).length === 0
-                                ? <p>None</p> : null
-                            }
-                          </div>
+                          <PlayerTeamList player={profile.player} />
                         ) : null}
                     </div>
                   </>
