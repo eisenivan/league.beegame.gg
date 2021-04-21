@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import cookie from 'react-cookies'
 import { PageTitle, PageSubtitle, H3, AvatarContainer } from '../components/elements'
 import Chrome from '../components/Chrome'
-import SingleTeam from '../components/SingleTeam'
+import PlayerTeamList from "../components/PlayerTeamList";
 import fetch from '../modules/fetch-with-headers'
 import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
@@ -72,14 +72,7 @@ function Profile () {
                 </div>
 
               </div>
-              <div className='clear'>
-                <H3 className>Teams</H3>
-                { player.teams.map(x => (
-                  <div key={x.id}>
-                    <SingleTeam className='text-md' team={x} />
-                  </div>
-                ))}
-              </div>
+              <PlayerTeamList player={player} className='clear' />
             </div>
           )
       }
