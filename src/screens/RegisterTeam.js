@@ -60,7 +60,7 @@ function RegisterTeam () {
           : (
             <CenterContent>
               <PageTitle>Register a Bee Game League Team</PageTitle>
-              <p className='-mt-4 mb-4 text-xs'>Once your team has been created you will be given a join url to distribute to your team members.</p>
+              <p className='-mt-4 mb-4 text-xs'>This form is to register a new team, not to join an existing team. If you want to join an existing team, ask your team captain for the join url. To register a new team, fill out this form and you will be given a join url to distribute to your team members.</p>
               <FormBox>
                 <label>Team Name</label>
                 <Input required placeholder='Team Name' value={name} onChange={e => setName(e.target.value)} />
