@@ -12,7 +12,7 @@ function Circuits () {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${getApiUrl()}circuits/?round_is_current=true&format=json`)
+      const response = await fetch(`${getApiUrl()}circuits/?is_active=true&format=json`)
         .then(x => x.json())
         .catch(handleError)
 
