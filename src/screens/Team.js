@@ -270,13 +270,13 @@ function Team () {
                       matches.length
                         ? (
                           matches.map((match) => (
-                            <div>
+                            <div key={`${match.round.name}-${match.id}`}>
                               <p className='inline-block px-2 mt-2 text-sm text-gray-800 bg-gray-300 rounded'>{match.round.name}</p>
                               {match.round.is_current_round
                                 ? <p className='pl-1 mt-1 text-xs italic font-bold text-red-600'>Play this week! Submit results by Monday 12 PT</p>
                                 : null }
                               <MatchBox key={`match-${match.id}`} match={match}>
-                                <div className='flex flex-row flex-wrap items-center p-2 text-right bg-gray-3 text-gray-1'>
+                                <div className='flex flex-col lg:flex-row flex-wrap lg:items-center p-2 lg:text-right bg-gray-3 text-gray-1'>
                                   {parseInt(userId) === parseInt(team.captain.id) && !match.result
                                     ? (
                                       <select value={`${get(match, 'primary_caster.id')}`} onChange={(e) => assignCaster(e, match.id)} className='justify-start flex-shrink text-gray-3 md:lg-0'>
@@ -286,7 +286,7 @@ function Team () {
                                     ) : null }
                                   { match.start_time === null && parseInt(userId) === parseInt(team.captain.id) && !match.result
                                     ? (
-                                      <div className='justify-end flex-auto'>
+                                      <div className='mt-2 lg:mt-0 align-self-start lg:justify-end flex-auto'>
                                         <span>
                                           <DatePicker
                                             className='text-sm text-gray-3 bg-gray-1'
