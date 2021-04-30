@@ -271,8 +271,10 @@ function Team () {
                         ? (
                           matches.map((match) => (
                             <div>
-                            <span className="text-gray-3">{match.round.name}</span>
-                            <span className="text-gray-3">{match.round.is_current_round ? " (Current, Play now!)" : null}</span>
+                            <p className="text-gray-3">{match.round.name}</p>
+                            {match.round.is_current_round 
+                            ? <p className="text-gray-3 text-xs">(Play this week! Submit results by Monday 12 PT)</p> 
+                            : null }
                             <MatchBox key={`match-${match.id}`} match={match}>
                               <div className='flex flex-row flex-wrap items-center p-2 text-right bg-gray-3 text-gray-1'>
                                 {parseInt(userId) === parseInt(team.captain.id) && !match.result
