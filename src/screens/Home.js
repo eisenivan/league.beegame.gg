@@ -175,7 +175,7 @@ function Home () {
         .then(data => setProfile(data))
         .catch(handleError))
 
-      promises.push(fetch(`${getApiUrl()}matches/?player=${userId}&days=90`)
+      promises.push(fetch(`${getApiUrl()}matches/?round_is_current=true&player=${userId}`)
         .then(data => data.json())
         .then(data => setPlayerMatches(data.results))
         .catch(handleError))
@@ -224,7 +224,15 @@ function Home () {
                           ? (
                             playerMatches.map((match) => (
                               <MatchBox key={`match-${match.id}`} match={match}>
-                                {formatDateTime(match.start_time)}
+                                <span className='justify-end flex-grow block text-sm'>
+                                  { match.start_time
+                                    ? (
+                                      <>
+                                        {formatDateTime(match.start_time)}
+                                      </>
+                                    )
+                                    : <span className='block align-right'>TBD</span> }
+                                </span>
                               </MatchBox>
                             ))
                           )
