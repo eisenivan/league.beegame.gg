@@ -221,8 +221,10 @@ function Home () {
           : (
             <div>
               <div className='grid grid-cols-1 mb-8 sm:mt-8 md:mt-0 md:grid-cols-content'>
-                <div className='max-w-lg mb-5 overflow-hidden md:mb-0'>
-                  <PageTitle>Check out BeeGameLeague on Twitch</PageTitle>
+                <div className='max-w-lg mb-5 overflow-hidden text-center md:text-left md:mb-0'>
+                  <PageTitle>
+                    Check out <span class="hidden md:inline">BeeGameLeague</span> <span class="md:hidden">BGL</span> on Twitch
+                  </PageTitle>
                   <ReactTwitchEmbedVideo targetClass='flex' height='300' layout='video' channel='BeeGameLeague' />
                 </div>
                 {

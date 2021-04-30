@@ -34,7 +34,7 @@ function Chrome ({ children }) {
         ? <div className='text-center text-white bg-red-800'>This is not production data</div>
         : null}
       <Header />
-      <main className='container flex-1 p-5 m-auto lg:p-8'>
+      <main className='container flex-1 p-3 m-auto lg:p-8'>
         {children}
       </main>
       <Footer />
