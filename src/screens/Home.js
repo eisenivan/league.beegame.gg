@@ -35,8 +35,8 @@ const EventItem = styled.div`
 function SingleEvent ({ event }) {
   return (
     <EventItem key={`${event.home.name}-${event.away.name}-${event.start_time}`}>
-      <p className='italic text-xs'>{formatTime(event.start_time)}</p>
-      <p className='font-bold text-xs'>{`${event.home.name} vs. ${event.away.name}`}</p>
+      <p className='text-xs italic'>{formatTime(event.start_time)}</p>
+      <p className='text-xs font-bold'>{`${event.home.name} vs. ${event.away.name}`}</p>
 
       { event.circuit
         ? <p className='mt-1 text-xs italic'><Link className='text-gray-1' to={`/circuits/${event.circuit.id}/`}>{event.circuit.name}</Link></p>
@@ -52,9 +52,9 @@ function SingleEvent ({ event }) {
 
 function TvGuide ({ schedule }) {
   return (
-    <div style={{ backgroundImage: 'repeating-linear-gradient(45deg, #202020, #202020 30px, #222 30px, #222 60px)' }} className='shadow-lg grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7'>
+    <div style={{ backgroundImage: 'repeating-linear-gradient(45deg, #202020, #202020 30px, #222 30px, #222 60px)' }} className='grid grid-cols-1 shadow-lg md:grid-cols-2 lg:grid-cols-7'>
       <DayColumn>
-        <div className='bg-blue-3 font-bold text-center p-2'>Today</div>
+        <div className='p-2 font-bold text-center bg-blue-3'>Today</div>
         <CalendarDark>
           <CalendarEvents>
             { get(schedule, `[${moment().format('YYYYMMDD')}]`, []).map((event) => {
@@ -66,7 +66,7 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className='bg-blue-3 font-bold text-center p-2'>Tomorrow</div>
+        <div className='p-2 font-bold text-center bg-blue-3'>Tomorrow</div>
         <CalendarDark>
           <CalendarEvents>
             { get(schedule, `[${moment().add(1, 'days').format('YYYYMMDD')}]`, []).map((event) => {
@@ -78,7 +78,7 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className='bg-blue-3 font-bold text-center p-2'>{moment().add(2, 'days').format('M/D')}</div>
+        <div className='p-2 font-bold text-center bg-blue-3'>{moment().add(2, 'days').format('M/D')}</div>
         <CalendarDark>
           <CalendarEvents>
             { get(schedule, `[${moment().add(2, 'days').format('YYYYMMDD')}]`, []).map((event) => {
@@ -90,7 +90,7 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className='bg-blue-3 font-bold text-center p-2'>{moment().add(3, 'days').format('M/D')}</div>
+        <div className='p-2 font-bold text-center bg-blue-3'>{moment().add(3, 'days').format('M/D')}</div>
         <CalendarDark>
           <CalendarEvents>
             { get(schedule, `[${moment().add(3, 'days').format('YYYYMMDD')}]`, []).map((event) => {
@@ -102,7 +102,7 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className='bg-blue-3 font-bold text-center p-2'>{moment().add(4, 'days').format('M/D')}</div>
+        <div className='p-2 font-bold text-center bg-blue-3'>{moment().add(4, 'days').format('M/D')}</div>
         <CalendarDark>
           <CalendarEvents>
             { get(schedule, `[${moment().add(4, 'days').format('YYYYMMDD')}]`, []).map((event) => {
@@ -114,7 +114,7 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className='bg-blue-3 font-bold text-center p-2'>{moment().add(5, 'days').format('M/D')}</div>
+        <div className='p-2 font-bold text-center bg-blue-3'>{moment().add(5, 'days').format('M/D')}</div>
         <CalendarDark>
           <CalendarEvents>
             { get(schedule, `[${moment().add(5, 'days').format('YYYYMMDD')}]`, []).map((event) => {
@@ -126,7 +126,7 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className='bg-blue-3 font-bold text-center p-2'>{moment().add(6, 'days').format('M/D')}</div>
+        <div className='p-2 font-bold text-center bg-blue-3'>{moment().add(6, 'days').format('M/D')}</div>
         <CalendarDark>
           <CalendarEvents>
             { get(schedule, `[${moment().add(6, 'days').format('YYYYMMDD')}]`, []).map((event) => {
@@ -196,8 +196,8 @@ function Home () {
           ? <div>loading...</div>
           : (
             <div>
-              <div className='mb-8 sm:mt-8 md:mt-0 grid grid-cols-1 md:grid-cols-content'>
-                <div className='max-w-lg overflow-hidden'>
+              <div className='grid grid-cols-1 mb-8 sm:mt-8 md:mt-0 md:grid-cols-content'>
+                <div className='max-w-lg mb-5 overflow-hidden md:mb-0'>
                   <PageTitle>Check out BeeGameLeague on Twitch</PageTitle>
                   <ReactTwitchEmbedVideo height='300' layout='video' channel='BeeGameLeague' />
                 </div>
@@ -219,7 +219,7 @@ function Home () {
                             </>
                           ) : <span>You're not on any teams. <Link to='/register'>Register a new one</Link></span>}
 
-                        <PageTitle className='mt-4'>Your Upcoming Matches</PageTitle>
+                        <PageTitle className='mt-4'>Your Week</PageTitle>
                         { playerMatches.length
                           ? (
                             playerMatches.map((match) => (
