@@ -271,9 +271,9 @@ function Team () {
                         ? (
                           matches.map((match) => (
                             <div key={`${match.round.name}-${match.id}`}>
-                              <p className='inline-block px-2 mt-2 text-sm text-gray-800 bg-gray-300 rounded'>{match.round.name}</p>
+                              <p className='inline-block px-2 mt-2 font-bold text-gray-500 uppercase bg-gray-300 rounded text-2xs'>{match.round.name}</p>
                               {match.round.is_current_round
-                                ? <p className='pl-1 mt-1 text-xs italic font-bold text-red-600'>Play this week! Submit results by Monday 12 PT</p>
+                                ? <p className='pl-1 mt-1 italic font-bold text-red-600 text-2xs'>Play this week! Submit results by Monday 12 PT</p>
                                 : null }
                               <MatchBox key={`match-${match.id}`} match={match}>
                                 <div className='flex flex-col flex-wrap lg:flex-row lg:items-center lg:text-right bg-gray-3 text-gray-1'>
