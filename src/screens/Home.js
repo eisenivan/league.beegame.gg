@@ -43,7 +43,7 @@ function SingleEvent ({ event }) {
         : null }
 
       { event.primary_caster
-        ? <a target='_blank' rel='noreferrer' className='text-xs' href={event.primary_caster.stream_link}>{event.primary_caster.name}</a>
+        ? <a target='_blank' rel='noreferrer' className='flex items-center text-xs text-purple-500' href={event.primary_caster.stream_link}><svg class="mr-1 w-3 h-3" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <defs/> <path fill-rule="evenodd" d="M2.149 0L.537 4.119v16.836h5.731V24h3.224l3.045-3.045h4.657l6.269-6.269V0H2.149zm19.164 13.612l-3.582 3.582H12l-3.045 3.045v-3.045H4.119V2.149h17.194v11.463zm-3.582-7.343v6.262h-2.149V6.269h2.149zm-5.731 0v6.262H9.851V6.269H12z" clip-rule="evenodd"/></svg>{event.primary_caster.name}</a>
         : <span className='text-xs italic'>Looking for caster</span> }
 
     </EventItem>
