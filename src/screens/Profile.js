@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import get from 'lodash.get'
-import { PageTitle, PageSubtitle, H2, H3, UtilityButton, AvatarContainer, FormBox } from '../components/elements'
+import { PageTitle, PageSubtitle, H3, UtilityButton, AvatarContainer, FormBox } from '../components/elements'
 import Chrome from '../components/Chrome'
-import PlayerTeamList from "../components/PlayerTeamList";
+import PlayerTeamList from '../components/PlayerTeamList'
 import fetch from '../modules/fetch-with-headers'
 import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
 import cookie from 'react-cookies'
+import setUserCookies from '../modules/set-tokens'
 
 function Profile () {
   const [loading, setLoading] = useState(true)
@@ -59,6 +60,8 @@ function Profile () {
         setNamePhonetic(res.name_phonetic)
         setPronouns(res.pronouns)
         setBio(res.bio)
+        // refresh the cached user data
+        setUserCookies()
         toggleEditProfile()
       })
       .catch(handleError)
