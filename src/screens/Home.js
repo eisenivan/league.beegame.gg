@@ -36,7 +36,7 @@ function SingleEvent ({ event }) {
   return (
     <EventItem key={`${event.home.name}-${event.away.name}-${event.start_time}`}>
       <p className='text-xs text-yellow-1'>{formatTime(event.start_time)}</p>
-      <div class="inline-block rounded px-1 py-1 -ml-1 bg-gray-2 text-gray-400 w-full md:w-auto ">
+      <div class='inline-block rounded px-1 py-1 -ml-1 bg-gray-2 text-gray-400 w-full md:w-auto'>
         <p className='inline-block px-1 py-1 -ml-1 text-xs font-bold text-white'>{`${event.home.name} vs. ${event.away.name}`}</p>
 
         { event.circuit
@@ -44,7 +44,7 @@ function SingleEvent ({ event }) {
           : null }
 
         { event.primary_caster
-          ? <a target='_blank' rel='noreferrer' className='flex items-center text-xs text-purple-500' href={event.primary_caster.stream_link}><svg class="mr-1 w-3 h-3" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <defs/> <path fill-rule="evenodd" d="M2.149 0L.537 4.119v16.836h5.731V24h3.224l3.045-3.045h4.657l6.269-6.269V0H2.149zm19.164 13.612l-3.582 3.582H12l-3.045 3.045v-3.045H4.119V2.149h17.194v11.463zm-3.582-7.343v6.262h-2.149V6.269h2.149zm-5.731 0v6.262H9.851V6.269H12z" clip-rule="evenodd"/></svg>{event.primary_caster.name}</a>
+          ? <a target='_blank' rel='noreferrer' className='flex items-center text-xs text-purple-500' href={event.primary_caster.stream_link}><svg class='mr-1 w-3 h-3' fill='currentColor' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'> <defs /> <path fill-rule='evenodd' d='M2.149 0L.537 4.119v16.836h5.731V24h3.224l3.045-3.045h4.657l6.269-6.269V0H2.149zm19.164 13.612l-3.582 3.582H12l-3.045 3.045v-3.045H4.119V2.149h17.194v11.463zm-3.582-7.343v6.262h-2.149V6.269h2.149zm-5.731 0v6.262H9.851V6.269H12z' clip-rule='evenodd' /></svg>{event.primary_caster.name}</a>
           : <span className='text-xs italic'>Looking for caster</span> }
       </div>
     </EventItem>
@@ -157,11 +157,11 @@ function sortEventsIntoDates (events) {
 }
 
 function Home () {
-  const userId = cookie.load('userId')
   const [loading, setLoading] = useState(true)
   const [schedule, setSchedule] = useState({})
   const [profile, setProfile] = useState({})
   const [playerMatches, setPlayerMatches] = useState({})
+  let userId = cookie.load('userId')
   useEffect(() => {
     const fetchData = async () => {
       const promises = []
@@ -187,7 +187,7 @@ function Home () {
     }
 
     fetchData()
-  }, [])
+  }, [userId])
 
   const token = cookie.load('token', true)
   return (

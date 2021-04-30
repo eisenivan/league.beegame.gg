@@ -24,7 +24,7 @@ function Chrome ({ children }) {
 
     // navigate browser to the current page with no query string
     history.push({
-      search: ''
+      pathname: '/'
     })
   }
 
