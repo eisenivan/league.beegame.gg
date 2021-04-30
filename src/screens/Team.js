@@ -32,7 +32,7 @@ function Team () {
   const [casters, setCasters] = useState([])
   const [matchError, setMatchError] = useState()
   const [name, setName] = useState()
-  const [userId, setUserId] = useState()
+  const [userId] = useState(cookie.load('userId'))
   const [lastUpdated, setLastUpdated] = useState(new Date())
   const [copyText, setCopyText] = useState('Copy invite url')
   const history = useHistory()
@@ -131,8 +131,6 @@ function Team () {
   }
 
   useEffect(() => {
-    setUserId(cookie.load('userId'))
-
     const fetchData = async () => {
       const promises = []
 
