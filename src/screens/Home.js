@@ -55,7 +55,10 @@ function TvGuide ({ schedule }) {
   return (
     <div style={{ backgroundImage: 'repeating-linear-gradient(45deg, #202020, #202020 30px, #222 30px, #222 60px)' }} className='grid grid-cols-1 shadow-lg md:grid-cols-2 lg:grid-cols-7'>
       <DayColumn>
-        <div className='p-2 font-bold text-center border-b border-gray-800 bg-blue-3 md:border-none'>Today</div>
+        <div className='p-2 font-bold text-center border-b border-gray-800 bg-blue-3 md:border-none'>
+          <div className='text-xs uppercase'>&nbsp;</div>
+          <div>Today</div>
+        </div>
         <CalendarDark>
           <CalendarEvents>
             { get(schedule, `[${moment().format('YYYYMMDD')}]`, []).map((event) => {
@@ -67,7 +70,10 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className='p-2 font-bold text-center border-b border-gray-800 bg-blue-3 md:border-none'>Tomorrow</div>
+        <div className='p-2 font-bold text-center border-b border-gray-800 bg-blue-3 md:border-none'>
+          <div className='text-xs uppercase'>&nbsp;</div>
+          <div>Tomorrow</div>
+        </div>
         <CalendarDark>
           <CalendarEvents>
             { get(schedule, `[${moment().add(1, 'days').format('YYYYMMDD')}]`, []).map((event) => {
@@ -79,7 +85,10 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className='p-2 font-bold text-center border-b border-gray-800 bg-blue-3 md:border-none'>{moment().add(2, 'days').format('M/D')}</div>
+        <div className='p-2 font-bold text-center border-b border-gray-800 bg-blue-3 md:border-none'>
+          <div className='text-xs uppercase'>{moment().add(2, 'days').format('ddd')}</div>
+          <div>{moment().add(2, 'days').format('M/D')}</div>
+        </div>
         <CalendarDark>
           <CalendarEvents>
             { get(schedule, `[${moment().add(2, 'days').format('YYYYMMDD')}]`, []).map((event) => {
@@ -91,7 +100,10 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className='p-2 font-bold text-center border-b border-gray-800 bg-blue-3 md:border-none'>{moment().add(3, 'days').format('M/D')}</div>
+        <div className='p-2 font-bold text-center border-b border-gray-800 bg-blue-3 md:border-none'>
+          <div className='text-xs uppercase'>{moment().add(3, 'days').format('ddd')}</div>
+          <div>{moment().add(3, 'days').format('M/D')}</div>
+        </div>
         <CalendarDark>
           <CalendarEvents>
             { get(schedule, `[${moment().add(3, 'days').format('YYYYMMDD')}]`, []).map((event) => {
@@ -103,7 +115,10 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className='p-2 font-bold text-center border-b border-gray-800 bg-blue-3 md:border-none'>{moment().add(4, 'days').format('M/D')}</div>
+        <div className='p-2 font-bold text-center border-b border-gray-800 bg-blue-3 md:border-none'>
+          <div className='text-xs uppercase'>{moment().add(4, 'days').format('ddd')}</div>
+          <div>{moment().add(4, 'days').format('M/D')}</div>
+        </div>
         <CalendarDark>
           <CalendarEvents>
             { get(schedule, `[${moment().add(4, 'days').format('YYYYMMDD')}]`, []).map((event) => {
@@ -115,7 +130,10 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className='p-2 font-bold text-center border-b border-gray-800 bg-blue-3 md:border-none'>{moment().add(5, 'days').format('M/D')}</div>
+        <div className='p-2 font-bold text-center border-b border-gray-800 bg-blue-3 md:border-none'>
+          <div className='text-xs uppercase'>{moment().add(5, 'days').format('ddd')}</div>
+          <div>{moment().add(5, 'days').format('M/D')}</div>
+        </div>
         <CalendarDark>
           <CalendarEvents>
             { get(schedule, `[${moment().add(5, 'days').format('YYYYMMDD')}]`, []).map((event) => {
@@ -127,7 +145,10 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className='p-2 font-bold text-center border-b border-gray-800 bg-blue-3 md:border-none'>{moment().add(6, 'days').format('M/D')}</div>
+        <div className='p-2 font-bold text-center border-b border-gray-800 bg-blue-3 md:border-none'>
+          <div className='text-xs uppercase'>{moment().add(6, 'days').format('ddd')}</div>
+          <div>{moment().add(6, 'days').format('M/D')}</div>
+        </div>
         <CalendarDark>
           <CalendarEvents>
             { get(schedule, `[${moment().add(6, 'days').format('YYYYMMDD')}]`, []).map((event) => {
@@ -240,7 +261,7 @@ function Home () {
                           : (
                         <>
                           <div>You have no match this week</div>
-                          <div className='text-xs'>(That may be because you have a Bye week)</div>
+                          <div className='text-xs uppercase'>(That may be because you have a Bye week)</div>
                         </>
                           )
                         }
