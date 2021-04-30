@@ -240,7 +240,7 @@ function Home () {
                     )
                     : (
                       <div className='text-xl'>
-                        <a className={`${linkString}`} href={`${getApiUrl()}accounts/discord/login/`}>Login</a> to see your upcoming matches or register a team
+                        <a className={`${linkString}`} href={`${getApiUrl()}accounts/discord/login/`}>Login</a> to see your upcoming matches
                       </div>
                     )
                 }
