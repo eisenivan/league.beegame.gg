@@ -75,7 +75,13 @@ function Circuit () {
                             : <span>{match.primary_caster.name}</span>
                         )
                         : null }
-                      {formatDateTime(match.start_time)}
+                      { match.start_time
+                        ? (
+                          <>
+                            {formatDateTime(match.start_time)}
+                          </>
+                        )
+                        : <span className='block align-right'>TBD</span> }
                     </MatchBox>
                   )) }
                 </div>

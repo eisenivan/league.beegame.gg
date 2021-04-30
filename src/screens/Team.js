@@ -265,62 +265,62 @@ function Team () {
                 <div className='grid grid-cols-1 md:grid-cols-2 md:gap-12'>
                   <TeamRoster className='mt-4' vertical team={team} />
                   <div>
-                  <H2 className="text-gray-3 font-head uppercase">Matches</H2>
+                    <H2 className='text-gray-3 font-head uppercase'>Matches</H2>
                     {
                       matches.length
                         ? (
                           matches.map((match) => (
                             <div>
-                            <p className="text-gray-3">{match.round.name}</p>
-                            {match.round.is_current_round 
-                            ? <p className="text-gray-3 text-xs">(Play this week! Submit results by Monday 12 PT)</p> 
-                            : null }
-                            <MatchBox key={`match-${match.id}`} match={match}>
-                              <div className='flex flex-row flex-wrap items-center p-2 text-right bg-gray-3 text-gray-1'>
-                                {parseInt(userId) === parseInt(team.captain.id) && !match.result
-                                  ? (
-                                    <select value={`${get(match, 'primary_caster.id')}`} onChange={(e) => assignCaster(e, match.id)} className='justify-start flex-shrink text-gray-3 md:lg-0'>
-                                      <option value=''>-- SELECT CASTER --</option>
-                                      { casters.map(x => <option key={`caster-${x.id}`} value={`${x.id}`}>{x.name.substr(0, 20)}{x.name.length > 20 ? '...' : ''}</option>)}
-                                    </select>
-                                  ) : null }
-                                { match.start_time === null && parseInt(userId) === parseInt(team.captain.id) && !match.result
-                                  ? (
-                                    <div className='justify-end flex-auto'>
-                                      <span>
-                                        <DatePicker
-                                          className='text-sm text-gray-3 bg-gray-1'
-                                          selected={matchTime[match.id]}
-                                          onChange={(val) => changeMatchTime(val, match.id)}
-                                          showTimeSelect
-                                          timeFormat='p'
-                                          timeIntervals={15}
-                                          autoFocus={false}
-                                          dateFormat='MM/dd/yyyy h:mm aa'
-                                          placeholderText={'Match Time (in ' + moment.tz(Date.now(), moment.tz.guess()).format('z') + ')'}
-                                        />
-                                        <button className='px-2 py-1 ml-2 text-sm uppercase rounded-sm bg-yellow-1 text-gray-3 font-head' onClick={(e) => scheduleMatch(e, match.id)}>Schedule</button>
-                                        { matchError ? <div className='mt-2 text-red-500'>{matchError}</div> : null }
-                                      </span>
-                                    </div>
-                                  )
-                                  : (
-                                    <span className='justify-end flex-grow block text-sm'>
-                                      { match.start_time
-                                        ? (
+                              <p className='text-gray-3'>{match.round.name}</p>
+                              {match.round.is_current_round
+                                ? <p className='text-gray-3 text-xs'>(Play this week! Submit results by Monday 12 PT)</p>
+                                : null }
+                              <MatchBox key={`match-${match.id}`} match={match}>
+                                <div className='flex flex-row flex-wrap items-center p-2 text-right bg-gray-3 text-gray-1'>
+                                  {parseInt(userId) === parseInt(team.captain.id) && !match.result
+                                    ? (
+                                      <select value={`${get(match, 'primary_caster.id')}`} onChange={(e) => assignCaster(e, match.id)} className='justify-start flex-shrink text-gray-3 md:lg-0'>
+                                        <option value=''>-- SELECT CASTER --</option>
+                                        { casters.map(x => <option key={`caster-${x.id}`} value={`${x.id}`}>{x.name.substr(0, 20)}{x.name.length > 20 ? '...' : ''}</option>)}
+                                      </select>
+                                    ) : null }
+                                  { match.start_time === null && parseInt(userId) === parseInt(team.captain.id) && !match.result
+                                    ? (
+                                      <div className='justify-end flex-auto'>
+                                        <span>
+                                          <DatePicker
+                                            className='text-sm text-gray-3 bg-gray-1'
+                                            selected={matchTime[match.id]}
+                                            onChange={(val) => changeMatchTime(val, match.id)}
+                                            showTimeSelect
+                                            timeFormat='p'
+                                            timeIntervals={15}
+                                            autoFocus={false}
+                                            dateFormat='MM/dd/yyyy h:mm aa'
+                                            placeholderText={'Match Time (in ' + moment.tz(Date.now(), moment.tz.guess()).format('z') + ')'}
+                                          />
+                                          <button className='px-2 py-1 ml-2 text-sm uppercase rounded-sm bg-yellow-1 text-gray-3 font-head' onClick={(e) => scheduleMatch(e, match.id)}>Schedule</button>
+                                          { matchError ? <div className='mt-2 text-red-500'>{matchError}</div> : null }
+                                        </span>
+                                      </div>
+                                    )
+                                    : (
+                                      <span className='justify-end flex-grow block text-sm'>
+                                        { match.start_time
+                                          ? (
                                       <>
                                         {formatDateTime(match.start_time)}
                                         { parseInt(userId) === parseInt(team.captain.id) && !match.result
                                           ? <button onClick={(e) => scheduleMatch(e, match.id, true)} className='px-2 py-1 ml-2 text-sm uppercase rounded-sm bg-yellow-1 text-gray-3 font-head'>Reschedule</button>
                                           : null }
                                       </>
-                                        )
-                                        : <span className='block align-right'>TBD</span> }
-                                    </span>
-                                  )
-                                }
-                              </div>
-                            </MatchBox>
+                                          )
+                                          : <span className='block align-right'>TBD</span> }
+                                      </span>
+                                    )
+                                  }
+                                </div>
+                              </MatchBox>
                             </div>
                           )
                           )
