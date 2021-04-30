@@ -1,4 +1,5 @@
 import React from 'react'
+import moment from 'moment'
 import { useLocation, useHistory } from 'react-router-dom'
 import cookie from 'react-cookies'
 import Header from './Header'
@@ -11,7 +12,14 @@ function Chrome ({ children }) {
   const token = new URLSearchParams(search).get('token')
 
   if (token) {
-    cookie.save('token', token, { path: '/', secure: !process.env.NODE_ENV === 'development' })
+    const expires = new Date(moment().add(6, 'months').toDate())
+
+    cookie.save('token', token, {
+      path: '/',
+      secure: !process.env.NODE_ENV === 'development',
+      expires
+    })
+
     setUserCookies()
 
     // navigate browser to the current page with no query string
