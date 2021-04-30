@@ -7,7 +7,7 @@ export const linkString = 'hover:text-yellow-2 transition-colors'
 
 export function MatchBox ({ match, children }) {
   return (
-    <div key={`${match.home.name}${match.away.name}${match.id}`} className='max-w-lg mb-4 shadow-xl'>
+    <div key={`${match.home.name}${match.away.name}${match.id}`} className='max-w-lg mt-1 mb-4 shadow-xl'>
       <div className='text-2xl uppercase font-head'>
         <div className='flex justify-between p-4 truncate text-gray-1 bg-blue-2 text-shadow shadow-match'>
           <RouterLink className='text-white truncate' to={`/teams/${match.away.id}/`}>{match.away.name}</RouterLink>

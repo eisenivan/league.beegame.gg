@@ -265,15 +265,15 @@ function Team () {
                 <div className='grid grid-cols-1 md:grid-cols-2 md:gap-12'>
                   <TeamRoster className='mt-4' vertical team={team} />
                   <div>
-                    <H2 className='text-gray-3 font-head uppercase'>Matches</H2>
+                    <H2 className='uppercase text-gray-3 font-head'>Matches</H2>
                     {
                       matches.length
                         ? (
                           matches.map((match) => (
                             <div key={`${match.round.name}-${match.id}`}>
-                              <p className='text-gray-3'>{match.round.name}</p>
+                              <p className='inline-block px-2 mt-2 text-sm text-gray-800 bg-gray-300 rounded'>{match.round.name}</p>
                               {match.round.is_current_round
-                                ? <p className='text-gray-3 text-xs'>(Play this week! Submit results by Monday 12 PT)</p>
+                                ? <p className='pl-1 mt-1 text-xs italic font-bold text-red-600'>Play this week! Submit results by Monday 12 PT</p>
                                 : null }
                               <MatchBox key={`match-${match.id}`} match={match}>
                                 <div className='flex flex-col lg:flex-row flex-wrap lg:items-center p-2 lg:text-right bg-gray-3 text-gray-1'>
