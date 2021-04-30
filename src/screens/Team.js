@@ -6,7 +6,7 @@ import cookie from 'react-cookies'
 import DatePicker from 'react-datepicker'
 import moment from 'moment-timezone'
 import Chrome from '../components/Chrome'
-import { PageTitle, PageSubtitle, LightContentBox, UtilityButton, MatchBox } from '../components/elements'
+import { PageTitle, PageSubtitle, LightContentBox, UtilityButton, MatchBox, H2 } from '../components/elements'
 import { formatDateTime } from '../modules/guess-local-tz'
 import { TeamRoster } from '../components/SingleTeam'
 import { useParams, useHistory, Link } from 'react-router-dom'
@@ -265,10 +265,14 @@ function Team () {
                 <div className='grid grid-cols-1 md:grid-cols-2 md:gap-12'>
                   <TeamRoster className='mt-4' vertical team={team} />
                   <div>
+                  <H2 className="text-gray-3 font-head uppercase">Matches</H2>
                     {
                       matches.length
                         ? (
                           matches.map((match) => (
+                            <div>
+                            <span className="text-gray-3">{match.round.name}</span>
+                            <span className="text-gray-3">{match.round.is_current_round ? " (Current, Play now!)" : null}</span>
                             <MatchBox key={`match-${match.id}`} match={match}>
                               <div className='flex flex-row flex-wrap items-center p-2 text-right bg-gray-3 text-gray-1'>
                                 {parseInt(userId) === parseInt(team.captain.id) && !match.result
@@ -315,6 +319,7 @@ function Team () {
                                 }
                               </div>
                             </MatchBox>
+                            </div>
                           )
                           )
                         )

@@ -50,8 +50,8 @@ export function PageSubtitle ({ children, style = {} }) {
   return <div style={style} className='-mt-4 text-xs'>{children}</div>
 }
 
-export function H2 ({ children }) {
-  return <h2 className='inline-block my-2 text-xl font-subhead'>{children}</h2>
+export function H2 ({ children, className = '', style = {} }) {
+  return <h2 style={style} className={`${className} inline-block my-2 text-xl font-subhead`}>{children}</h2>
 }
 
 export function H3 ({ children }) {

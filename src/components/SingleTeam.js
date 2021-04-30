@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { AvatarContainer, PageSubtitle } from './elements'
+import { AvatarContainer, PageSubtitle, H2 } from './elements'
 
 function PlayerCard ({ children, id, img = '', name = '', imgUrl, captain, pronouns }) {
   return (
@@ -16,6 +16,8 @@ function PlayerCard ({ children, id, img = '', name = '', imgUrl, captain, prono
 
 export function TeamRoster ({ team = {}, vertical, className = '' }) {
   return (
+    <div>
+    <H2 className="text-gray-3 font-head uppercase">Roster</H2>
     <div style={{ gridTemplateRows: 'repeat(4, 85px)' }} className={`${className} grid md:grid-cols-2 gap-4 mb-4 md:mb-0"`}>
       { team.captain
         ? (
@@ -31,6 +33,7 @@ export function TeamRoster ({ team = {}, vertical, className = '' }) {
             <PlayerCard id={member.id} key={`${team.name}-${member.name}`} name={member.name} imgUrl={member.avatar_url} pronouns={member.pronouns} />
           )
         })}
+    </div>
     </div>
   )
 }
