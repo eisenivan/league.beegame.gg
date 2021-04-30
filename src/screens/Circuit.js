@@ -7,6 +7,7 @@ import { useParams, Link } from 'react-router-dom'
 import fetch from '../modules/fetch-with-headers'
 import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
+import moment from 'moment'
 
 function Standings ({ teams }) {
   const sorted = sortBy(teams, ['wins', o => o.losses * -1]).reverse()
@@ -66,7 +67,35 @@ function Circuit () {
               <div className='grid grid-cols-1 md:grid-cols-content md:gap-12'>
                 <div>
                   <H2>Matches This Week</H2>
-                  { matches.map((match) => (
+                  { matches.sort((a, b) => {
+                    // if neither match has a start time do nothing
+                    if (!a.start_time && !b.start_time) {
+                      return 0
+                    }
+
+                    // if b has a time and a does not, flip them
+                    if (!a.start_time && b.start_time) {
+                      return 1
+                    }
+
+                    // if a has a time and b does not, confirm order
+                    if (a.start_time && !b.start_time) {
+                      return -1
+                    }
+
+                    // if a has a time and it's less than b flip them
+                    if (a.start_time < b.start_time) {
+                      return 1
+                    }
+
+                    // if a is later than b, confirm order
+                    if (a.start_time > b.start_time) {
+                      return -1
+                    }
+
+                    // we should never get to here, but just do nothing if we do
+                    return 0
+                  }).map((match) => (
                     <MatchBox key={`match-${match.id}`} match={match}>
                       { match.primary_caster
                         ? (
