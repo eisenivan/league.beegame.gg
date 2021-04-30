@@ -41,7 +41,7 @@ function Circuit () {
       const teamJson = await teamResponse.json()
         .catch(handleError)
 
-      const matchResponse = await fetch(`${getApiUrl()}matches/?circuit=${id}&round_is_current=true`)
+      const matchResponse = await fetch(`${getApiUrl()}matches/?circuit=${id}&round_is_current=true&limit=50`)
         .catch(handleError)
       const matchJson = await matchResponse.json()
         .catch(handleError)
