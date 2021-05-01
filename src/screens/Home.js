@@ -42,7 +42,9 @@ function SingleEvent ({ event }) {
           ? <p className='mt-1 text-gray-500 uppercase text-2xs'><Link className='text-gray-500' to={`/circuits/${event.circuit.id}/`}>{event.circuit.name} Circuit</Link></p>
           : null }
 
-          <p className='inline-block px-1 py-1 -ml-1 text-xs font-bold text-white'>{`${event.home.name} vs. ${event.away.name}`}</p>
+          <p className='inline-block px-1 py-1 -ml-1 text-xs font-bold text-white'>
+          <Link className='text-white' to={`/teams/${event.home.id}/`}>{event.home.name}</Link> vs. <Link className='text-white' to={`/teams/${event.away.id}/`}>{event.away.name}</Link>
+          </p>
 
 
         { event.primary_caster
