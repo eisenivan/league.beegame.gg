@@ -35,7 +35,7 @@ const EventItem = styled.div`
 function SingleEvent ({ event }) {
   return (
     <EventItem key={`${event.home.name}-${event.away.name}-${event.start_time}`}>
-      <p className='pl-1 mb-1 text-xs text-yellow-1'>{formatTime(event.start_time)}</p>
+      <p className='py-1 pl-1 text-xs text-yellow-1'>{formatTime(event.start_time)}</p>
       <div class='inline-block rounded px-2 py-1 bg-gray-2 text-gray-400 w-full md:w-auto mb-1'>
 
         { event.circuit
