@@ -35,8 +35,8 @@ const EventItem = styled.div`
 function SingleEvent ({ event }) {
   return (
     <EventItem key={`${event.home.name}-${event.away.name}-${event.start_time}`}>
-      <p className='pl-1 mb-1 text-xs text-yellow-1'>{formatTime(event.start_time)}</p>
-      <div class='inline-block rounded px-2 py-1 bg-gray-2 text-gray-400 w-full md:w-auto mb-1'>
+      <p className='py-1 pl-1 text-xs text-yellow-1'>{formatTime(event.start_time)}</p>
+      <div class='inline-block rounded px-2 py-1 bg-gray-2 text-gray-400 w-full'>
 
         { event.circuit
           ? <p className='mt-1 text-gray-500 uppercase text-2xs'><Link className='text-gray-500' to={`/circuits/${event.circuit.id}/`}>{event.circuit.name} Circuit</Link></p>
@@ -57,7 +57,7 @@ function TvGuide ({ schedule }) {
   return (
     <div style={{ backgroundImage: 'repeating-linear-gradient(45deg, #202020, #202020 30px, #222 30px, #222 60px)' }} className='grid grid-cols-1 shadow-lg md:grid-cols-2 lg:grid-cols-7 md:rounded-t-md'>
       <DayColumn>
-        <div className='p-1 font-bold text-center border-b border-gray-800 md:p-2 md:rounded-tl-md bg-blue-3 md:border-none'>
+        <div className='p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:rounded-tl-md bg-blue-3 md:border-none'>
           <div className='text-xs uppercase text-blue-4'>{moment().format('ddd')}</div>
           <div>Today</div>
         </div>
@@ -72,7 +72,7 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className='p-1 font-bold text-center border-b border-gray-800 md:p-2 bg-blue-3 md:border-none'>
+        <div className='p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 bg-blue-3 md:border-none'>
         <div className='text-xs uppercase text-blue-4'>{moment().add(1, 'days').format('ddd')}</div>
           <div>Tomorrow</div>
         </div>
@@ -87,7 +87,7 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className='p-1 font-bold text-center border-b border-gray-800 md:p-2 bg-blue-3 md:border-none'>
+        <div className='p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 bg-blue-3 md:border-none'>
           <div className='text-xs uppercase text-blue-4'>{moment().add(2, 'days').format('ddd')}</div>
           <div>{moment().add(2, 'days').format('M/D')}</div>
         </div>
@@ -102,7 +102,7 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className='p-1 font-bold text-center border-b border-gray-800 md:p-2 bg-blue-3 md:border-none'>
+        <div className='p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 bg-blue-3 md:border-none'>
           <div className='text-xs uppercase text-blue-4'>{moment().add(3, 'days').format('ddd')}</div>
           <div>{moment().add(3, 'days').format('M/D')}</div>
         </div>
@@ -117,7 +117,7 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className='p-1 font-bold text-center border-b border-gray-800 md:p-2 bg-blue-3 md:border-none'>
+        <div className='p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 bg-blue-3 md:border-none'>
           <div className='text-xs uppercase text-blue-4'>{moment().add(4, 'days').format('ddd')}</div>
           <div>{moment().add(4, 'days').format('M/D')}</div>
         </div>
@@ -132,7 +132,7 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className='p-1 font-bold text-center border-b border-gray-800 md:p-2 bg-blue-3 md:border-none'>
+        <div className='p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 bg-blue-3 md:border-none'>
           <div className='text-xs uppercase text-blue-4'>{moment().add(5, 'days').format('ddd')}</div>
           <div>{moment().add(5, 'days').format('M/D')}</div>
         </div>
@@ -147,7 +147,7 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className='p-1 font-bold text-center border-b border-gray-800 md:p-2 md:rounded-tr-md bg-blue-3 md:border-none'>
+        <div className='p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:rounded-tr-md bg-blue-3 md:border-none'>
           <div className='text-xs uppercase text-blue-4'>{moment().add(6, 'days').format('ddd')}</div>
           <div>{moment().add(6, 'days').format('M/D')}</div>
         </div>
