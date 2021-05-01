@@ -294,6 +294,7 @@ function Team () {
                                             timeFormat='p'
                                             timeIntervals={15}
                                             autoFocus={false}
+                                            popperPlacement='top-end'
                                             dateFormat='MM/dd/yyyy h:mm aa'
                                             placeholderText={'Match Time (in ' + moment.tz(Date.now(), moment.tz.guess()).format('z') + ')'}
                                           />
