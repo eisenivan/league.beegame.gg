@@ -185,12 +185,17 @@ function Home () {
   const [schedule, setSchedule] = useState({})
   const [profile, setProfile] = useState({})
   const [playerMatches, setPlayerMatches] = useState({})
+  const [currentWeek, setCurrentWeek] = useState()
   let userId = cookie.load('userId')
   useEffect(() => {
     const fetchData = async () => {
       const promises = []
       promises.push(fetch(`${getApiUrl()}matches/?round_is_current=true&scheduled=true&limit=100`)
         .then(data => data.json())
+        .then((data) => {
+          setCurrentWeek(get(data, 'results[0].round.name'))
+          return data
+        })
         .then(data => () => sortEventsIntoDates(data.results))
         .then(data => setSchedule(data))
         .catch(handleError))
@@ -281,7 +286,7 @@ function Home () {
                 }
               </div>
 
-              <PageTitle className='mt-8'>Upcoming Matches</PageTitle>
+              <PageTitle className='mt-8'>Upcoming Matches{currentWeek ? ` (${currentWeek})` : ''}</PageTitle>
               <TvGuide schedule={schedule} />
             </div>
 
