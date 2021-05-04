@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import sortBy from 'lodash.sortbyorder'
+import sortBy from 'lodash.orderby'
 import Chrome from '../components/Chrome'
 import { formatDateTime } from '../modules/guess-local-tz'
 import { PageTitle, H2, MatchBox } from '../components/elements'
