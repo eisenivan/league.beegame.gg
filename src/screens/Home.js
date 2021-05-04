@@ -190,7 +190,7 @@ function Home () {
   useEffect(() => {
     const fetchData = async () => {
       const promises = []
-      promises.push(fetch(`${getApiUrl()}matches/?days=7&scheduled=true&limit=100`)
+      promises.push(fetch(`${getApiUrl()}matches/?round_is_current=true&scheduled=true&limit=100`)
         .then(data => data.json())
         .then(data => () => sortEventsIntoDates(data.results))
         .then(data => setSchedule(data))
