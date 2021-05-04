@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import sortBy from 'lodash.sortby'
+import sortBy from 'lodash.sortbyorder'
 import Chrome from '../components/Chrome'
 import { formatDateTime } from '../modules/guess-local-tz'
 import { PageTitle, H2, MatchBox } from '../components/elements'
@@ -9,7 +9,7 @@ import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
 
 function Standings ({ teams }) {
-  const sorted = sortBy(teams, ['wins', o => o.losses * -1]).reverse()
+  const sorted = sortBy(teams, ['wins', 'losses', 'name'], ['desc', 'asc', 'asc'])
   return (
     <div className='shadow-xl'>
       { sorted.map((x, i) => (

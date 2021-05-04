@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^12.1.10",
     "lodash.get": "^4.4.2",
     "lodash.sortby": "^4.7.0",
+    "lodash.sortbyorder": "^3.4.4",
     "moment-timezone": "^0.5.33",
     "react": "^17.0.1",
     "react-cookies": "^0.1.1",
