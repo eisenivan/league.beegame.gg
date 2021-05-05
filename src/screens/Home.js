@@ -32,6 +32,12 @@ const EventItem = styled.div`
   padding: 5px;
 `
 
+function highlightCurrentDay (dayOffset = 0) {
+  return moment().format('M/D') === moment().startOf('isoweek').add(dayOffset, 'days').format('M/D')
+    ? 'bg-blue-700 text-yellow-2'
+    : 'bg-blue-3'
+}
+
 function SingleEvent ({ event }) {
   return (
     <EventItem key={`${event.home.name}-${event.away.name}-${event.start_time}`}>
@@ -58,7 +64,7 @@ function TvGuide ({ schedule }) {
   return (
     <div style={{ backgroundImage: 'repeating-linear-gradient(45deg, #202020, #202020 30px, #222 30px, #222 60px)' }} className='grid grid-cols-1 shadow-lg md:grid-cols-2 lg:grid-cols-7 md:rounded-t-md'>
       <DayColumn>
-        <div className='p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:rounded-tl-md bg-blue-3 md:border-none'>
+        <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:rounded-tl-md md:border-none ${highlightCurrentDay(0)}`}>
           <div className='text-xs uppercase text-blue-4'>{moment().startOf('isoweek').format('ddd')}</div>
           <div>{moment().startOf('isoweek').format('M/D')}</div>
         </div>
@@ -73,7 +79,7 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className='p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 bg-blue-3 md:border-none'>
+        <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:border-none ${highlightCurrentDay(1)}`}>
           <div className='text-xs uppercase text-blue-4'>{moment().startOf('isoweek').add(1, 'days').format('ddd')}</div>
           <div>{moment().startOf('isoweek').add(1, 'days').format('M/D')}</div>
         </div>
@@ -88,7 +94,7 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className='p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 bg-blue-3 md:border-none'>
+        <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:border-none ${highlightCurrentDay(2)}`}>
           <div className='text-xs uppercase text-blue-4'>{moment().startOf('isoweek').add(2, 'days').format('ddd')}</div>
           <div>{moment().startOf('isoweek').add(2, 'days').format('M/D')}</div>
         </div>
@@ -103,7 +109,7 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className='p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 bg-blue-3 md:border-none'>
+        <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:border-none ${highlightCurrentDay(3)}`}>
           <div className='text-xs uppercase text-blue-4'>{moment().startOf('isoweek').add(3, 'days').format('ddd')}</div>
           <div>{moment().startOf('isoweek').add(3, 'days').format('M/D')}</div>
         </div>
@@ -118,7 +124,7 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className='p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 bg-blue-3 md:border-none'>
+        <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:border-none ${highlightCurrentDay(4)}`}>
           <div className='text-xs uppercase text-blue-4'>{moment().startOf('isoweek').add(4, 'days').format('ddd')}</div>
           <div>{moment().startOf('isoweek').add(4, 'days').format('M/D')}</div>
         </div>
@@ -133,7 +139,7 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className='p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 bg-blue-3 md:border-none'>
+        <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:border-none ${highlightCurrentDay(5)}`}>
           <div className='text-xs uppercase text-blue-4'>{moment().startOf('isoweek').add(5, 'days').format('ddd')}</div>
           <div>{moment().startOf('isoweek').add(5, 'days').format('M/D')}</div>
         </div>
@@ -148,7 +154,7 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className='p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:rounded-tr-md bg-blue-3 md:border-none'>
+        <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:rounded-tr-md md:border-none ${highlightCurrentDay(6)}`}>
           <div className='text-xs uppercase text-blue-4'>{moment().startOf('isoweek').add(6, 'days').format('ddd')}</div>
           <div>{moment().startOf('isoweek').add(6, 'days').format('M/D')}</div>
         </div>
@@ -286,7 +292,7 @@ function Home () {
                 }
               </div>
 
-              <PageTitle className='mt-8'>Upcoming Matches{currentWeek ? ` (${currentWeek})` : ''}</PageTitle>
+              <PageTitle className='mt-8'>Matches This Week{currentWeek ? ` (${currentWeek})` : ''}</PageTitle>
               <TvGuide schedule={schedule} />
             </div>
 
