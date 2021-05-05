@@ -13,7 +13,7 @@ function Standings ({ teams }) {
   return (
     <div className='shadow-xl'>
       { sorted.map((x, i) => (
-        <div className={`shadow-xl font-head text-xl font-bold text-white text-shadow px-2 flex items-center justify-between ${i % 2 ? 'bg-blue-2' : 'bg-yellow-2'}`} key={`${x.name}-${x.wins}-${x.losses}`}>
+        <div className={`shadow-xl text-md mg:text-lg lg:text-xl text-white text-shadow px-2 flex items-center justify-between border-b-2 ${i % 2 ? 'bg-blue-3' : 'bg-blue-3'}`} key={`${x.name}-${x.wins}-${x.losses}`}>
           <div className='max-w-md font-head uppercase truncate'><Link className='text-white' to={`/teams/${x.id}`}>{`${i + 1}. ${x.name}`}</Link></div>
           <div className='w-16 font-head uppercase text-right'><strong className='inline-block text-3xl'>{x.wins}</strong> - <strong className='inline-block text-3xl'>{x.losses}</strong></div>
         </div>
