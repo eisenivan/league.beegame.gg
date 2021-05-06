@@ -63,7 +63,7 @@ function SingleEvent ({ event }) {
           : <p className='text-xs italic'>Looking for caster</p> }
 
         { event.result
-          ? <p className="flex items-center justify-center w-full px-1 py-1 mt-2 mb-1 font-bold text-center text-white border border-gray-700 rounded-full text-2xs">
+          ? <p className="flex items-center justify-center w-1/2 px-1 py-1 mt-2 mb-1 ml-auto mr-auto font-bold text-center text-white border border-gray-700 rounded-full md:w-full text-2xs">
             <span className="pl-2 mr-2 -ml-1">🏆</span>
             <span className="pr-1">{event.result.winner}</span>
           </p>
