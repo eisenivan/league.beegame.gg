@@ -215,22 +215,24 @@ function Home () {
   const [profile, setProfile] = useState({})
   const [playerMatches, setPlayerMatches] = useState({})
   const [currentRoundName, setCurrentRoundName] = useState()
-  const [currentRound, setCurrentRound] = useState()
+  const [activeRound, setActiveRound] = useState()
   const [roundOffset, setRoundOffset] = useState(0)
   let userId = cookie.load('userId')
   useEffect(() => {
     const fetchData = async () => {
       const promises = []
 
-      promises.push(fetch(`${getApiUrl()}me/?format=json`)
-        .then(data => data.json())
-        .then(data => setProfile(data))
-        .catch(handleError))
+      if (userId) {
+        promises.push(fetch(`${getApiUrl()}me/?format=json`)
+          .then(data => data.json())
+          .then(data => setProfile(data))
+          .catch(handleError))
 
-      promises.push(fetch(`${getApiUrl()}matches/?round_is_current=true&player=${userId}`)
-        .then(data => data.json())
-        .then(data => setPlayerMatches(data.results))
-        .catch(handleError))
+        promises.push(fetch(`${getApiUrl()}matches/?round_is_current=true&player=${userId}`)
+          .then(data => data.json())
+          .then(data => setPlayerMatches(data.results))
+          .catch(handleError))
+      }
 
       Promise.all(promises).then(() => {
         setLoading(false)
@@ -248,7 +250,7 @@ function Home () {
 
   function handleMatch (data) {
     setCurrentRoundName(get(data, 'results[0].round.name'))
-    setCurrentRound(get(data, 'results[0].round.number'))
+
     const sortedSchedule = sortEventsIntoDates(data.results)
     setSchedule(sortedSchedule)
 
@@ -266,11 +268,12 @@ function Home () {
       fetch(`${getApiUrl()}matches/?round_is_current=true&scheduled=true&limit=100`)
         .then(data => data.json())
         .then((data) => {
+          setActiveRound(parseInt(get(data, 'results[0].round.number', 10)))
           handleMatch(data)
         })
         .catch(handleError)
     } else {
-      fetch(`${getApiUrl()}matches/?round=${parseFloat(currentRound) + roundOffset}&scheduled=true&limit=100&season=bronze`)
+      fetch(`${getApiUrl()}matches/?round=${parseFloat(activeRound) + parseInt(roundOffset, 10)}&scheduled=true&limit=100&season=bronze`)
         .then(data => data.json())
         .then((data) => {
           handleMatch(data)
