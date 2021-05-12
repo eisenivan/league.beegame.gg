@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import Chrome from '../components/Chrome'
+import Loading from '../components/Loading'
 import fetch from '../modules/fetch-with-headers'
 import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
@@ -56,7 +57,7 @@ function RegisterTeam () {
     <Chrome>
       {
         loading
-          ? <div>loading...</div>
+          ? <Loading />
           : (
             <CenterContent>
               <PageTitle>Register a Bee Game League Team</PageTitle>

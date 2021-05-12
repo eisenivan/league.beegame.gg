@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import sortBy from 'lodash.orderby'
 import Chrome from '../components/Chrome'
+import Loading from '../components/Loading'
 import { formatDateTime } from '../modules/guess-local-tz'
 import { PageTitle, H2, MatchBox } from '../components/elements'
 import { useParams, Link } from 'react-router-dom'
@@ -59,7 +60,7 @@ function Circuit () {
     <Chrome>
       {
         loading
-          ? <div>loading...</div>
+          ? <Loading />
           : (
             <div>
               <PageTitle>{circuit.name}</PageTitle>

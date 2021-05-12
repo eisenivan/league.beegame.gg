@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { not, empty } from 'regent'
 import get from 'lodash.get'
 import Chrome from '../components/Chrome'
+import Loading from '../components/Loading'
 import { PageTitle, PageSubtitle, utilityButtonString } from '../components/elements'
 import { useParams, Link, useLocation, useHistory } from 'react-router-dom'
 import fetch from '../modules/fetch-with-headers'
@@ -55,7 +56,7 @@ function Teams () {
     <Chrome>
       {
         loading
-          ? <div>loading...</div>
+          ? <Loading />
           : (
             <div>
               <PageTitle>Find a BGL Team</PageTitle>

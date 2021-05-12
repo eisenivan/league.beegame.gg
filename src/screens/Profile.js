@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import get from 'lodash.get'
 import { PageTitle, PageSubtitle, H3, UtilityButton, AvatarContainer, FormBox } from '../components/elements'
 import Chrome from '../components/Chrome'
+import Loading from '../components/Loading'
 import PlayerTeamList from '../components/PlayerTeamList'
 import fetch from '../modules/fetch-with-headers'
 import getApiUrl from '../modules/get-api-url'
@@ -110,7 +111,7 @@ function Profile () {
     <Chrome>
       {
         loading
-          ? <div>loading...</div>
+          ? <Loading />
           : (
             <div class='flex flex-col md:block items-center'>
               { profile.player.avatar_url

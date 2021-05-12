@@ -6,6 +6,7 @@ import cookie from 'react-cookies'
 import DatePicker from 'react-datepicker'
 import moment from 'moment-timezone'
 import Chrome from '../components/Chrome'
+import Loading from '../components/Loading'
 import { PageTitle, PageSubtitle, LightContentBox, UtilityButton, MatchBox, H2 } from '../components/elements'
 import { formatDateTime } from '../modules/guess-local-tz'
 import { TeamRoster } from '../components/SingleTeam'
@@ -199,7 +200,7 @@ function Team () {
     <Chrome>
       {
         loading
-          ? <div>loading...</div>
+          ? <Loading />
           : (
             <div>
               <div>

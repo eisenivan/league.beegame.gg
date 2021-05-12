@@ -9,6 +9,7 @@ import fetch from '../modules/fetch-with-headers'
 import { formatTime, formatDateTime } from '../modules/guess-local-tz'
 import getApiUrl from '../modules/get-api-url'
 import Chrome from '../components/Chrome'
+import Loading from '../components/Loading'
 import handleError from '../modules/handle-error'
 import { PageTitle, MatchBox, linkString } from '../components/elements'
 import SingleTeam from '../components/SingleTeam'
@@ -244,7 +245,7 @@ function Home () {
     <Chrome>
       {
         loading
-          ? <div>loading...</div>
+          ? <Loading />
           : (
             <div>
               <div className='grid grid-cols-1 mb-8 sm:mt-8 md:mt-0 md:grid-cols-content'>

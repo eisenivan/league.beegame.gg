@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Chrome from '../components/Chrome'
+import Loading from '../components/Loading'
 import { useParams } from 'react-router-dom'
 import { PageTitle, PageSubtitle } from '../components/elements'
 import getApiUrl from '../modules/get-api-url'
@@ -29,7 +30,7 @@ function Teams () {
     <Chrome>
       {
         loading
-          ? <div>loading...</div>
+          ? <Loading />
           : (
             <div>
               <PageTitle>{caster.name}</PageTitle>

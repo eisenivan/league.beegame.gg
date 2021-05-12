@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import cookie from 'react-cookies'
 import { PageTitle, PageSubtitle, H3, AvatarContainer } from '../components/elements'
 import Chrome from '../components/Chrome'
-import PlayerTeamList from "../components/PlayerTeamList";
+import PlayerTeamList from '../components/PlayerTeamList';
 import fetch from '../modules/fetch-with-headers'
 import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
@@ -32,7 +32,7 @@ function Profile () {
     <Chrome>
       {
         loading
-          ? <div>loading...</div>
+          ? <Loading />
           : (
             <div className='md:grid md:grid-cols-content'>
               <div class='flex flex-col md:block items-center'>
