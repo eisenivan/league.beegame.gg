@@ -1,8 +1,8 @@
 import React from 'react'
 
-function Loading () {
+function Loading ({ className = '' }) {
   return (
-    <img className='m-auto' alt='Loading indicator: blue checkers dancing' src='/img/chex-dance.gif' />
+    <img className={`m-auto ${className}`} alt='Loading indicator: blue checkers dancing' src='/img/chex-dance.gif' />
   )
 }
 

@@ -113,7 +113,7 @@ function Profile () {
         loading
           ? <Loading />
           : (
-            <div class='flex flex-col md:block items-center'>
+            <div className='flex flex-col md:block items-center'>
               { profile.player.avatar_url
                 ? <AvatarContainer alt={`Avatar for BGL player ${profile.player.name}`} imgUrl={profile.player.avatar_url} className='w-16 h-16 mb-1 rounded md:w-32 md:h-32 bg-gray-2 lg:mr-8 lg:mb-0 lg:float-left' />
                 : null }
@@ -144,9 +144,9 @@ function Profile () {
                 editProfile
                   ? (
                     <div className='flex flex-col w-full md:w-auto'>
-                      <div class='md:flex md:w-1/2'>
+                      <div className='md:flex md:w-1/2'>
 
-                        <div class='md:w-1/2 md:mr-4'>
+                        <div className='md:w-1/2 md:mr-4'>
                           <FormBox>
                             <label for='namePhonetic'>Name Phonetically</label>
                             <input
@@ -159,7 +159,7 @@ function Profile () {
                           </FormBox>
                         </div>
 
-                        <div class='md:w-1/2'>
+                        <div className='md:w-1/2'>
                           <FormBox>
                             <label for='pronouns'>Pronouns</label>
                             <input
@@ -203,7 +203,7 @@ function Profile () {
                           ? (
                             <div>
                               <H3>Bio</H3>
-                              <p class='-mt-2'>{bio}</p>
+                              <p className='-mt-2'>{bio}</p>
                             </div>
                           )
                           : null

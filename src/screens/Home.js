@@ -14,9 +14,7 @@ import handleError from '../modules/handle-error'
 import { PageTitle, MatchBox, linkString } from '../components/elements'
 import SingleTeam from '../components/SingleTeam'
 
-const DayColumn = styled.div`
-
-`
+const DayColumn = styled.div``
 
 const CalendarDark = styled.div`
   box-shadow: 0px 0px 35px -16px rgba(0, 0, 0, 0.75);
@@ -33,14 +31,14 @@ const EventItem = styled.div`
   padding: 5px;
 `
 
-function highlightCurrentDay (dayOffset = 0) {
-  return moment().format('M/D') === moment().startOf('isoweek').add(dayOffset, 'days').format('M/D')
+function highlightCurrentDay (dayOffset = 0, roundOffset = 0) {
+  return moment().format('M/D') === moment().startOf('isoweek').add(roundOffset * 7, 'days').add(dayOffset, 'days').format('M/D')
     ? 'bg-blue-700 text-white'
     : 'bg-blue-3 text-blue-200'
 }
 
-function highlightCurrentDayHeader (dayOffset = 0) {
-  return moment().format('M/D') === moment().startOf('isoweek').add(dayOffset, 'days').format('M/D')
+function highlightCurrentDayHeader (dayOffset = 0, roundOffset = 0) {
+  return moment().format('M/D') === moment().startOf('isoweek').add(roundOffset * 7, 'days').add(dayOffset, 'days').format('M/D')
     ? 'text-blue-300'
     : 'text-blue-4'
 }
@@ -76,17 +74,17 @@ function SingleEvent ({ event }) {
   )
 }
 
-function TvGuide ({ schedule }) {
+function TvGuide ({ schedule, roundOffset = 0, loading, scheduleWarning = null }) {
   return (
     <div style={{ backgroundImage: 'repeating-linear-gradient(45deg, #202020, #202020 30px, #222 30px, #222 60px)' }} className='grid grid-cols-1 shadow-lg md:grid-cols-2 lg:grid-cols-7 md:rounded-t-md'>
       <DayColumn>
-        <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:rounded-tl-md md:border-none ${highlightCurrentDay(0)}`}>
-          <div className={`text-xs uppercase ${highlightCurrentDayHeader(0)}`}>{moment().startOf('isoweek').format('ddd')}</div>
-          <div>{moment().startOf('isoweek').format('M/D')}</div>
+        <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:rounded-tl-md md:border-none ${highlightCurrentDay(0, roundOffset)}`}>
+          <div className={`text-xs uppercase ${highlightCurrentDayHeader(0, roundOffset)}`}>{moment().startOf('isoweek').add(roundOffset * 7, 'days').format('ddd')}</div>
+          <div>{moment().startOf('isoweek').add(roundOffset * 7, 'days').format('M/D')}</div>
         </div>
         <CalendarDark>
           <CalendarEvents>
-            { get(schedule, `[${moment().startOf('isoweek').format('YYYYMMDD')}]`, []).map((event) => {
+            { get(schedule, `[${moment().startOf('isoweek').add(roundOffset * 7, 'days').format('YYYYMMDD')}]`, []).map((event) => {
               return (
                 <SingleEvent key={`${event.home.name}-${event.away.name}-${event.start_time}`} event={event} />
               )
@@ -95,13 +93,13 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:border-none ${highlightCurrentDay(1)}`}>
-          <div className={`text-xs uppercase ${highlightCurrentDayHeader(1)}`}>{moment().startOf('isoweek').add(1, 'days').format('ddd')}</div>
-          <div>{moment().startOf('isoweek').add(1, 'days').format('M/D')}</div>
+        <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:border-none ${highlightCurrentDay(1, roundOffset)}`}>
+          <div className={`text-xs uppercase ${highlightCurrentDayHeader(1, roundOffset)}`}>{moment().startOf('isoweek').add(roundOffset * 7, 'days').add(1, 'days').format('ddd')}</div>
+          <div>{moment().startOf('isoweek').add(roundOffset * 7, 'days').add(1, 'days').format('M/D')}</div>
         </div>
         <CalendarDark>
           <CalendarEvents>
-            { get(schedule, `[${moment().startOf('isoweek').add(1, 'days').format('YYYYMMDD')}]`, []).map((event) => {
+            { get(schedule, `[${moment().startOf('isoweek').add(roundOffset * 7, 'days').add(1, 'days').format('YYYYMMDD')}]`, []).map((event) => {
               return (
                 <SingleEvent key={`${event.home.name}-${event.away.name}-${event.start_time}`} event={event} />
               )
@@ -110,13 +108,13 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:border-none ${highlightCurrentDay(2)}`}>
-          <div className={`text-xs uppercase ${highlightCurrentDayHeader(2)}`}>{moment().startOf('isoweek').add(2, 'days').format('ddd')}</div>
-          <div>{moment().startOf('isoweek').add(2, 'days').format('M/D')}</div>
+        <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:border-none ${highlightCurrentDay(2, roundOffset)}`}>
+          <div className={`text-xs uppercase ${highlightCurrentDayHeader(2, roundOffset)}`}>{moment().startOf('isoweek').add(roundOffset * 7, 'days').add(2, 'days').format('ddd')}</div>
+          <div>{moment().startOf('isoweek').add(roundOffset * 7, 'days').add(2, 'days').format('M/D')}</div>
         </div>
         <CalendarDark>
           <CalendarEvents>
-            { get(schedule, `[${moment().startOf('isoweek').add(2, 'days').format('YYYYMMDD')}]`, []).map((event) => {
+            { get(schedule, `[${moment().startOf('isoweek').add(roundOffset * 7, 'days').add(2, 'days').format('YYYYMMDD')}]`, []).map((event) => {
               return (
                 <SingleEvent key={`${event.home.name}-${event.away.name}-${event.start_time}`} event={event} />
               )
@@ -125,13 +123,13 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:border-none ${highlightCurrentDay(3)}`}>
-          <div className={`text-xs uppercase ${highlightCurrentDayHeader(3)}`}>{moment().startOf('isoweek').add(3, 'days').format('ddd')}</div>
-          <div>{moment().startOf('isoweek').add(3, 'days').format('M/D')}</div>
+        <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:border-none ${highlightCurrentDay(3, roundOffset)}`}>
+          <div className={`text-xs uppercase ${highlightCurrentDayHeader(3, roundOffset)}`}>{moment().startOf('isoweek').add(roundOffset * 7, 'days').add(3, 'days').format('ddd')}</div>
+          <div>{moment().startOf('isoweek').add(roundOffset * 7, 'days').add(3, 'days').format('M/D')}</div>
         </div>
         <CalendarDark>
           <CalendarEvents>
-            { get(schedule, `[${moment().startOf('isoweek').add(3, 'days').format('YYYYMMDD')}]`, []).map((event) => {
+            { get(schedule, `[${moment().startOf('isoweek').add(roundOffset * 7, 'days').add(3, 'days').format('YYYYMMDD')}]`, []).map((event) => {
               return (
                 <SingleEvent key={`${event.home.name}-${event.away.name}-${event.start_time}`} event={event} />
               )
@@ -140,13 +138,13 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:border-none ${highlightCurrentDay(4)}`}>
-          <div className={`text-xs uppercase ${highlightCurrentDayHeader(4)}`}>{moment().startOf('isoweek').add(4, 'days').format('ddd')}</div>
-          <div>{moment().startOf('isoweek').add(4, 'days').format('M/D')}</div>
+        <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:border-none ${highlightCurrentDay(4, roundOffset)}`}>
+          <div className={`text-xs uppercase ${highlightCurrentDayHeader(4, roundOffset)}`}>{moment().startOf('isoweek').add(roundOffset * 7, 'days').add(4, 'days').format('ddd')}</div>
+          <div>{moment().startOf('isoweek').add(roundOffset * 7, 'days').add(4, 'days').format('M/D')}</div>
         </div>
         <CalendarDark>
           <CalendarEvents>
-            { get(schedule, `[${moment().startOf('isoweek').add(4, 'days').format('YYYYMMDD')}]`, []).map((event) => {
+            { get(schedule, `[${moment().startOf('isoweek').add(roundOffset * 7, 'days').add(4, 'days').format('YYYYMMDD')}]`, []).map((event) => {
               return (
                 <SingleEvent key={`${event.home.name}-${event.away.name}-${event.start_time}`} event={event} />
               )
@@ -155,13 +153,13 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:border-none ${highlightCurrentDay(5)}`}>
-          <div className={`text-xs uppercase ${highlightCurrentDayHeader(5)}`}>{moment().startOf('isoweek').add(5, 'days').format('ddd')}</div>
-          <div>{moment().startOf('isoweek').add(5, 'days').format('M/D')}</div>
+        <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:border-none ${highlightCurrentDay(5, roundOffset)}`}>
+          <div className={`text-xs uppercase ${highlightCurrentDayHeader(5, roundOffset)}`}>{moment().startOf('isoweek').add(roundOffset * 7, 'days').add(5, 'days').format('ddd')}</div>
+          <div>{moment().startOf('isoweek').add(roundOffset * 7, 'days').add(5, 'days').format('M/D')}</div>
         </div>
         <CalendarDark>
           <CalendarEvents>
-            { get(schedule, `[${moment().startOf('isoweek').add(5, 'days').format('YYYYMMDD')}]`, []).map((event) => {
+            { get(schedule, `[${moment().startOf('isoweek').add(roundOffset * 7, 'days').add(5, 'days').format('YYYYMMDD')}]`, []).map((event) => {
               return (
                 <SingleEvent key={`${event.home.name}-${event.away.name}-${event.start_time}`} event={event} />
               )
@@ -170,13 +168,13 @@ function TvGuide ({ schedule }) {
         </CalendarDark>
       </DayColumn>
       <DayColumn>
-        <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:rounded-tr-md md:border-none ${highlightCurrentDay(6)}`}>
-          <div className={`text-xs uppercase ${highlightCurrentDayHeader(6)}`}>{moment().startOf('isoweek').add(6, 'days').format('ddd')}</div>
-          <div>{moment().startOf('isoweek').add(6, 'days').format('M/D')}</div>
+        <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:rounded-tr-md md:border-none ${highlightCurrentDay(6, roundOffset)}`}>
+          <div className={`text-xs uppercase ${highlightCurrentDayHeader(6, roundOffset)}`}>{moment().startOf('isoweek').add(roundOffset * 7, 'days').add(6, 'days').format('ddd')}</div>
+          <div>{moment().startOf('isoweek').add(roundOffset * 7, 'days').add(6, 'days').format('M/D')}</div>
         </div>
         <CalendarDark>
           <CalendarEvents>
-            { get(schedule, `[${moment().startOf('isoweek').add(6, 'days').format('YYYYMMDD')}]`, []).map((event) => {
+            { get(schedule, `[${moment().startOf('isoweek').add(roundOffset * 7, 'days').add(6, 'days').format('YYYYMMDD')}]`, []).map((event) => {
               return (
                 <SingleEvent key={`${event.home.name}-${event.away.name}-${event.start_time}`} event={event} />
               )
@@ -184,6 +182,13 @@ function TvGuide ({ schedule }) {
           </CalendarEvents>
         </CalendarDark>
       </DayColumn>
+      { loading
+        ? (
+          <div className='col-span-full text-center mt-4 uppercase text-xl'>
+            { scheduleWarning ? <span>{scheduleWarning}</span> : null }
+            <Loading />
+          </div>
+        ) : null }
     </div>
   )
 }
@@ -204,23 +209,18 @@ function sortEventsIntoDates (events) {
 
 function Home () {
   const [loading, setLoading] = useState(true)
+  const [tvLoading, setTvLoading] = useState(true)
+  const [scheduleWarning, setScheduleWarning] = useState(true)
   const [schedule, setSchedule] = useState({})
   const [profile, setProfile] = useState({})
   const [playerMatches, setPlayerMatches] = useState({})
-  const [currentWeek, setCurrentWeek] = useState()
+  const [currentRoundName, setCurrentRoundName] = useState()
+  const [currentRound, setCurrentRound] = useState()
+  const [roundOffset, setRoundOffset] = useState(0)
   let userId = cookie.load('userId')
   useEffect(() => {
     const fetchData = async () => {
       const promises = []
-      promises.push(fetch(`${getApiUrl()}matches/?round_is_current=true&scheduled=true&limit=100`)
-        .then(data => data.json())
-        .then((data) => {
-          setCurrentWeek(get(data, 'results[0].round.name'))
-          return data
-        })
-        .then(data => () => sortEventsIntoDates(data.results))
-        .then(data => setSchedule(data))
-        .catch(handleError))
 
       promises.push(fetch(`${getApiUrl()}me/?format=json`)
         .then(data => data.json())
@@ -239,6 +239,45 @@ function Home () {
 
     fetchData()
   }, [userId])
+
+  function pageTvGuide (round) {
+    setTvLoading(true)
+    setScheduleWarning(null)
+    setRoundOffset(round)
+  }
+
+  function handleMatch (data) {
+    setCurrentRoundName(get(data, 'results[0].round.name'))
+    setCurrentRound(get(data, 'results[0].round.number'))
+    const sortedSchedule = sortEventsIntoDates(data.results)
+    setSchedule(sortedSchedule)
+
+    // keep showing dancing chex if there are no matches
+    if (Object.keys(sortedSchedule).length === 0) {
+      setScheduleWarning('No matches scheduled this week')
+    } else {
+      setTvLoading(false)
+    }
+  }
+
+  // distinct effect for querying / paging tv guide
+  useEffect(() => {
+    if (roundOffset === 0) {
+      fetch(`${getApiUrl()}matches/?round_is_current=true&scheduled=true&limit=100`)
+        .then(data => data.json())
+        .then((data) => {
+          handleMatch(data)
+        })
+        .catch(handleError)
+    } else {
+      fetch(`${getApiUrl()}matches/?round=${parseFloat(currentRound) + roundOffset}&scheduled=true&limit=100&season=bronze`)
+        .then(data => data.json())
+        .then((data) => {
+          handleMatch(data)
+        })
+        .catch(handleError)
+    }
+  }, [roundOffset]) // eslint-disable-line
 
   const token = cookie.load('token', true)
   return (
@@ -308,8 +347,15 @@ function Home () {
                 }
               </div>
 
-              <PageTitle className='mt-8'>Matches This Week{currentWeek ? ` (${currentWeek})` : ''}</PageTitle>
-              <TvGuide schedule={schedule} />
+              <PageTitle className='mt-8 flex justify-between'>
+                {currentRoundName ? `${currentRoundName}` : `Week of ${moment().startOf('isoweek').add(roundOffset * 7, 'days').format('M/D')}`}
+                <span>
+                  <button className='text-sm ml-4 px-2 bg-yellow-3' onClick={() => pageTvGuide(roundOffset - 1)}>{'<<'}</button>
+                  <button className='text-sm ml-1 px-2 bg-yellow-3' onClick={() => pageTvGuide(0)}>{'Current Week'}</button>
+                  <button className='text-sm ml-1 px-2 bg-yellow-3' onClick={() => pageTvGuide(roundOffset + 1)}>{'>>'}</button>
+                </span>
+              </PageTitle>
+              <TvGuide schedule={schedule} roundOffset={roundOffset} loading={tvLoading} scheduleWarning={scheduleWarning} />
             </div>
 
           )

@@ -36,13 +36,13 @@ function Profile () {
           ? <Loading />
           : (
             <div className='md:grid md:grid-cols-content'>
-              <div class='flex flex-col md:block items-center'>
+              <div className='flex flex-col md:block items-center'>
                 { player.avatar_url
                   ? <AvatarContainer alt={`Avatar for BGL player ${player.name}`} imgUrl={player.avatar_url} className='w-16 h-16 mb-1 rounded md:w-32 md:h-32 bg-gray-2 lg:mr-8 lg:mb-0 lg:float-left' />
                   : null }
                 <div className='flex flex-col items-center w-full mb-0 md:items-start md:w-auto md:flex-row'>
 
-                  <div class='-mb-3 md:mb-0'>
+                  <div className='-mb-3 md:mb-0'>
                     <PageTitle className='break-all'>{player.name}</PageTitle>
                   </div>
 
@@ -54,7 +54,7 @@ function Profile () {
                       </div>
                     ) : null }
                 </div>
-                <div class='mt-5 md:mt-0'>
+                <div className='mt-5 md:mt-0'>
                   <PageSubtitle>
                     {player.name_phonetic || ''} {player.pronouns ? `(${player.pronouns})` : ''}
                   </PageSubtitle>
@@ -65,7 +65,7 @@ function Profile () {
                     ? (
                       <div>
                         <H3>Bio</H3>
-                        <p class='-mt-2'>{player.bio}</p>
+                        <p className='-mt-2'>{player.bio}</p>
                       </div>
                     )
                     : null
