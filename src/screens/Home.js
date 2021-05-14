@@ -47,7 +47,7 @@ function SingleEvent ({ event }) {
   return (
     <EventItem key={`${event.home.name}-${event.away.name}-${event.start_time}`}>
       <p className='py-1 pl-1 text-xs text-yellow-1'>{formatTime(event.start_time)}</p>
-      <div className='inline-block rounded px-2 py-1 bg-gray-2 text-gray-400 w-full'>
+      <div className='inline-block w-full px-2 py-1 text-gray-400 rounded bg-gray-2'>
 
         { event.circuit
           ? <p className='mt-1 text-gray-500 uppercase text-2xs'><Link className='text-gray-500' to={`/circuits/${event.circuit.id}/`}>{event.circuit.name} Circuit</Link></p>
@@ -58,7 +58,7 @@ function SingleEvent ({ event }) {
         </p>
 
         { event.primary_caster
-          ? <a target='_blank' rel='noreferrer' className='flex items-center text-xs leading-loose text-purple-400' href={event.primary_caster.stream_link}><svg className='mr-1 w-3 h-3' fill='currentColor' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'> <defs /> <path fillRule='evenodd' d='M2.149 0L.537 4.119v16.836h5.731V24h3.224l3.045-3.045h4.657l6.269-6.269V0H2.149zm19.164 13.612l-3.582 3.582H12l-3.045 3.045v-3.045H4.119V2.149h17.194v11.463zm-3.582-7.343v6.262h-2.149V6.269h2.149zm-5.731 0v6.262H9.851V6.269H12z' clipRule='evenodd' /></svg>{event.primary_caster.name}</a>
+          ? <a target='_blank' rel='noreferrer' className='flex items-center text-xs leading-loose text-purple-400' href={event.primary_caster.stream_link}><svg className='w-3 h-3 mr-1' fill='currentColor' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'> <defs /> <path fillRule='evenodd' d='M2.149 0L.537 4.119v16.836h5.731V24h3.224l3.045-3.045h4.657l6.269-6.269V0H2.149zm19.164 13.612l-3.582 3.582H12l-3.045 3.045v-3.045H4.119V2.149h17.194v11.463zm-3.582-7.343v6.262h-2.149V6.269h2.149zm-5.731 0v6.262H9.851V6.269H12z' clipRule='evenodd' /></svg>{event.primary_caster.name}</a>
           : <p className='text-xs italic'>Looking for caster</p> }
 
         { event.result
@@ -184,7 +184,7 @@ function TvGuide ({ schedule, roundOffset = 0, loading, scheduleWarning = null }
       </DayColumn>
       { loading
         ? (
-          <div className='col-span-full text-center mt-4 uppercase text-xl'>
+          <div className='mt-4 text-xl text-center uppercase col-span-full'>
             { scheduleWarning ? <span>{scheduleWarning}</span> : null }
             <Loading />
           </div>
@@ -350,13 +350,13 @@ function Home () {
                 }
               </div>
 
-              <PageTitle className='mt-8 flex justify-between'>
+              <PageTitle className='flex justify-between mt-8'>
                 {currentRoundName ? `${currentRoundName}` : `Week of ${moment().startOf('isoweek').add(roundOffset * 7, 'days').format('M/D')}`}
-                <span>
-                  <button className='text-sm ml-4 px-2 bg-yellow-3' onClick={() => pageTvGuide(roundOffset - 1)}>{'<<'}</button>
-                  <button className='text-sm ml-1 px-2 bg-yellow-3' onClick={() => pageTvGuide(0)}>{'Current Week'}</button>
-                  <button className='text-sm ml-1 px-2 bg-yellow-3' onClick={() => pageTvGuide(roundOffset + 1)}>{'>>'}</button>
-                </span>
+                <div class="flex items-center">
+                  <button className='px-2 ml-4 text-sm border border-gray-700 focus:outline-none focus:ring-1 rounded-l-md rounded-r-md hover:border-gray-500 focus:ring-gray-400 focus:border-black' onClick={() => pageTvGuide(roundOffset - 1)}>{'◁'}</button>
+                  <button className='px-2 ml-1 text-sm border border-gray-700 focus:outline-none focus:ring-1 rounded-l-md rounded-r-md hover:border-gray-500 focus:ring-gray-400 focus:border-black' onClick={() => pageTvGuide(0)}>{'Current Week'}</button>
+                  <button className='px-2 ml-1 text-sm transform rotate-180 border border-gray-700 focus:outline-none focus:ring-1 rounded-l-md rounded-r-md hover:border-gray-500 focus:ring-gray-400 focus:border-black' onClick={() => pageTvGuide(roundOffset + 1)}>{'◁'}</button>
+                </div>
               </PageTitle>
               <TvGuide schedule={schedule} roundOffset={roundOffset} loading={tvLoading} scheduleWarning={scheduleWarning} />
             </div>
