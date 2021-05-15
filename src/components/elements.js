@@ -38,7 +38,7 @@ export function MatchBox ({ match, children }) {
             ? <span className='text-3xl'>{match.result.sets_home}</span>
             : null }
         </div>
-        <div className='p-2 pb-2 text-sm text-right bg-gray-3 text-gray-1'>
+        <div className='flex items-center justify-end p-2 pb-2 text-sm text-right bg-gray-3 text-gray-1'>
           {children}
         </div>
       </div>

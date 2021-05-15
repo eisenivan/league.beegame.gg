@@ -15,8 +15,8 @@ function Standings ({ teams }) {
     <div className='shadow-xl'>
       { sorted.map((x, i) => (
         <div className={`shadow-xl text-md mg:text-lg lg:text-xl text-white text-shadow px-2 flex items-center justify-between border-b-2 ${i % 2 ? 'bg-blue-3' : 'bg-blue-3'}`} key={`${x.name}-${x.wins}-${x.losses}`}>
-          <div className='max-w-md font-head uppercase truncate'><Link className='text-white' to={`/teams/${x.id}`}>{`${i + 1}. ${x.name}`}</Link></div>
-          <div className='w-16 font-head uppercase text-right'><strong className='inline-block text-3xl'>{x.wins}</strong> - <strong className='inline-block text-3xl'>{x.losses}</strong></div>
+          <div className='max-w-md uppercase truncate font-head'><Link className='text-white' to={`/teams/${x.id}`}>{`${i + 1}. ${x.name}`}</Link></div>
+          <div className='w-16 text-right uppercase font-head'><strong className='inline-block text-3xl'>{x.wins}</strong> - <strong className='inline-block text-3xl'>{x.losses}</strong></div>
         </div>
       )) }
     </div>
@@ -100,9 +100,14 @@ function Circuit () {
                       { match.primary_caster
                         ? (
                           match.primary_caster.stream_link
-                            ? <a className='mr-2' target='_blank' rel='noreferrer' href={match.primary_caster.stream_link}>{match.primary_caster.name}</a>
-                            : <span>{match.primary_caster.name}</span>
-                        )
+
+                            ? <a target='_blank' rel='noreferrer' className='flex items-center mr-4 text-xs leading-loose text-purple-400' href={match.primary_caster.stream_link}>
+                                <svg className='w-3 h-3 mr-1' fill='currentColor' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'> <defs /> <path fillRule='evenodd' d='M2.149 0L.537 4.119v16.836h5.731V24h3.224l3.045-3.045h4.657l6.269-6.269V0H2.149zm19.164 13.612l-3.582 3.582H12l-3.045 3.045v-3.045H4.119V2.149h17.194v11.463zm-3.582-7.343v6.262h-2.149V6.269h2.149zm-5.731 0v6.262H9.851V6.269H12z' clipRule='evenodd' /></svg>
+                                {match.primary_caster.name}
+                              </a>
+                            : <p className='text-xs italic'>Looking for caster</p>
+
+                          )
                         : null }
                       { match.start_time
                         ? (
