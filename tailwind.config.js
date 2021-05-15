@@ -39,10 +39,16 @@ module.exports = {
           3: '#080808'
         }
       },
+
       fontSize: {
         '2xs': '.65rem'
+      },
+
+      spacing: {
+        '112': '28rem'
       }
     }
+
   },
   variants: {
     extend: {}
