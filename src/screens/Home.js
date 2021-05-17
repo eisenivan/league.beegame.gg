@@ -338,7 +338,7 @@ function Home () {
                                         {formatDateTime(match.start_time)}
                                       </>
                                     )
-                                    : <span className='mr-4 text-xs italic text-gray-600'>Looking for caster</span> 
+                                    : <span className='block align-right'>TBD</span> 
                                   }
                                 </span>
                               </MatchBox>
