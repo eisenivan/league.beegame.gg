@@ -7,18 +7,21 @@ export const linkString = 'hover:text-yellow-2 transition-colors'
 
 export function MatchBox ({ match, children }) {
   return (
-    <div key={`${match.home.name}${match.away.name}${match.id}`} className='max-w-lg mt-1 mb-4 shadow-xl'>
+    <div key={`${match.home.name}${match.id}`} className='max-w-lg mt-1 mb-4 shadow-xl'>
       <div className='text-lg uppercase md:text-2xl font-head'>
+        
         <div className='flex justify-between p-4 truncate text-gray-1 bg-blue-2 text-shadow shadow-match'>
-          <RouterLink className='flex items-center text-white truncate' to={`/teams/${match.away.id}/`}>
+          {
+            match.away
+          ? <RouterLink className='flex items-center text-white truncate' to={`/teams/${match.away.id}/`}>
             <span className='truncate'>
               {match.away.name}
             </span>
-
           </RouterLink>
-
+          : <span>Bye Match</span>
+          }
           <div class="flex items-center flex-shrink-0">
-          { match.result && match.result.winner === match.away.name
+          { match.result && match.away && match.result.winner === match.away.name
               ? <img className="flex-shrink-0 inline-block h-8 ml-2" src="/img/trophy_med.png"></img>
               : null
             }
