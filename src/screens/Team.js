@@ -140,7 +140,17 @@ function Team () {
         .then((data) => data.json())
         .then((data) => {
           setTeam(data)
-          setMatches([...data.home_matches, ...data.away_matches].sort((a, b) => (a.start_time > b.start_time ? 1 : -1)))
+          setMatches([...data.home_matches, ...data.away_matches].sort(
+            (a, b) => (a.round.number - 0.0 > b.round.number - 0.0 ? 1 : -1)
+          ).sort(
+            (a, b) => {
+              if (a.start_time == null || b.start_time == null || a.start_time == b.start_time) {
+                return 0
+              } else {
+                return (a.start_time > b.start_time ? 1 : -1)
+              }
+            }
+          ))
           setMatchesWon(data.wins)
           setMatchesLost(data.losses)
 
