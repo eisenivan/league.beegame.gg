@@ -279,7 +279,7 @@ function Team () {
                           matches.map((match) => (
                             <div key={`${match.round.name}-${match.id}`}>
                               <p className='inline-block px-2 mt-2 font-bold text-gray-500 uppercase bg-gray-300 rounded text-2xs'>{match.round.name}</p>
-                              {match.round.is_current_round
+                              {match.round.is_current_round && match.result == null
                                 ? <p className='pl-1 mt-1 italic font-bold text-red-600 text-2xs'>Play this week! Submit results by Sunday midnight PT</p>
                                 : null }
                               <MatchBox key={`match-${match.id}`} match={match}>
