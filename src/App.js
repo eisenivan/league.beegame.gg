@@ -14,6 +14,7 @@ import Player from './screens/Player'
 import Profile from './screens/Profile'
 import RegisterTeam from './screens/RegisterTeam'
 import Help from './screens/Help'
+import Links from './screens/Links'
 
 function App () {
   return (
@@ -51,6 +52,9 @@ function App () {
         </Route>
         <Route path='/help'>
           <Help />
+        </Route>
+        <Route path='/links'>
+          <Links />
         </Route>
       </Switch>
     </Router>
