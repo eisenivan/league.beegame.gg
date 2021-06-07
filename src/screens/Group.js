@@ -24,7 +24,7 @@ function Standings ({ teams }) {
 }
 
 function Circuit () {
-  const { id, group } = useParams()
+  const { group } = useParams()
   const [loading, setLoading] = useState(true)
   const [circuit, setCircuit] = useState({})
   const [teams, setTeams] = useState({})
@@ -32,29 +32,24 @@ function Circuit () {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${getApiUrl()}circuits/${id}/?format=json`)
+      const response = await fetch(`${getApiUrl()}groups/${group}/?format=json`)
         .catch(handleError)
       const json = await response.json()
         .catch(handleError)
 
-      const teamResponse = await fetch(`${getApiUrl()}teams/?circuit=${id}&limit=50`)
-        .catch(handleError)
-      const teamJson = await teamResponse.json()
-        .catch(handleError)
-
-      const matchResponse = await fetch(`${getApiUrl()}matches/?circuit=${id}&round_is_current=true&limit=50`)
+      const matchResponse = await fetch(`${getApiUrl()}matches/?group=${group}&round_is_current=true&limit=50`)
         .catch(handleError)
       const matchJson = await matchResponse.json()
         .catch(handleError)
 
       setCircuit(json)
-      setTeams(teamJson.results)
+      setTeams(json.teams)
       setMatches(matchJson.results)
       setLoading(false)
     }
 
     fetchData()
-  }, [id])
+  }, [group])
 
   return (
     <Chrome>

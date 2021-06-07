@@ -6,6 +6,7 @@ import {
 import Home from './screens/Home'
 import Circuits from './screens/Circuits'
 import Circuit from './screens/Circuit'
+import Groups from './screens/Group'
 import Teams from './screens/Teams'
 import Team from './screens/Team'
 import Casters from './screens/Casters'
@@ -38,8 +39,11 @@ function App () {
         <Route path='/circuits' exact>
           <Circuits />
         </Route>
-        <Route path='/circuits/:id'>
+        <Route path='/circuits/:id' exact>
           <Circuit />
+        </Route>
+        <Route path='/circuits/:id/:group'>
+          <Groups />
         </Route>
         <Route path='/player/:id'>
           <Player />

@@ -64,7 +64,7 @@ function SingleEvent ({ event }) {
         { event.result
           ? <p className='flex items-center justify-center w-1/2 px-1 py-1 my-2 ml-auto mr-auto font-bold text-center text-white border border-gray-700 rounded-full md:mt-2 md:mb-1 md:w-full text-2xs'>
             <span className='pl-2 mr-2 -ml-1'>
-              <svg class="w-3 text-yellow-3" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 1456.2 1161.79"><def/><path class="" fill="currentColor" d="M1360.56 626.71c127.52-127.52 127.52-335 0-462.51a325.16 325.16 0 00-107.75-71.57q2-27.11 2.84-54.35A37.21 37.21 0 001218.4 0H237.8a37.21 37.21 0 00-37.25 38.28q.82 27.23 2.84 54.35A325.16 325.16 0 0095.64 164.2c-127.52 127.52-127.52 335 0 462.51 62.66 62.67 189.09 139.61 307.44 187.1 46.74 18.76 100 36.14 152.16 44.45a1210.29 1210.29 0 01-147.7 253.48c-15.48 20.39-1.27 50 24 50h593.16c25.25 0 39.46-29.65 24-50A1210.29 1210.29 0 01901 858.26c52.11-8.31 105.43-25.69 152.16-44.45 118.31-47.49 244.73-124.43 307.4-187.1zM166.83 555.52c-88.26-88.26-88.26-231.87 0-320.13a225.73 225.73 0 0148.7-37C247.16 400.98 325 588.84 430.2 716.17c-115.29-47.83-219.05-116.28-263.37-160.65zm1073.84-357.16a225.73 225.73 0 0148.7 37c88.26 88.26 88.26 231.87 0 320.13-44.27 44.4-148.08 112.85-263.37 160.65 105.2-127.33 183.04-315.19 214.67-517.78z"/></svg>
+              <svg className='w-3 text-yellow-3' xmlns='http://www.w3.org/2000/svg' data-name='Layer 1' viewBox='0 0 1456.2 1161.79'><def /><path className='' fill='currentColor' d='M1360.56 626.71c127.52-127.52 127.52-335 0-462.51a325.16 325.16 0 00-107.75-71.57q2-27.11 2.84-54.35A37.21 37.21 0 001218.4 0H237.8a37.21 37.21 0 00-37.25 38.28q.82 27.23 2.84 54.35A325.16 325.16 0 0095.64 164.2c-127.52 127.52-127.52 335 0 462.51 62.66 62.67 189.09 139.61 307.44 187.1 46.74 18.76 100 36.14 152.16 44.45a1210.29 1210.29 0 01-147.7 253.48c-15.48 20.39-1.27 50 24 50h593.16c25.25 0 39.46-29.65 24-50A1210.29 1210.29 0 01901 858.26c52.11-8.31 105.43-25.69 152.16-44.45 118.31-47.49 244.73-124.43 307.4-187.1zM166.83 555.52c-88.26-88.26-88.26-231.87 0-320.13a225.73 225.73 0 0148.7-37C247.16 400.98 325 588.84 430.2 716.17c-115.29-47.83-219.05-116.28-263.37-160.65zm1073.84-357.16a225.73 225.73 0 0148.7 37c88.26 88.26 88.26 231.87 0 320.13-44.27 44.4-148.08 112.85-263.37 160.65 105.2-127.33 183.04-315.19 214.67-517.78z' /></svg>
             </span>
             <span className='pr-1'>{event.result.winner}</span>
           </p>
@@ -297,7 +297,7 @@ function Home () {
                   <PageTitle>
                     Check out <span className='hidden md:inline'>BeeGameLeague</span> <span className='md:hidden'>BGL</span> on Twitch
                   </PageTitle>
-                  <ReactTwitchEmbedVideo targetClass='flex' height='300' layout='video' channel='BeeGameLeague' />
+                  <ReactTwitchEmbedVideo targetClassName='flex' height='300' layout='video' channel='BeeGameLeague' />
                 </div>
                 {
                   token
@@ -324,13 +324,13 @@ function Home () {
                               <MatchBox key={`match-${match.id}`} match={match}>
                                 <span className='flex items-center justify-end flex-grow text-sm'>
 
-                                { match.primary_caster
-                                        ? <a target='_blank' rel='noreferrer' className='flex items-center mr-4 text-xs leading-loose text-purple-400' href={match.primary_caster.stream_link}>
-                                            <svg className='w-3 h-3 mr-1' fill='currentColor' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'> <defs /> <path fillRule='evenodd' d='M2.149 0L.537 4.119v16.836h5.731V24h3.224l3.045-3.045h4.657l6.269-6.269V0H2.149zm19.164 13.612l-3.582 3.582H12l-3.045 3.045v-3.045H4.119V2.149h17.194v11.463zm-3.582-7.343v6.262h-2.149V6.269h2.149zm-5.731 0v6.262H9.851V6.269H12z' clipRule='evenodd' /></svg>
-                                            {match.primary_caster.name}
-                                          </a>
-                                        : <p className='mr-4 text-xs italic text-gray-600'>Looking for caster</p> 
-                                      }
+                                  { match.primary_caster
+                                    ? <a target='_blank' rel='noreferrer' className='flex items-center mr-4 text-xs leading-loose text-purple-400' href={match.primary_caster.stream_link}>
+                                      <svg className='w-3 h-3 mr-1' fill='currentColor' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'> <defs /> <path fillRule='evenodd' d='M2.149 0L.537 4.119v16.836h5.731V24h3.224l3.045-3.045h4.657l6.269-6.269V0H2.149zm19.164 13.612l-3.582 3.582H12l-3.045 3.045v-3.045H4.119V2.149h17.194v11.463zm-3.582-7.343v6.262h-2.149V6.269h2.149zm-5.731 0v6.262H9.851V6.269H12z' clipRule='evenodd' /></svg>
+                                      {match.primary_caster.name}
+                                    </a>
+                                    : <p className='mr-4 text-xs italic text-gray-600'>Looking for caster</p>
+                                  }
 
                                   { match.start_time
                                     ? (
@@ -338,7 +338,7 @@ function Home () {
                                         {formatDateTime(match.start_time)}
                                       </>
                                     )
-                                    : <span className='block align-right'>TBD</span> 
+                                    : <span className='block align-right'>TBD</span>
                                   }
                                 </span>
                               </MatchBox>
@@ -364,7 +364,7 @@ function Home () {
 
               <PageTitle className='flex justify-between mt-8'>
                 {currentRoundName ? `${currentRoundName}` : `Week of ${moment().startOf('isoweek').add(roundOffset * 7, 'days').format('M/D')}`}
-                <div class="flex items-center">
+                <div className='flex items-center'>
                   <button className='px-2 ml-4 text-sm border border-gray-700 focus:outline-none focus:ring-1 rounded-l-md rounded-r-md hover:border-gray-500 focus:ring-gray-400 focus:border-black' onClick={() => pageTvGuide(roundOffset - 1)}>{'◁'}</button>
                   <button className='px-2 ml-1 text-sm border border-gray-700 focus:outline-none focus:ring-1 rounded-l-md rounded-r-md hover:border-gray-500 focus:ring-gray-400 focus:border-black' onClick={() => pageTvGuide(0)}>{'Current Week'}</button>
                   <button className='px-2 ml-1 text-sm transform rotate-180 border border-gray-700 focus:outline-none focus:ring-1 rounded-l-md rounded-r-md hover:border-gray-500 focus:ring-gray-400 focus:border-black' onClick={() => pageTvGuide(roundOffset + 1)}>{'◁'}</button>
