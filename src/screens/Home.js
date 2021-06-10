@@ -43,6 +43,16 @@ function highlightCurrentDayHeader (dayOffset = 0, roundOffset = 0) {
     : 'text-blue-4'
 }
 
+function borderForDay(dayOffset = 0) {
+  if (dayOffset == 0) {
+    return "md:rounded-tl-md"
+  } else if (dayOffset == 6) {
+    return "md:rounded-tr-md"
+  } else {
+    return ""
+  }
+}
+
 function SingleEvent ({ event }) {
   return (
     <EventItem key={`${event.home.name}-${event.away.name}-${event.start_time}`}>
@@ -79,111 +89,25 @@ function SingleEvent ({ event }) {
 function TvGuide ({ schedule, roundOffset = 0, loading, scheduleWarning = null }) {
   return (
     <div style={{ backgroundImage: 'repeating-linear-gradient(45deg, #202020, #202020 30px, #222 30px, #222 60px)' }} className='grid grid-cols-1 shadow-lg md:grid-cols-2 lg:grid-cols-7 md:rounded-t-md'>
-      <DayColumn>
-        <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:rounded-tl-md md:border-none ${highlightCurrentDay(0, roundOffset)}`}>
-          <div className={`text-xs uppercase ${highlightCurrentDayHeader(0, roundOffset)}`}>{moment().startOf('isoweek').add(roundOffset * 7, 'days').format('ddd')}</div>
-          <div>{moment().startOf('isoweek').add(roundOffset * 7, 'days').format('M/D')}</div>
-        </div>
-        <CalendarDark>
-          <CalendarEvents>
-            { get(schedule, `[${moment().startOf('isoweek').add(roundOffset * 7, 'days').format('YYYYMMDD')}]`, []).map((event) => {
-              return (
-                <SingleEvent key={`${event.home.name}-${event.away.name}-${event.start_time}`} event={event} />
-              )
-            })}
-          </CalendarEvents>
-        </CalendarDark>
-      </DayColumn>
-      <DayColumn>
-        <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:border-none ${highlightCurrentDay(1, roundOffset)}`}>
-          <div className={`text-xs uppercase ${highlightCurrentDayHeader(1, roundOffset)}`}>{moment().startOf('isoweek').add(roundOffset * 7, 'days').add(1, 'days').format('ddd')}</div>
-          <div>{moment().startOf('isoweek').add(roundOffset * 7, 'days').add(1, 'days').format('M/D')}</div>
-        </div>
-        <CalendarDark>
-          <CalendarEvents>
-            { get(schedule, `[${moment().startOf('isoweek').add(roundOffset * 7, 'days').add(1, 'days').format('YYYYMMDD')}]`, []).map((event) => {
-              return (
-                <SingleEvent key={`${event.home.name}-${event.away.name}-${event.start_time}`} event={event} />
-              )
-            })}
-          </CalendarEvents>
-        </CalendarDark>
-      </DayColumn>
-      <DayColumn>
-        <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:border-none ${highlightCurrentDay(2, roundOffset)}`}>
-          <div className={`text-xs uppercase ${highlightCurrentDayHeader(2, roundOffset)}`}>{moment().startOf('isoweek').add(roundOffset * 7, 'days').add(2, 'days').format('ddd')}</div>
-          <div>{moment().startOf('isoweek').add(roundOffset * 7, 'days').add(2, 'days').format('M/D')}</div>
-        </div>
-        <CalendarDark>
-          <CalendarEvents>
-            { get(schedule, `[${moment().startOf('isoweek').add(roundOffset * 7, 'days').add(2, 'days').format('YYYYMMDD')}]`, []).map((event) => {
-              return (
-                <SingleEvent key={`${event.home.name}-${event.away.name}-${event.start_time}`} event={event} />
-              )
-            })}
-          </CalendarEvents>
-        </CalendarDark>
-      </DayColumn>
-      <DayColumn>
-        <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:border-none ${highlightCurrentDay(3, roundOffset)}`}>
-          <div className={`text-xs uppercase ${highlightCurrentDayHeader(3, roundOffset)}`}>{moment().startOf('isoweek').add(roundOffset * 7, 'days').add(3, 'days').format('ddd')}</div>
-          <div>{moment().startOf('isoweek').add(roundOffset * 7, 'days').add(3, 'days').format('M/D')}</div>
-        </div>
-        <CalendarDark>
-          <CalendarEvents>
-            { get(schedule, `[${moment().startOf('isoweek').add(roundOffset * 7, 'days').add(3, 'days').format('YYYYMMDD')}]`, []).map((event) => {
-              return (
-                <SingleEvent key={`${event.home.name}-${event.away.name}-${event.start_time}`} event={event} />
-              )
-            })}
-          </CalendarEvents>
-        </CalendarDark>
-      </DayColumn>
-      <DayColumn>
-        <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:border-none ${highlightCurrentDay(4, roundOffset)}`}>
-          <div className={`text-xs uppercase ${highlightCurrentDayHeader(4, roundOffset)}`}>{moment().startOf('isoweek').add(roundOffset * 7, 'days').add(4, 'days').format('ddd')}</div>
-          <div>{moment().startOf('isoweek').add(roundOffset * 7, 'days').add(4, 'days').format('M/D')}</div>
-        </div>
-        <CalendarDark>
-          <CalendarEvents>
-            { get(schedule, `[${moment().startOf('isoweek').add(roundOffset * 7, 'days').add(4, 'days').format('YYYYMMDD')}]`, []).map((event) => {
-              return (
-                <SingleEvent key={`${event.home.name}-${event.away.name}-${event.start_time}`} event={event} />
-              )
-            })}
-          </CalendarEvents>
-        </CalendarDark>
-      </DayColumn>
-      <DayColumn>
-        <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:border-none ${highlightCurrentDay(5, roundOffset)}`}>
-          <div className={`text-xs uppercase ${highlightCurrentDayHeader(5, roundOffset)}`}>{moment().startOf('isoweek').add(roundOffset * 7, 'days').add(5, 'days').format('ddd')}</div>
-          <div>{moment().startOf('isoweek').add(roundOffset * 7, 'days').add(5, 'days').format('M/D')}</div>
-        </div>
-        <CalendarDark>
-          <CalendarEvents>
-            { get(schedule, `[${moment().startOf('isoweek').add(roundOffset * 7, 'days').add(5, 'days').format('YYYYMMDD')}]`, []).map((event) => {
-              return (
-                <SingleEvent key={`${event.home.name}-${event.away.name}-${event.start_time}`} event={event} />
-              )
-            })}
-          </CalendarEvents>
-        </CalendarDark>
-      </DayColumn>
-      <DayColumn>
-        <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2 md:rounded-tr-md md:border-none ${highlightCurrentDay(6, roundOffset)}`}>
-          <div className={`text-xs uppercase ${highlightCurrentDayHeader(6, roundOffset)}`}>{moment().startOf('isoweek').add(roundOffset * 7, 'days').add(6, 'days').format('ddd')}</div>
-          <div>{moment().startOf('isoweek').add(roundOffset * 7, 'days').add(6, 'days').format('M/D')}</div>
-        </div>
-        <CalendarDark>
-          <CalendarEvents>
-            { get(schedule, `[${moment().startOf('isoweek').add(roundOffset * 7, 'days').add(6, 'days').format('YYYYMMDD')}]`, []).map((event) => {
-              return (
-                <SingleEvent key={`${event.home.name}-${event.away.name}-${event.start_time}`} event={event} />
-              )
-            })}
-          </CalendarEvents>
-        </CalendarDark>
-      </DayColumn>
+      {[0, 1, 2, 3, 4, 5, 6].map((dayOfWeek) => {
+        return (
+          <DayColumn>
+            <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2  md:border-none ${borderForDay(dayOfWeek)} ${highlightCurrentDay(dayOfWeek, roundOffset)}`}>
+              <div className={`text-xs uppercase ${highlightCurrentDayHeader(dayOfWeek, roundOffset)}`}>{moment().startOf('isoweek').add(roundOffset * 7, 'days').add(dayOfWeek, 'days').format('ddd')}</div>
+              <div>{moment().startOf('isoweek').add(roundOffset * 7, 'days').add(dayOfWeek, 'days').format('M/D')}</div>
+            </div>
+            <CalendarDark>
+              <CalendarEvents>
+                { get(schedule, `[${moment().startOf('isoweek').add(roundOffset * 7, 'days').add(dayOfWeek, 'days').format('YYYYMMDD')}]`, []).map((event) => {
+                  return (
+                    <SingleEvent key={`${event.home.name}-${event.away.name}-${event.start_time}`} event={event} />
+                  )
+                })}
+              </CalendarEvents>
+            </CalendarDark>
+          </DayColumn>
+        )
+      })}
       { loading
         ? (
           <div className='mt-4 text-xl text-center uppercase col-span-full'>
