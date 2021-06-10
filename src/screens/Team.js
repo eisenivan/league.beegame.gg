@@ -244,7 +244,7 @@ function Team () {
                       : (
                         <div className='flex flex-col'>
                           <PageTitle className='max-w-xs truncate sm:max-width-sm md:max-w-full' style={{ marginBottom: 0 }}>
-                            {name} <span className='xs:hidden md:inline'>({matchesWon} - {matchesLost})</span>
+                            {name} <span className='hidden md:inline'>({matchesWon} - {matchesLost})</span>
                           </PageTitle>
                           { parseInt(userId) === parseInt(team.captain.id)
                           // captain only view
@@ -266,7 +266,7 @@ function Team () {
 
                   <div className='flex self-center justify-center text-lg text-right md:block font-head'>
                     <Link className='text-white' to={`/circuits/${circuit.id}/`}>{circuit.name}</Link>
-                    <span className='xs:inline md:hidden pl-1'>({matchesWon} - {matchesLost})</span>
+                    <span className='md:hidden pl-1'>({matchesWon} - {matchesLost})</span>
                   </div>
                 </div>
               </div>
