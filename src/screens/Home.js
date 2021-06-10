@@ -53,10 +53,18 @@ function borderForDay(dayOffset = 0) {
   }
 }
 
-function SingleEvent ({ event }) {
+function hideDuplicatedTimestamp(currentEventStartTime, previousEventStartTime) {
+  if (currentEventStartTime == previousEventStartTime) {
+    return "lg:hidden"
+  } else {
+    return ""
+  }
+}
+
+function SingleEvent ({ event, previousEventStartTime = 0 }) {
   return (
     <EventItem key={`${event.home.name}-${event.away.name}-${event.start_time}`}>
-      <p className='py-1 pl-1 text-xs text-yellow-1'>{formatTime(event.start_time)}</p>
+      <p className={`py-1 pl-1 text-xs text-yellow-1 ${hideDuplicatedTimestamp(event.start_time, previousEventStartTime)}`}>{formatTime(event.start_time)}</p>
       <div className='inline-block w-full px-2 py-1 text-gray-400 rounded bg-gray-2'>
 
         { event.circuit
@@ -98,9 +106,10 @@ function TvGuide ({ schedule, roundOffset = 0, loading, scheduleWarning = null }
             </div>
             <CalendarDark>
               <CalendarEvents>
-                { get(schedule, `[${moment().startOf('isoweek').add(roundOffset * 7, 'days').add(dayOfWeek, 'days').format('YYYYMMDD')}]`, []).map((event) => {
+                { get(schedule, `[${moment().startOf('isoweek').add(roundOffset * 7, 'days').add(dayOfWeek, 'days').format('YYYYMMDD')}]`, []).map((event, idx, events) => {
+                  const previousEventStartTime = idx > 0 ? events[idx - 1].start_time : -1;
                   return (
-                    <SingleEvent key={`${event.home.name}-${event.away.name}-${event.start_time}`} event={event} />
+                    <SingleEvent key={`${event.home.name}-${event.away.name}-${event.start_time}`} event={event} previousEventStartTime={previousEventStartTime} />
                   )
                 })}
               </CalendarEvents>
