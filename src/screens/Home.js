@@ -99,7 +99,7 @@ function TvGuide ({ schedule, roundOffset = 0, loading, scheduleWarning = null }
     <div style={{ backgroundImage: 'repeating-linear-gradient(45deg, #202020, #202020 30px, #222 30px, #222 60px)' }} className='grid grid-cols-1 shadow-lg md:grid-cols-2 lg:grid-cols-7 md:rounded-t-md'>
       {[0, 1, 2, 3, 4, 5, 6].map((dayOfWeek) => {
         return (
-          <DayColumn>
+          <DayColumn key={dayOfWeek.toString()}>
             <div className={`p-1 mt-1 font-bold text-center border-b border-gray-800 md:mt-0 md:p-2  md:border-none ${borderForDay(dayOfWeek)} ${highlightCurrentDay(dayOfWeek, roundOffset)}`}>
               <div className={`text-xs uppercase ${highlightCurrentDayHeader(dayOfWeek, roundOffset)}`}>{moment().startOf('isoweek').add(roundOffset * 7, 'days').add(dayOfWeek, 'days').format('ddd')}</div>
               <div>{moment().startOf('isoweek').add(roundOffset * 7, 'days').add(dayOfWeek, 'days').format('M/D')}</div>
