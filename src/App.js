@@ -6,6 +6,7 @@ import {
 import Home from './screens/Home'
 import Circuits from './screens/Circuits'
 import Circuit from './screens/Circuit'
+import Groups from './screens/Group'
 import Teams from './screens/Teams'
 import Team from './screens/Team'
 import Casters from './screens/Casters'
@@ -14,6 +15,7 @@ import Player from './screens/Player'
 import Profile from './screens/Profile'
 import RegisterTeam from './screens/RegisterTeam'
 import Help from './screens/Help'
+import Links from './screens/Links'
 
 function App () {
   return (
@@ -37,8 +39,11 @@ function App () {
         <Route path='/circuits' exact>
           <Circuits />
         </Route>
-        <Route path='/circuits/:id'>
+        <Route path='/circuits/:id' exact>
           <Circuit />
+        </Route>
+        <Route path='/circuits/:id/:group'>
+          <Groups />
         </Route>
         <Route path='/player/:id'>
           <Player />
@@ -51,6 +56,9 @@ function App () {
         </Route>
         <Route path='/help'>
           <Help />
+        </Route>
+        <Route path='/links'>
+          <Links />
         </Route>
       </Switch>
     </Router>

@@ -9,26 +9,26 @@ export function MatchBox ({ match, children }) {
   return (
     <div key={`${match.home.name}${match.id}`} className='max-w-lg mt-1 mb-4 shadow-xl'>
       <div className='text-lg uppercase md:text-2xl font-head'>
-        
+
         <div className='flex justify-between p-4 truncate text-gray-1 bg-blue-2 text-shadow shadow-match'>
           {
             match.away
-          ? <RouterLink className='flex items-center text-white truncate' to={`/teams/${match.away.id}/`}>
-            <span className='truncate'>
-              {match.away.name}
-            </span>
-          </RouterLink>
-          : <span>Bye Match</span>
+              ? <RouterLink className='flex items-center text-white truncate' to={`/teams/${match.away.id}/`}>
+                <span className='truncate'>
+                  {match.away.name}
+                </span>
+              </RouterLink>
+              : <span>Bye Match</span>
           }
-          <div class="flex items-center flex-shrink-0">
-          { match.result && match.away && match.result.winner === match.away.name
-              ? <img className="flex-shrink-0 inline-block h-8 ml-2" src="/img/trophy_med.png"></img>
+          <div class='flex items-center flex-shrink-0'>
+            { match.result && match.away && match.result.winner === match.away.name
+              ? <img alt='trophy' className='flex-shrink-0 inline-block h-8 ml-2' src='/img/trophy_med.png' />
               : null
             }
 
-          { match.result
-            ? <span className='ml-2 text-xl md:text-3xl'>{match.result.sets_away}</span>
-            : null }
+            { match.result
+              ? <span className='ml-2 text-xl md:text-3xl'>{match.result.sets_away}</span>
+              : null }
           </div>
 
         </div>
@@ -40,16 +40,16 @@ export function MatchBox ({ match, children }) {
 
           </RouterLink>
 
-          <div class="flex items-center flex-shrink-0">
+          <div class='flex items-center flex-shrink-0'>
 
-          { match.result && match.result.winner === match.home.name
-              ? <img className="flex-shrink-0 inline-block h-8" src="/img/trophy_med.png"></img>
+            { match.result && match.result.winner === match.home.name
+              ? <img alt='trophy' className='flex-shrink-0 inline-block h-8' src='/img/trophy_med.png' />
               : null
             }
 
-          { match.result
-            ? <span className='ml-2 text-xl md:text-3xl'>{match.result.sets_home}</span>
-            : null }
+            { match.result
+              ? <span className='ml-2 text-xl md:text-3xl'>{match.result.sets_home}</span>
+              : null }
           </div>
         </div>
         <div className='flex items-center justify-end p-2 pb-2 text-sm text-right bg-gray-3 text-gray-1'>

@@ -244,7 +244,7 @@ function Team () {
                       : (
                         <div className='flex flex-col'>
                           <PageTitle className='max-w-xs truncate sm:max-width-sm md:max-w-full' style={{ marginBottom: 0 }}>
-                            {name} ({matchesWon} - {matchesLost})
+                            {name} <span className='hidden md:inline'>({matchesWon} - {matchesLost})</span>
                           </PageTitle>
                           { parseInt(userId) === parseInt(team.captain.id)
                           // captain only view
@@ -264,7 +264,10 @@ function Team () {
 
                   </div>
 
-                  <div className='flex self-center justify-center text-lg text-right md:block font-head'><Link className='text-white' to={`/circuits/${circuit.id}/`}>{circuit.name}</Link></div>
+                  <div className='flex self-center justify-center text-lg text-right md:block font-head'>
+                    <Link className='text-white' to={`/circuits/${circuit.id}/`}>{circuit.name}</Link>
+                    <span className='md:hidden pl-1'>({matchesWon} - {matchesLost})</span>
+                  </div>
                 </div>
               </div>
 
@@ -294,7 +297,7 @@ function Team () {
                                   { match.start_time === null && parseInt(userId) === parseInt(team.captain.id) && !match.result
                                     ? (
                                       <div className='flex-auto mt-2 lg:mt-0 align-self-start lg:justify-end'>
-                                        <span class="md:flex md:justify-end md:items-center">
+                                        <span class='md:flex md:justify-end md:items-center'>
                                           <DatePicker
                                             className='pl-2 text-sm text-gray-3 bg-gray-1'
                                             selected={matchTime[match.id]}
@@ -315,13 +318,13 @@ function Team () {
                                     : (
                                       <span className='flex items-center justify-end flex-grow text-sm'>
 
-                                      { match.primary_caster
-                                        ? <a target='_blank' rel='noreferrer' className='flex items-center mr-4 text-xs leading-loose text-purple-400' href={match.primary_caster.stream_link}>
+                                        { match.primary_caster
+                                          ? <a target='_blank' rel='noreferrer' className='flex items-center mr-4 text-xs leading-loose text-purple-400' href={match.primary_caster.stream_link}>
                                             <svg className='w-3 h-3 mr-1' fill='currentColor' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'> <defs /> <path fillRule='evenodd' d='M2.149 0L.537 4.119v16.836h5.731V24h3.224l3.045-3.045h4.657l6.269-6.269V0H2.149zm19.164 13.612l-3.582 3.582H12l-3.045 3.045v-3.045H4.119V2.149h17.194v11.463zm-3.582-7.343v6.262h-2.149V6.269h2.149zm-5.731 0v6.262H9.851V6.269H12z' clipRule='evenodd' /></svg>
-                                            <span class="truncate">{match.primary_caster.name}</span>
+                                            <span class='truncate'>{match.primary_caster.name}</span>
                                           </a>
-                                        : <p className='mr-4 text-xs italic'>Looking for caster</p>
-                                      }
+                                          : <p className='mr-4 text-xs italic'>Looking for caster</p>
+                                        }
 
                                         { match.start_time
                                           ? (
