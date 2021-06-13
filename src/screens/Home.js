@@ -43,7 +43,7 @@ function highlightCurrentDayHeader (dayOffset = 0, roundOffset = 0) {
     : 'text-blue-4'
 }
 
-function SingleEvent ({ event, showSpoilers = true}) {
+function SingleEvent ({ event, showSpoilers = true }) {
   const [reveal, setReveal] = useState(false)
   return (
     <EventItem key={`${event.home.name}-${event.away.name}-${event.start_time}`}>
