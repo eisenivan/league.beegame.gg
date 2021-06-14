@@ -56,7 +56,7 @@ function Help () {
       <div className='grid grid-cols-1 lg:grid-cols-10 gap-2'>
         <div className='lg:col-span-2'>
           {docs.map(doc => (
-            <div>
+            <div key={JSON.stringify(doc)}>
               <Link href={doc.url} target='_blank'>(📄)</Link>
               <Link href='' onClick={e => updateIFrame(e, doc)}>{doc.name}</Link>
               <br />

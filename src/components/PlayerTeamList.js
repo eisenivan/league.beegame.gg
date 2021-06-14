@@ -1,9 +1,9 @@
 import React from 'react'
-import {H2, H3} from './elements'
+import { H2, H3 } from './elements'
 
 import SingleTeam from './SingleTeam'
 
-function PlayerTeamList ({ player, className = ''}) {
+function PlayerTeamList ({ player, className = '' }) {
   return (
     <div>
       <H2>Teams</H2>

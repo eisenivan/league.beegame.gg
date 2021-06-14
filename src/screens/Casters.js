@@ -35,7 +35,7 @@ function Teams () {
               <div>
                 <PageTitle>Casters</PageTitle>
                 {casters.map((caster) => (
-                  <div>
+                  <div key={JSON.stringify(caster)}>
                     <Link to={`/casters/${caster.id}/`}>{caster.name}</Link>
                   </div>
                 ))}
