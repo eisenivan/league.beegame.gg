@@ -20,7 +20,7 @@ export function MatchBox ({ match, children }) {
               </RouterLink>
               : <span>Bye Match</span>
           }
-          <div class='flex items-center flex-shrink-0'>
+          <div className='flex items-center flex-shrink-0'>
             { match.result && match.away && match.result.winner === match.away.name
               ? <img alt='trophy' className='flex-shrink-0 inline-block h-8 ml-2' src='/img/trophy_med.png' />
               : null
@@ -40,7 +40,7 @@ export function MatchBox ({ match, children }) {
 
           </RouterLink>
 
-          <div class='flex items-center flex-shrink-0'>
+          <div className='flex items-center flex-shrink-0'>
 
             { match.result && match.result.winner === match.home.name
               ? <img alt='trophy' className='flex-shrink-0 inline-block h-8' src='/img/trophy_med.png' />

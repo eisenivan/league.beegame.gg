@@ -24,7 +24,7 @@ function Standings ({ teams }) {
 }
 
 function Circuit () {
-  const { id, group } = useParams()
+  const { id } = useParams()
   const [loading, setLoading] = useState(true)
   const [circuit, setCircuit] = useState({})
   const [teams, setTeams] = useState({})
