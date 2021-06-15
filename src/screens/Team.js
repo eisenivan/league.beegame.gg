@@ -195,7 +195,7 @@ function Team () {
       })
 
       // get our casters (this is non-blocking)
-      fetch(`${getApiUrl()}casters/?is_active=true&limit=30`)
+      fetch(`${getApiUrl()}casters/?is_active=true&limit=100`)
         .then(data => data.json())
         .then(data => setCasters(data.results))
         .catch(handleError)
