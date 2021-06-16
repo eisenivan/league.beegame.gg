@@ -27,8 +27,6 @@ function Team () {
   const [circuit, setCircuit] = useState({})
   const [editTeam, setEditTeam] = useState(false)
   const [matches, setMatches] = useState([])
-  const [matchesWon, setMatchesWon] = useState(0)
-  const [matchesLost, setMatchesLost] = useState(0)
   const [matchTime, setMatchTime] = useState({})
   const [casters, setCasters] = useState([])
   const [matchError, setMatchError] = useState()
@@ -151,8 +149,6 @@ function Team () {
               }
             }
           ))
-          setMatchesWon(data.wins)
-          setMatchesLost(data.losses)
 
           setName(data.name)
           fetch(`${getApiUrl()}circuits/${data.circuit}/`)
@@ -244,7 +240,7 @@ function Team () {
                       : (
                         <div className='flex flex-col'>
                           <PageTitle className='max-w-xs truncate sm:max-width-sm md:max-w-full' style={{ marginBottom: 0 }}>
-                            {name} <span className='hidden md:inline'>({matchesWon} - {matchesLost})</span>
+                            {name} <span className='hidden md:inline'>({team.wins} - {team.losses})</span>
                           </PageTitle>
                           { parseInt(userId) === parseInt(team.captain.id)
                           // captain only view
@@ -266,7 +262,7 @@ function Team () {
 
                   <div className='flex self-center justify-center text-lg text-right md:block font-head'>
                     <Link className='text-white' to={`/circuits/${circuit.id}/`}>{circuit.name}</Link>
-                    <span className='md:hidden pl-1'>({matchesWon} - {matchesLost})</span>
+                    <span className='md:hidden pl-1'>({team.wins} - {team.losses})</span>
                   </div>
                 </div>
               </div>
