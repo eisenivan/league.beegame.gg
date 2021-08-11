@@ -29,24 +29,6 @@ function Links () {
       </div>
 
       <div className='mb-2'>
-        <p>Bronze Season East</p>
-        <Link target='_blank' href='https://beegame.challonge.com/bronze_t1_east'>Tier 1 East</Link> &nbsp;
-        <Link target='_blank' href='https://beegame.challonge.com/bronze_t2_east'>Tier 2 East</Link> &nbsp;
-        <Link target='_blank' href='https://beegame.challonge.com/bronze_t3_east'>Tier 3 East</Link> &nbsp;
-        <Link target='_blank' href='https://beegame.challonge.com/bronze_t4_east'>Tier 4 East</Link> &nbsp;
-        <Link target='_blank' href='https://beegame.challonge.com/z9dz581c'>East Swiss Circuit Play</Link> &nbsp;
-      </div>
-
-      <div className='mb-2'>
-        <p>Bronze Season West</p>
-        <Link target='_blank' href='https://beegame.challonge.com/bronze_t1_west'>Tier 1 West</Link> &nbsp;
-        <Link target='_blank' href='https://beegame.challonge.com/bronze_t2_west'>Tier 2 West</Link> &nbsp;
-        <Link target='_blank' href='https://beegame.challonge.com/bronze_t3_west'>Tier 3 West</Link> &nbsp;
-        <Link target='_blank' href='https://beegame.challonge.com/bronze_t4_west'>Tier 4 West</Link> &nbsp;
-        <Link target='_blank' href='https://beegame.challonge.com/cf07wetc'>West Swiss Circuit Play</Link> &nbsp;
-      </div>
-
-      <div className='mb-2'>
         <Link target='_blank' href='https://forms.gle/zbk8HUtPohnVLXni8'>Standards Board Issue Form</Link>
       </div>
 
