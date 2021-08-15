@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 import Chrome from '../components/Chrome'
 import Loading from '../components/Loading'
 import fetch from '../modules/fetch-with-headers'
