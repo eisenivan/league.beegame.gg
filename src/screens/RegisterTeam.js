@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, Link } from 'react-router-dom'
+import get from 'lodash.get'
 import Chrome from '../components/Chrome'
 import Loading from '../components/Loading'
 import fetch from '../modules/fetch-with-headers'
@@ -21,7 +22,7 @@ function RegisterTeam () {
         .then(x => x.json())
         .catch(handleError)
 
-      setCircuits(circuits.results)
+      setCircuits(get(circuits, 'results', []))
 
       setLoading(false)
     }
@@ -62,20 +63,31 @@ function RegisterTeam () {
             <CenterContent>
               <PageTitle>Register a Bee Game League Team</PageTitle>
               <p className='-mt-4 mb-4 text-xs'>This form is to register a new team, not to join an existing team. If you want to join an existing team, ask your team captain for the join url. To register a new team, fill out this form and you will be given a join url to distribute to your team members.</p>
-              <p className='-mt-4 mb-4 text-xs'> </p>
+              <p className='-mt-4 mb-4 text-xs' />
               <p className='-mt-4 mb-4 text-xs'>As team captain, understand that registering a team means you will be expected to work with another team captain to schedule a match EVERY WEEK for up to 11 weeks this season. Make sure you read the <Link target='_blank' href='https://league.beegame.gg/help/'>Help</Link> section for Rules and Guidance.</p>
               <FormBox>
                 <label>Team Name</label>
                 <Input required placeholder='Team Name' value={name} onChange={e => setName(e.target.value)} />
               </FormBox>
               <FormBox>
-                <label>Circuit</label>
-                <Select value={circuit} onChange={e => setCircuit(e.target.value)}>
-                  <option>Select a circuit</option>
-                  { circuits.map(circuit => (
-                    <option key={circuit.id} value={circuit.id}>{circuit.name}</option>
-                  ))}
-                </Select>
+
+                { circuits.length > 0
+                  ? (
+                    <>
+                      <label>Circuit</label>
+                      <Select value={circuit} onChange={e => setCircuit(e.target.value)}>
+                        <option>Select a circuit</option>
+                        { circuits.map(circuit => (
+                          <option key={circuit.id} value={circuit.id}>{circuit.name}</option>
+                        ))}
+                      </Select>
+                    </>
+                  )
+                  : (
+                    <p>No active circuits. Please check back when registration opens.</p>
+                  )
+                }
+
               </FormBox>
 
               <Button
