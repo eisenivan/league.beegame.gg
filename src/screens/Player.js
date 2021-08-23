@@ -8,6 +8,7 @@ import PlayerTeamList from '../components/PlayerTeamList'
 import fetch from '../modules/fetch-with-headers'
 import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
+import AwardsTable from "../components/AwardsTable";
 
 function Profile () {
   const { id } = useParams()
@@ -60,7 +61,7 @@ function Profile () {
                   </PageSubtitle>
                 </div>
 
-                <div className='w-full my-4 md:pr-10'>
+                <div className='my-4 md:pr-10'>
                   { player.bio
                     ? (
                       <div>
@@ -68,8 +69,17 @@ function Profile () {
                         <p className='-mt-2'>{player.bio}</p>
                       </div>
                     )
-                    : null
+                    : (
+                      <div>
+                        <br /><br />
+                      </div>
+                    )
+                    // ^^^ Spacing to put awards below avatar consistently
                   }
+                </div>
+
+                <div className='w-full my-4 md:pr-10'>
+                  <AwardsTable awards={player.awards} />
                 </div>
 
               </div>
