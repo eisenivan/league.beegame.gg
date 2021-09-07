@@ -9,6 +9,7 @@ import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
 import cookie from 'react-cookies'
 import setUserCookies from '../modules/set-tokens'
+import AwardsTable from '../components/AwardsTable'
 
 function Profile () {
   const [loading, setLoading] = useState(true)
@@ -208,6 +209,10 @@ function Profile () {
                           )
                           : null
                         }
+                        <div className='w-full my-4 md:pr-10'>
+                          { console.log(profile.player.awards) }
+                          <AwardsTable awards={profile.player.awards} />
+                        </div>
                       </div>
 
                       { get(profile, 'player.teams')

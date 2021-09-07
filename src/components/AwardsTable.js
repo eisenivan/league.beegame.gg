@@ -1,9 +1,9 @@
 import React from 'react'
-import {H3} from './elements'
-import orderBy from "lodash.orderby";
+import { H3 } from './elements'
+import orderBy from 'lodash.orderby'
 
-function AwardsTable({awards, className = ''}) {
-  if (!awards || awards.length == 0) {
+function AwardsTable ({ awards, className = '' }) {
+  if (!awards || awards.length === 0) {
     return null
   }
 
@@ -12,8 +12,8 @@ function AwardsTable({awards, className = ''}) {
   return (
     <div>
       <H3>Awards</H3>
-      <div style={{gridTemplateRows: `repeat(${sortedAwards.length}, 50px)`}}
-           className={`${className} grid md:grid-cols-2 gap-4 mb-4 md:mb-0"`}>
+      <div style={{ gridTemplateRows: `repeat(${sortedAwards.length}, 50px)` }}
+        className={`${className} grid md:grid-cols-2 gap-4 mb-4 md:mb-0"`}>
         {sortedAwards
           .map((award) => {
             return (

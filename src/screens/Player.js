@@ -8,7 +8,7 @@ import PlayerTeamList from '../components/PlayerTeamList'
 import fetch from '../modules/fetch-with-headers'
 import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
-import AwardsTable from "../components/AwardsTable";
+import AwardsTable from '../components/AwardsTable'
 
 function Profile () {
   const { id } = useParams()
