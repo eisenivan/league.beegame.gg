@@ -211,7 +211,7 @@ function Home () {
         })
         .catch(handleError)
     } else {
-      fetch(`${getApiUrl()}matches/?round=${parseFloat(activeRound) + parseInt(roundOffset, 10)}&scheduled=true&limit=100&season=bronze`)
+      fetch(`${getApiUrl()}matches/?round=${parseFloat(activeRound) + parseInt(roundOffset, 10)}&scheduled=true&limit=100&season=silver`)
         .then(data => data.json())
         .then((data) => {
           handleMatch(data)
