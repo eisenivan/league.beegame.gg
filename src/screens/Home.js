@@ -150,7 +150,6 @@ function Home () {
   const [profile, setProfile] = useState({})
   const [playerMatches, setPlayerMatches] = useState({})
   const [currentRoundName, setCurrentRoundName] = useState()
-  const [activeRound, setActiveRound] = useState()
   const [roundOffset, setRoundOffset] = useState(0)
   // create userGuide cookie if needed; default to `{showSpoilers: true}` to preserve existing behavior
   const [guideOptions, setGuideOptions] = useState(
@@ -190,6 +189,7 @@ function Home () {
     setCurrentRoundName(get(data, 'results[0].round.name'))
 
     const sortedSchedule = sortEventsIntoDates(data.results)
+    console.log(sortedSchedule)
     setSchedule(sortedSchedule)
 
     // keep showing dancing chex if there are no matches
@@ -206,12 +206,11 @@ function Home () {
       fetch(`${getApiUrl()}matches/?round_is_current=true&scheduled=true&limit=100`)
         .then(data => data.json())
         .then((data) => {
-          setActiveRound(parseInt(get(data, 'results[0].round.number', 10)))
           handleMatch(data)
         })
         .catch(handleError)
     } else {
-      fetch(`${getApiUrl()}matches/?round=${parseFloat(activeRound) + parseInt(roundOffset, 10)}&scheduled=true&limit=100&season=silver`)
+      fetch(`${getApiUrl()}matches/?start_time_range_begin=${moment().startOf('isoweek').add(roundOffset * 7 + 1, 'days').format('YYYY-MM-DD')}T00:00:00Z&start_time_range_end=${moment().startOf('isoweek').add(roundOffset * 7 + 7, 'days').format('YYYY-MM-DD')}T00:00:00Z&limit=100`)
         .then(data => data.json())
         .then((data) => {
           handleMatch(data)
