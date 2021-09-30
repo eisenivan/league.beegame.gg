@@ -152,7 +152,6 @@ function Home () {
   const [currentRoundName, setCurrentRoundName] = useState()
   const [roundOffset, setRoundOffset] = useState(0)
   const [featuredStream, setFeaturedStream] = useState(null)
-  const [casters, setCasters] = useState([])
 
   // create userGuide cookie if needed; default to `{showSpoilers: true}` to preserve existing behavior
   const [guideOptions, setGuideOptions] = useState(

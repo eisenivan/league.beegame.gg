@@ -210,7 +210,6 @@ function Profile () {
                           : null
                         }
                         <div className='w-full my-4 md:pr-10'>
-                          { console.log(profile.player.awards) }
                           <AwardsTable awards={profile.player.awards} />
                         </div>
                       </div>
