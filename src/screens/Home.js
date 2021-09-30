@@ -151,6 +151,9 @@ function Home () {
   const [playerMatches, setPlayerMatches] = useState({})
   const [currentRoundName, setCurrentRoundName] = useState()
   const [roundOffset, setRoundOffset] = useState(0)
+  const [featuredStream, setFeaturedStream] = useState(null)
+  const [casters, setCasters] = useState([])
+
   // create userGuide cookie if needed; default to `{showSpoilers: true}` to preserve existing behavior
   const [guideOptions, setGuideOptions] = useState(
     cookie.save('guideOptions', { showSpoilers: true, ...cookie.load('guideOptions') }) || cookie.load('guideOptions'))
@@ -189,7 +192,6 @@ function Home () {
     setCurrentRoundName(get(data, 'results[0].round.name'))
 
     const sortedSchedule = sortEventsIntoDates(data.results)
-    console.log(sortedSchedule)
     setSchedule(sortedSchedule)
 
     // keep showing dancing chex if there are no matches
@@ -199,6 +201,37 @@ function Home () {
       setTvLoading(false)
     }
   }
+
+  // distinct effect for twitch stream
+  useEffect(() => {
+    fetch(`${getApiUrl()}streams/?is_live=true&limit=100`)
+      .then(data => data.json())
+      .then((streams) => {
+        fetch(`${getApiUrl()}casters/?is_active=true&limit=100`)
+          .then((data) => data.json())
+          .then((casters) => {
+            const approvedStreams = get(streams, 'results', [])
+              .filter((x) => {
+                // make sure this user is twitch
+                const isTwitch = x.service === 'Twitch'
+                const isActive = casters.results.filter(y => y.player.twitch_username.toLowerCase() === x.username.toLowerCase()).length > 0
+
+                return isTwitch && isActive
+              })
+
+            // if there are active streams
+            if (approvedStreams.length > 0) {
+              // check to see if BGL is live
+              if (approvedStreams.find(x => x.username.toLowerCase() === 'beegameleague')) {
+                setFeaturedStream('beegameleague')
+              } else {
+                // pick a random other approved live stream to feature
+                setFeaturedStream(approvedStreams[Math.floor(Math.random() * approvedStreams.length)].username)
+              }
+            }
+          })
+      })
+  }, []) // eslint-disable-line
 
   // distinct effect for querying / paging tv guide
   useEffect(() => {
@@ -229,6 +262,7 @@ function Home () {
   }, [guideOptions]) // eslint-disable-line
 
   const token = cookie.load('token', true)
+
   return (
     <Chrome>
       {
@@ -237,12 +271,19 @@ function Home () {
           : (
             <div>
               <div className='grid grid-cols-1 mb-8 sm:mt-8 md:mt-0 md:grid-cols-content'>
-                <div className='max-w-lg mb-5 overflow-hidden text-center md:text-left md:mb-0'>
-                  <PageTitle>
-                    Check out <span className='hidden md:inline'>BeeGameLeague</span> <span className='md:hidden'>BGL</span> on Twitch
-                  </PageTitle>
-                  <ReactTwitchEmbedVideo targetClassName='flex' height='300' layout='video' channel='BeeGameLeague' />
-                </div>
+                {
+                  featuredStream
+                    ? (
+                      <div className='max-w-lg mb-5 overflow-hidden text-center md:text-left md:mb-0'>
+                        <PageTitle>
+                          Check out <span className='hidden md:inline'>BeeGameLeague</span> <span className='md:hidden'>BGL</span> on Twitch
+                        </PageTitle>
+                        <ReactTwitchEmbedVideo targetClassName='flex' height='300' layout='video' channel={featuredStream} />
+                      </div>
+                    )
+                    : null
+                }
+
                 {
                   token
                     ? (
