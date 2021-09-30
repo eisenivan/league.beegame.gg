@@ -275,12 +275,19 @@ function Home () {
                     ? (
                       <div className='max-w-lg mb-5 overflow-hidden text-center md:text-left md:mb-0'>
                         <PageTitle>
-                          Check out <span className='hidden md:inline'>BeeGameLeague</span> <span className='md:hidden'>BGL</span> on Twitch
+                          <div className='flex items-center'><span className='rounded-lg border-2 border-red-600 text-red-600 text-sm animate-pulse px-2 mr-2'><span>●</span> LIVE</span> BeeGameLeague on Twitch</div>
                         </PageTitle>
                         <ReactTwitchEmbedVideo targetClassName='flex' height='300' layout='video' channel={featuredStream} />
                       </div>
                     )
-                    : null
+                    : (
+                      <div className='hidden md:block'>
+                        <PageTitle>
+                          <div className='flex items-center'>Highlights from the Bee Game League</div>
+                        </PageTitle>
+                        <iframe width='70%' height='300' src='https://www.youtube-nocookie.com/embed/videoseries?list=PLUgxpjGQ2kE2bW9UHcw_N6uZu4qlnwL3q' title='YouTube video player' html-frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' html-allowfullscreen='true' />
+                      </div>
+                    )
                 }
 
                 {
