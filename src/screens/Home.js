@@ -269,7 +269,7 @@ function Home () {
           ? <Loading />
           : (
             <div>
-              <div className='grid grid-cols-1 mb-8 sm:mt-8 md:mt-0 md:grid-cols-content'>
+              <div className='grid grid-cols-1 mb-8 sm:mt-8 gap-12 md:mt-0 md:grid-cols-content'>
                 {
                   featuredStream
                     ? (
@@ -285,7 +285,9 @@ function Home () {
                         <PageTitle>
                           <div className='flex items-center'>Highlights from the Bee Game League</div>
                         </PageTitle>
-                        <iframe width='70%' height='300' src='https://www.youtube-nocookie.com/embed/videoseries?list=PLUgxpjGQ2kE2bW9UHcw_N6uZu4qlnwL3q' title='YouTube video player' html-frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' html-allowfullscreen='true' />
+                        <div class='youtube-video-container'>
+                          <iframe width='70%' height='300' src='https://www.youtube-nocookie.com/embed/videoseries?list=PLUgxpjGQ2kE2bW9UHcw_N6uZu4qlnwL3q' title='YouTube video player' html-frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' html-allowfullscreen='true' />
+                        </div>
                       </div>
                     )
                 }
