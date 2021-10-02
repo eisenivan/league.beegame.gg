@@ -234,21 +234,12 @@ function Home () {
 
   // distinct effect for querying / paging tv guide
   useEffect(() => {
-    if (roundOffset === 0) {
-      fetch(`${getApiUrl()}matches/?round_is_current=true&scheduled=true&limit=100`)
-        .then(data => data.json())
-        .then((data) => {
-          handleMatch(data)
-        })
-        .catch(handleError)
-    } else {
-      fetch(`${getApiUrl()}matches/?start_time_range_begin=${moment().startOf('isoweek').add(roundOffset * 7 + 1, 'days').format('YYYY-MM-DD')}T00:00:00Z&start_time_range_end=${moment().startOf('isoweek').add(roundOffset * 7 + 7, 'days').format('YYYY-MM-DD')}T00:00:00Z&limit=100`)
-        .then(data => data.json())
-        .then((data) => {
-          handleMatch(data)
-        })
-        .catch(handleError)
-    }
+    fetch(`${getApiUrl()}matches/?start_time_range_begin=${moment().startOf('isoweek').add(roundOffset * 7 + 1, 'days').format('YYYY-MM-DD')}T00:00:00Z&start_time_range_end=${moment().startOf('isoweek').add(roundOffset * 7 + 7, 'days').format('YYYY-MM-DD')}T00:00:00Z&limit=100`)
+      .then(data => data.json())
+      .then((data) => {
+        handleMatch(data)
+      })
+      .catch(handleError)
   }, [roundOffset]) // eslint-disable-line
 
   function handleSpoilersChange (event) {
