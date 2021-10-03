@@ -353,7 +353,8 @@ function Home () {
               </div>
 
               <PageTitle className='flex justify-between mt-8'>
-                {currentRoundName ? `${currentRoundName}` : `Week of ${moment().startOf('isoweek').add(roundOffset * 7, 'days').format('M/D')}`}
+                {/* {currentRoundName ? `${currentRoundName}` : `Week of ${moment().startOf('isoweek').add(roundOffset * 7, 'days').format('M/D')}`} */}
+                {`Week of ${moment().startOf('isoweek').add(roundOffset * 7, 'days').format('M/D')}`}
                 <div className='flex items-center text-sm px-2'>
                  Hide Spoilers:&nbsp;<input type='checkbox' className='' checked={!guideOptions.showSpoilers} onChange={handleSpoilersChange} />
                 </div>
