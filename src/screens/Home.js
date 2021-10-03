@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import moment from 'moment'
 import get from 'lodash.get'
+import sortBy from 'lodash.orderby'
 import ReactTwitchEmbedVideo from 'react-twitch-embed-video'
 import cookie from 'react-cookies'
 import styled from 'styled-components'
@@ -139,6 +140,11 @@ function sortEventsIntoDates (events) {
     }
   })
 
+  // force sort these if the API has returned them in a weird order
+  Object.keys(sorted).forEach((key) => {
+    sorted[key] = sortBy(sorted[key], ['start_time'])
+  })
+
   return sorted
 }
 
@@ -234,7 +240,7 @@ function Home () {
 
   // distinct effect for querying / paging tv guide
   useEffect(() => {
-    fetch(`${getApiUrl()}matches/?start_time_range_begin=${moment().startOf('isoweek').add(roundOffset * 7 + 1, 'days').format('YYYY-MM-DD')}T00:00:00Z&start_time_range_end=${moment().startOf('isoweek').add(roundOffset * 7 + 7, 'days').format('YYYY-MM-DD')}T00:00:00Z&limit=100`)
+    fetch(`${getApiUrl()}matches/?start_time_range_begin=${moment().startOf('isoweek').add(roundOffset * 7 + 1, 'days').format('YYYY-MM-DD')}T00:00:00Z&start_time_range_end=${moment().startOf('isoweek').add(roundOffset * 7 + 8, 'days').format('YYYY-MM-DD')}T00:00:00Z&limit=100`)
       .then(data => data.json())
       .then((data) => {
         handleMatch(data)
@@ -276,7 +282,7 @@ function Home () {
                         <PageTitle>
                           <div className='flex items-center'>Highlights from the Bee Game League</div>
                         </PageTitle>
-                        <div class='youtube-video-container'>
+                        <div className='youtube-video-container'>
                           <iframe width='70%' height='300' src='https://www.youtube-nocookie.com/embed/videoseries?list=PLUgxpjGQ2kE2bW9UHcw_N6uZu4qlnwL3q' title='YouTube video player' html-frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' html-allowfullscreen='true' />
                         </div>
                       </div>
