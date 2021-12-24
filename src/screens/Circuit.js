@@ -63,7 +63,7 @@ function Circuit () {
           ? <Loading />
           : (
             <div>
-              <PageTitle>{circuit.name}</PageTitle>
+              <PageTitle>{circuit.name || circuit.verbose_name}</PageTitle>
               <div className='grid grid-cols-1 md:grid-cols-content md:gap-12'>
                 <div>
                   <H2>Matches This Week</H2>
