@@ -34,22 +34,23 @@ function Circuits () {
           : (
             <div>
               <PageTitle>Circuits</PageTitle>
-              { leagues.map(x => (
-                <span key={JSON.stringify(x)}>
-                  <PageSubtitle style={{ marginTop: '0rem', marginBottom: '-0.25rem' }}>{x.season.name}</PageSubtitle>
-                  <Link key={`${x.name}`} className='block text-lg mb-2' to={`/circuits/${x.id}/`}>{x.name}</Link>
-                  {get(x, 'groups.length', 0) > 0
-                    ? (
-                      sortBy(x.groups, 'name')
-                        .map(group => (
-                          <Link key={`${group.name}`} className='block text-sm mb-2 pl-4' to={`/circuits/${x.id}/${group.id}/`}>{group.name}</Link>
-                        ))
+              { leagues.length === 0 ? "There are currently no active circuits.  Please check back later." : (
+                leagues.map(x => (
+                  <span key={JSON.stringify(x)}>
+                    <PageSubtitle style={{ marginTop: '0rem', marginBottom: '-0.25rem' }}>{x.season.name}</PageSubtitle>
+                    <Link key={`${x.name}`} className='block text-lg mb-2' to={`/circuits/${x.id}/`}>{x.name}</Link>
+                    {get(x, 'groups.length', 0) > 0
+                      ? (
+                        sortBy(x.groups, 'name')
+                          .map(group => (
+                            <Link key={`${group.name}`} className='block text-sm mb-2 pl-4' to={`/circuits/${x.id}/${group.id}/`}>{group.name}</Link>
+                          ))
 
-                    )
-                    : null }
-                  <div className='mb-4' />
-                </span>
-              )) }
+                      )
+                      : null }
+                    <div className='mb-4' />
+                  </span>
+              )))}
             </div>
           )
       }
