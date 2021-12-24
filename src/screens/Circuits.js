@@ -20,7 +20,7 @@ function Circuits () {
         .then(x => x.json())
         .catch(handleError)
 
-      let allCircuits = sortBy(get(response, 'results', []), ['season.registration_end', 'name'])
+      let allCircuits = sortBy(get(response, 'results', []), ['season.registration_end', 'season.name', 'name'])
 
       setActiveCircuits(allCircuits.filter(x => x.is_active))
       setInactiveCircuits(allCircuits.filter(x => !x.is_active))
