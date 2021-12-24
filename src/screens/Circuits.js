@@ -34,7 +34,7 @@ function Circuits () {
               circuits.map(x => (
                   <span key={JSON.stringify(x)}>
                     <PageSubtitle style={{ marginTop: '0rem', marginBottom: '-0.25rem' }}>{x.season.name}</PageSubtitle>
-                    <Link key={`${x.name}`} className='block text-lg mb-2' to={`/circuits/${x.id}/`}>{x.name}</Link>
+                    <Link key={`${x.name}`} className='block text-lg mb-2' to={`/circuits/${x.id}/`}>{x.name ? x.name : x.verbose_name}</Link>
                     {get(x, 'groups.length', 0) > 0
                       ? (
                         sortBy(x.groups, 'name')
