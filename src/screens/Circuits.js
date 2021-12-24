@@ -12,26 +12,33 @@ import { PageTitle, PageSubtitle } from '../components/elements'
 function Circuits () {
   const [loading, setLoading] = useState(true)
   const [activeCircuits, setActiveCircuits] = useState([])
+  const [inactiveCircuits, setInactiveCircuits] = useState([])
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${getApiUrl()}circuits/?is_active=true&format=json`)
+      const response = await fetch(`${getApiUrl()}circuits/?format=json&limit=100`)
         .then(x => x.json())
         .catch(handleError)
 
-      setActiveCircuits(sortBy(get(response, 'results', []), 'name'))
+      let allCircuits = sortBy(get(response, 'results', []), ['season.registration_end', 'name'])
+
+      setActiveCircuits(allCircuits.filter(x => x.is_active))
+      setInactiveCircuits(allCircuits.filter(x => !x.is_active))
       setLoading(false)
     }
 
     fetchData()
   }, [])
 
-  function CircuitListing({ circuits, typeOfCircuits }) {
+  // NOTE(shenanigans, 2021-12-24): Waiting for a response from Bees on if she wants non-BGL circuits shown.  This flag
+  // can toggle that.  Unfortunately, it looks like (1) there is some bad data in their (empty circuits, etc.), and
+  // (2) the page becomes super long and unwieldly if done that way.  Also, (3) the !!x.name hack is terrible.  Shoot me later.
+  function CircuitListing({ circuits, typeOfCircuits, showNonBglCircuits = false }) {
     return (
         <div>
           <PageTitle>{typeOfCircuits}</PageTitle>
           { circuits.length === 0 ? "There are currently no " + typeOfCircuits.toLowerCase() + ".  Please check back later." : (
-              circuits.map(x => (
+              circuits.filter(x => showNonBglCircuits || !!x.name).map(x => (
                   <span key={JSON.stringify(x)}>
                     <PageSubtitle style={{ marginTop: '0rem', marginBottom: '-0.25rem' }}>{x.season.name}</PageSubtitle>
                     <Link key={`${x.name}`} className='block text-lg mb-2' to={`/circuits/${x.id}/`}>{x.name ? x.name : x.verbose_name}</Link>
@@ -56,7 +63,11 @@ function Circuits () {
       {
         loading
           ? <Loading />
-          : <CircuitListing circuits={activeCircuits} typeOfCircuits={"Active Circuits"} />
+          : <div>
+            <CircuitListing circuits={activeCircuits} typeOfCircuits={"Active Circuits"} />
+            <br /><br />
+            <CircuitListing circuits={inactiveCircuits} typeOfCircuits={"Past Circuits"} />
+          </div>
       }
     </Chrome>
   )
