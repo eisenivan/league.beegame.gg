@@ -38,9 +38,14 @@ function Circuits () {
         <div>
           <PageTitle>{typeOfCircuits}</PageTitle>
           { circuits.length === 0 ? "There are currently no " + typeOfCircuits.toLowerCase() + ".  Please check back later." : (
-              circuits.filter(x => showNonBglCircuits || !!x.name).map(x => (
+              circuits.filter(x => showNonBglCircuits || !!x.name).map((x, idx, all) => {
+                const previousSeasonName = idx > 0 ? all[idx - 1].season.name : "[empty]"
+                return (
                   <span key={JSON.stringify(x)}>
-                    <PageSubtitle style={{ marginTop: '0rem', marginBottom: '-0.25rem' }}>{x.season.name}</PageSubtitle>
+                    { previousSeasonName == x.season.name ?
+                        null :
+                        <PageSubtitle style={{ marginTop: '0rem', marginBottom: '-0.25rem' }}>{x.season.name}</PageSubtitle>
+                    }
                     <Link key={`${x.name}`} className='block text-lg mb-2' to={`/circuits/${x.id}/`}>{x.name ? x.name : x.verbose_name}</Link>
                     {get(x, 'groups.length', 0) > 0
                       ? (
@@ -53,7 +58,8 @@ function Circuits () {
                       : null }
                     <div className='mb-4' />
                   </span>
-              )))}
+                )
+              }))}
         </div>
     )
   }
