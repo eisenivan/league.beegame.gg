@@ -26,16 +26,12 @@ function Circuits () {
     fetchData()
   }, [])
 
-  return (
-    <Chrome>
-      {
-        loading
-          ? <Loading />
-          : (
-            <div>
-              <PageTitle>Circuits</PageTitle>
-              { activeCircuits.length === 0 ? "There are currently no active circuits.  Please check back later." : (
-                activeCircuits.map(x => (
+  function CircuitListing({ circuits, typeOfCircuits }) {
+    return (
+        <div>
+          <PageTitle>{typeOfCircuits}</PageTitle>
+          { circuits.length === 0 ? "There are currently no " + typeOfCircuits.toLowerCase() + ".  Please check back later." : (
+              circuits.map(x => (
                   <span key={JSON.stringify(x)}>
                     <PageSubtitle style={{ marginTop: '0rem', marginBottom: '-0.25rem' }}>{x.season.name}</PageSubtitle>
                     <Link key={`${x.name}`} className='block text-lg mb-2' to={`/circuits/${x.id}/`}>{x.name}</Link>
@@ -51,8 +47,16 @@ function Circuits () {
                     <div className='mb-4' />
                   </span>
               )))}
-            </div>
-          )
+        </div>
+    )
+  }
+
+  return (
+    <Chrome>
+      {
+        loading
+          ? <Loading />
+          : <CircuitListing circuits={activeCircuits} typeOfCircuits={"Active Circuits"} />
       }
     </Chrome>
   )
