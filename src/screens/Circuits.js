@@ -11,7 +11,7 @@ import { PageTitle, PageSubtitle } from '../components/elements'
 
 function Circuits () {
   const [loading, setLoading] = useState(true)
-  const [leagues, setLeagues] = useState([])
+  const [activeCircuits, setActiveCircuits] = useState([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,7 +19,7 @@ function Circuits () {
         .then(x => x.json())
         .catch(handleError)
 
-      setLeagues(sortBy(get(response, 'results', []), 'name'))
+      setActiveCircuits(sortBy(get(response, 'results', []), 'name'))
       setLoading(false)
     }
 
@@ -34,8 +34,8 @@ function Circuits () {
           : (
             <div>
               <PageTitle>Circuits</PageTitle>
-              { leagues.length === 0 ? "There are currently no active circuits.  Please check back later." : (
-                leagues.map(x => (
+              { activeCircuits.length === 0 ? "There are currently no active circuits.  Please check back later." : (
+                activeCircuits.map(x => (
                   <span key={JSON.stringify(x)}>
                     <PageSubtitle style={{ marginTop: '0rem', marginBottom: '-0.25rem' }}>{x.season.name}</PageSubtitle>
                     <Link key={`${x.name}`} className='block text-lg mb-2' to={`/circuits/${x.id}/`}>{x.name}</Link>
