@@ -85,7 +85,7 @@ function RegisterTeam () {
                     </>
                   )
                   : (
-                    <p></p>
+                    <p>No active circuits. Please check back when registration opens.</p>
                   )
                 }
 
