@@ -343,8 +343,8 @@ function Team () {
                         )
                         : (
                             <>
-                              <span>You have no match this week</span>
-                              <span className='text-xs'>(That may be because you have a Bye week)</span>
+                              <br/>
+                              <span className='text-gray-500'>No matches are currently scheduled</span>
                             </>
                         )
                     }
