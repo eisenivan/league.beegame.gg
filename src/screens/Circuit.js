@@ -10,7 +10,7 @@ import getApiUrl from '../modules/get-api-url'
 import handleError from '../modules/handle-error'
 
 function Standings ({ teams }) {
-  const sorted = sortBy(teams, ['wins', 'losses', 'name'], ['desc', 'asc', 'asc'])
+  const sorted = sortBy(teams, ['wins', 'losses', t => t.name.toLowerCase()], ['desc', 'asc', 'asc'])
   return (
     <div className='shadow-xl'>
       { sorted.map((x, i) => (
