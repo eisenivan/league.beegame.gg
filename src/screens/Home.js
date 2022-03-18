@@ -173,7 +173,7 @@ function Home () {
           .then(data => setProfile(data))
           .catch(handleError))
 
-        promises.push(fetch(`${getApiUrl()}matches/?round_is_current=true&player=${userId}`)
+        promises.push(fetch(`${getApiUrl()}matches/?round_is_current=true&player=${userId}&season_is_active=true`)
           .then(data => data.json())
           .then(data => setPlayerMatches(data.results))
           .catch(handleError))
