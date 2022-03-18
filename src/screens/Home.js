@@ -142,7 +142,7 @@ function sortEventsIntoDates (events) {
 
   // force sort these if the API has returned them in a weird order
   Object.keys(sorted).forEach((key) => {
-    sorted[key] = sortBy(sorted[key], ['start_time'])
+    sorted[key] = sortBy(sorted[key], ['start_time', 'away.name'])
   })
 
   return sorted
