@@ -77,10 +77,17 @@ function SingleEvent ({ event, previousEventStartTime = 0, showSpoilers = true }
         <p className='inline-block px-1 py-1 -ml-1 text-xs font-bold text-white'>
           <Link className='text-white' to={`/teams/${event.away.id}/`}>{event.away.name}</Link> vs. <Link className='text-white' to={`/teams/${event.home.id}/`}>{event.home.name}</Link>
         </p>
-
-        { event.primary_caster
-          ? <a target='_blank' rel='noreferrer' className='flex items-center text-xs leading-loose text-purple-400' href={event.primary_caster.stream_link}><svg className='w-3 h-3 mr-1' fill='currentColor' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'> <defs /> <path fillRule='evenodd' d='M2.149 0L.537 4.119v16.836h5.731V24h3.224l3.045-3.045h4.657l6.269-6.269V0H2.149zm19.164 13.612l-3.582 3.582H12l-3.045 3.045v-3.045H4.119V2.149h17.194v11.463zm-3.582-7.343v6.262h-2.149V6.269h2.149zm-5.731 0v6.262H9.851V6.269H12z' clipRule='evenodd' /></svg>{event.primary_caster.name}</a>
-          : <p className='text-xs italic'>Looking for caster</p> }
+  
+        { event.vod_link
+          ? <a target='_blank' rel='noreferrer' className='flex items-center text-xs leading-loose text-red-400' href={event.primary_caster.vod_link}><svg className='w-3 h-3 mr-1' fill='currentColor' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'> <defs /> <path fillRule='evenodd' d='M2.149 0L.537 4.119v16.836h5.731V24h3.224l3.045-3.045h4.657l6.269-6.269V0H2.149zm19.164 13.612l-3.582 3.582H12l-3.045 3.045v-3.045H4.119V2.149h17.194v11.463zm-3.582-7.343v6.262h-2.149V6.269h2.149zm-5.731 0v6.262H9.851V6.269H12z' clipRule='evenodd' /></svg>{event.primary_caster.name}</a>
+          : (
+            <span>
+              { event.primary_caster
+                ? <a target='_blank' rel='noreferrer' className='flex items-center text-xs leading-loose text-purple-400' href={event.primary_caster.stream_link}><svg className='w-3 h-3 mr-1' fill='currentColor' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'> <defs /> <path fillRule='evenodd' d='M2.149 0L.537 4.119v16.836h5.731V24h3.224l3.045-3.045h4.657l6.269-6.269V0H2.149zm19.164 13.612l-3.582 3.582H12l-3.045 3.045v-3.045H4.119V2.149h17.194v11.463zm-3.582-7.343v6.262h-2.149V6.269h2.149zm-5.731 0v6.262H9.851V6.269H12z' clipRule='evenodd' /></svg>{event.primary_caster.name}</a>
+                : <p className='text-xs italic'>Looking for caster</p> }
+            </span>
+          )}
+        
 
         { event.result &&
           <div className={'flex items-center justify-center w-1/2 px-1 py-1 my-2 ml-auto mr-auto font-bold text-center text-white border border-gray-700 rounded-full md:mt-2 md:mb-1 md:w-full text-2xs ' + (!shouldDisplayWinner() ? 'cursor-pointer' : '')} onClick={!shouldDisplayWinner() ? () => setReveal(true) : undefined}>
@@ -313,7 +320,7 @@ function Home () {
                             playerMatches.map((match) => (
                               <MatchBox key={`match-${match.id}`} match={match}>
                                 <span className='flex items-center justify-end flex-grow text-sm'>
-
+                                  { console.log(match.vod_link) }
                                   { match.primary_caster
                                     ? <a target='_blank' rel='noreferrer' className='flex items-center mr-4 text-xs leading-loose text-purple-400' href={match.primary_caster.stream_link}>
                                       <svg className='w-3 h-3 mr-1' fill='currentColor' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'> <defs /> <path fillRule='evenodd' d='M2.149 0L.537 4.119v16.836h5.731V24h3.224l3.045-3.045h4.657l6.269-6.269V0H2.149zm19.164 13.612l-3.582 3.582H12l-3.045 3.045v-3.045H4.119V2.149h17.194v11.463zm-3.582-7.343v6.262h-2.149V6.269h2.149zm-5.731 0v6.262H9.851V6.269H12z' clipRule='evenodd' /></svg>
